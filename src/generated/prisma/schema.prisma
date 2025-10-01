@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id              Int     @id @default(autoincrement())
+  firstName       String
+  lastName        String
+  email           String  @unique
+  phone           String?
+  subjects        String  @default("") // Comma-separated subjects (e.g., "Math,Physics")
+  hourlyRateCents Int // Store as integer cents to avoid floating-point issues
+  year            Int? // Year level as number (e.g., 5, 10, 12)
+  notes           String?
+  isActive        Boolean @default(true)
+  isArchived      Boolean @default(false)
+
+  // Parent Information
+  parentName  String?
+  parentEmail String?
+  parentPhone String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ownership
+  user     User?     @relation(fields: [userId], references: [id])
+  userId   String?
+  meetings Meeting[]
+}
+
+// NextAuth-compatible User model with passwordHash for credentials login
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+
+  students Student[]
+  meetings Meeting[]
+}
+
+model Meeting {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+}

@@ -12,7 +12,7 @@ export const metadata = {
 export default async function Home() {
 	const session = await getServerSession(authOptions);
 	return (
-		<>
+		<div className="font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
 			<LandingClient />
 			<section className="bg-gradient-to-b from-white to-gray-50">
 				<div className="mx-auto max-w-7xl px-4 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -24,16 +24,8 @@ export default async function Home() {
 							Manage your scheduling, billing, and students — all in one place.
 						</p>
 						<div className="mt-6 flex flex-col sm:flex-row gap-3">
-							<a href="#trial" className="rounded-md bg-black text-white px-5 py-3 text-center hover:opacity-90">Start Free Trial</a>
-							<a href="#demo" className="rounded-md border px-5 py-3 text-center hover:bg-gray-50">Book a Demo</a>
-						</div>
-						<p className="mt-2 text-xs text-gray-500">No credit card required</p>
-
-						<div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-700" data-fade>
-							<div className="rounded-md border bg-white px-3 py-2">Easy Setup</div>
-							<div className="rounded-md border bg-white px-3 py-2">Custom Branding</div>
-							<div className="rounded-md border bg-white px-3 py-2">Online Payments</div>
-							<div className="rounded-md border bg-white px-3 py-2">Automated Reminders</div>
+							<a href="/signup" className="rounded-md bg-blue-600 text-white px-5 py-3 text-center hover:bg-blue-700">Create an account</a>
+							<a href="/about" className="rounded-md border px-5 py-3 text-center hover:bg-gray-50">About us</a>
 						</div>
 					</div>
 					<div className="relative" data-fade>
@@ -122,42 +114,11 @@ export default async function Home() {
 					<h3 className="text-2xl font-semibold">Try it Free for 30 Days</h3>
 					<p className="mt-2 text-gray-700">Upgrade any time. Cancel any time.</p>
 					<div className="mt-6 flex items-center justify-center gap-3">
-						<a href="#trial" className="rounded-md bg-black text-white px-5 py-3 hover:opacity-90">Start Free Trial</a>
+						<a href="#trial" className="rounded-md bg-blue-600 text-white px-5 py-3 hover:bg-blue-700">Start Free Trial</a>
 						<a href="/signin" className="rounded-md border px-5 py-3 hover:bg-gray-50">Sign in</a>
 					</div>
 				</div>
-				<div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-					{["Basic","Pro","Premium"].map((plan, idx) => (
-						<div key={plan} className={`rounded-xl border bg-white p-6 ${idx===1 ? 'ring-2 ring-black' : ''}`} data-fade>
-							<div className="font-semibold">{plan}</div>
-							<div className="mt-2 text-3xl font-bold">$49<span className="text-base font-medium text-gray-500">/mo</span></div>
-							<ul className="mt-4 space-y-2 text-sm text-gray-700 list-disc list-inside">
-								<li>Unlimited students</li>
-								<li>Online invoices & payments</li>
-								<li>Scheduling & reminders</li>
-							</ul>
-							<a href="#trial" className="mt-6 inline-block rounded-md bg-black text-white px-4 py-2 hover:opacity-90">Start</a>
-						</div>
-					))}
-				</div>
-
-				{/* App quick links (previous features) */}
-				<div className="mt-16 border-t pt-10" data-fade>
-					<h4 className="text-lg font-semibold">App quick links</h4>
-					<div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-						<a className="rounded-lg border bg-white p-6 hover:shadow transition" href="/students">
-							<div className="font-semibold">Manage Students</div>
-							<div className="text-sm text-gray-600 mt-1">Create, view, update, and delete students.</div>
-						</a>
-						{session?.user ? (
-							<a className="rounded-lg border bg-white p-6 hover:shadow transition" href="/students/new">
-								<div className="font-semibold">Add a Student</div>
-								<div className="text-sm text-gray-600 mt-1">Quickly add a new student record.</div>
-							</a>
-						) : null}
-					</div>
-				</div>
 			</section>
-		</>
+		</div>
 	);
 }

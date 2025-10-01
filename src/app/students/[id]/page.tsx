@@ -3,6 +3,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/utils/auth";
 import { getServerSession } from "next-auth";
+import DeleteIcon from "./DeleteIcon";
+import ArchiveIcon from "./ArchiveIcon";
 
 function formatCurrencyFromCents(valueInCents: number): string {
 	const dollars = (valueInCents / 100).toFixed(2);
@@ -18,9 +20,14 @@ async function updateStudent(id: number, formData: FormData) {
 	const email = String(formData.get("email") || "").trim();
 	const phone = String(formData.get("phone") || "").trim() || null;
 	const subjects = String(formData.get("subjects") || "").trim();
+	const year = Number(String(formData.get("year") || "0")) || null;
 	const hourlyRate = Number(String(formData.get("hourlyRate") || "0"));
 	const notes = String(formData.get("notes") || "").trim() || null;
-	const isActive = String(formData.get("isActive") || "true") === "true";
+	
+	// Parent information
+	const parentName = String(formData.get("parentName") || "").trim() || null;
+	const parentEmail = String(formData.get("parentEmail") || "").trim() || null;
+	const parentPhone = String(formData.get("parentPhone") || "").trim() || null;
 
 	await prisma.student.update({
 		where: { id },
@@ -30,9 +37,12 @@ async function updateStudent(id: number, formData: FormData) {
 			email,
 			phone,
 			subjects,
+			year,
 			hourlyRateCents: Math.round(hourlyRate * 100),
 			notes,
-			isActive,
+			parentName,
+			parentEmail,
+			parentPhone,
 		},
 	});
 
@@ -47,8 +57,9 @@ async function deleteStudent(id: number) {
 	redirect("/students");
 }
 
-export default async function StudentDetail({ params }: { params: { id: string } }) {
-	const id = Number(params.id);
+export default async function StudentDetail({ params }: { params: Promise<{ id: string }> }) {
+	const { id: idString } = await params;
+	const id = Number(idString);
 	if (Number.isNaN(id)) notFound();
 
 	const session = await getServerSession(authOptions);
@@ -58,63 +69,101 @@ export default async function StudentDetail({ params }: { params: { id: string }
 	if (!student) notFound();
 
 	return (
-		<div className="space-y-4">
+		<div className="space-y-6 pt-8 max-w-[90rem] mx-auto font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
 			<div className="flex items-center justify-between">
-				<h2 className="text-xl font-semibold">{student.firstName} {student.lastName}</h2>
-				<Link href="/students" className="text-sm text-gray-600 hover:underline">Back to list</Link>
+				<div className="flex items-center gap-3">
+					<h2 className="text-2xl font-semibold">{student.firstName} {student.lastName}</h2>
+					<ArchiveIcon studentId={student.id} />
+					<DeleteIcon studentId={student.id} deleteAction={deleteStudent} />
+				</div>
+				<Link href="/students" className="text-sm text-gray-600 hover:underline">← Back to list</Link>
 			</div>
 
-			<div className="bg-white rounded-lg border p-4 space-y-4">
-				<form action={updateStudent.bind(null, student.id)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-					<label className="block">
-						<div className="text-sm text-gray-700">First name</div>
-						<input name="firstName" defaultValue={student.firstName} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block">
-						<div className="text-sm text-gray-700">Last name</div>
-						<input name="lastName" defaultValue={student.lastName} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Email</div>
-						<input type="email" name="email" defaultValue={student.email} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Phone</div>
-						<input name="phone" defaultValue={student.phone ?? undefined} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Subjects (comma-separated)</div>
-						<input name="subjects" defaultValue={student.subjects} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Hourly rate (e.g., 45)</div>
-						<input name="hourlyRate" type="number" step="0.01" min="0" defaultValue={student.hourlyRateCents / 100} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Notes</div>
-						<textarea name="notes" rows={4} defaultValue={student.notes ?? undefined} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Status</div>
-						<select name="isActive" defaultValue={student.isActive ? "true" : "false"} className="mt-1 w-full border rounded-md px-3 py-2">
-							<option value="true">Active</option>
-							<option value="false">Inactive</option>
-						</select>
-					</label>
-					<div className="flex items-center gap-2 sm:col-span-2">
-						<button className="rounded-md bg-black text-white px-3 py-2 text-sm hover:opacity-90">Save changes</button>
-						<button formAction={deleteStudent.bind(null, student.id)} className="rounded-md bg-red-600 text-white px-3 py-2 text-sm hover:opacity-90">Delete</button>
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+				{/* Basic Information Card */}
+				<div className="bg-white rounded-lg border p-6">
+					<h3 className="text-lg font-medium mb-4">Basic Information</h3>
+					<div className="space-y-4">
+						<div>
+							<div className="text-sm text-gray-600">Full Name</div>
+							<div className="font-medium">{student.firstName} {student.lastName}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Email</div>
+							<div className="font-medium">{student.email}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Phone</div>
+							<div className="font-medium">{student.phone || "—"}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Year Level</div>
+							<div className="font-medium">{student.year ? `Grade ${student.year}` : "—"}</div>
+						</div>
 					</div>
-				</form>
+				</div>
+
+				{/* Academic Information Card */}
+				<div className="bg-white rounded-lg border p-6">
+					<h3 className="text-lg font-medium mb-4">Academic Information</h3>
+					<div className="space-y-4">
+						<div>
+							<div className="text-sm text-gray-600">Subjects</div>
+							<div className="font-medium">{student.subjects || "—"}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Hourly Rate</div>
+							<div className="font-medium text-lg">{formatCurrencyFromCents(student.hourlyRateCents)}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Student Since</div>
+							<div className="font-medium">{new Date(student.createdAt).toLocaleDateString()}</div>
+						</div>
+						{student.isArchived && (
+							<div>
+								<div className="text-sm text-gray-600">Archived On</div>
+								<div className="font-medium text-orange-600">{new Date(student.updatedAt).toLocaleDateString()}</div>
+							</div>
+						)}
+					</div>
+				</div>
+
+				{/* Parent Information Card */}
+				<div className="bg-white rounded-lg border p-6">
+					<h3 className="text-lg font-medium mb-4">Parent Information</h3>
+					<div className="space-y-4">
+						<div>
+							<div className="text-sm text-gray-600">Parent Name</div>
+							<div className="font-medium">{student.parentName || "—"}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Parent Email</div>
+							<div className="font-medium">{student.parentEmail || "—"}</div>
+						</div>
+						<div>
+							<div className="text-sm text-gray-600">Parent Phone</div>
+							<div className="font-medium">{student.parentPhone || "—"}</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Notes Card */}
+				{student.notes && (
+					<div className="bg-white rounded-lg border p-6 lg:col-span-3">
+						<h3 className="text-lg font-medium mb-4">Notes</h3>
+						<div className="text-gray-700 whitespace-pre-wrap">{student.notes}</div>
+					</div>
+				)}
 			</div>
 
-			<div className="bg-white rounded-lg border p-4">
-				<div className="text-sm text-gray-600">Email</div>
-				<div className="font-medium">{student.email}</div>
-				<div className="mt-2 text-sm text-gray-600">Rate</div>
-				<div className="font-medium">{formatCurrencyFromCents(student.hourlyRateCents)}</div>
-				<div className="mt-2 text-sm text-gray-600">Subjects</div>
-				<div className="font-medium">{student.subjects || "—"}</div>
+			{/* Action Buttons */}
+			<div className="flex items-center gap-3">
+				<Link 
+					href={`/students/${student.id}/edit`}
+					className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm hover:bg-blue-700"
+				>
+					Edit Student
+				</Link>
 			</div>
 		</div>
 	);

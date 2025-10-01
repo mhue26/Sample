@@ -25,7 +25,7 @@ export default async function SignupPage() {
 	if (session?.user) redirect("/students");
 	return (
 		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6">
-			<h2 className="text-xl font-semibold mb-4">Create your account</h2>
+			<h2 className="text-2xl font-semibold mb-4">Create your account</h2>
 			<form action={doSignup} className="space-y-3">
 				<label className="block">
 					<div className="text-sm text-gray-700">Name</div>
@@ -39,7 +39,7 @@ export default async function SignupPage() {
 					<div className="text-sm text-gray-700">Password</div>
 					<input name="password" type="password" required className="mt-1 w-full border rounded-md px-3 py-2" />
 				</label>
-				<button className="rounded-md bg-black text-white px-3 py-2 text-sm hover:opacity-90 w-full">Sign up</button>
+				<button className="rounded-md bg-blue-600 text-white px-3 py-2 text-sm hover:bg-blue-700 w-full">Sign up</button>
 			</form>
 			<p className="text-xs text-gray-600 mt-3">Already have an account? <a href="/signin" className="underline">Log in</a></p>
 		</div>

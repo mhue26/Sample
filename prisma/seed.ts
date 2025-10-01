@@ -60,6 +60,48 @@ async function main() {
             console.log("No unowned students to assign.");
         }
     }
+
+    // Add some sample meetings
+    const students = await prisma.student.findMany({ where: { userId: tutor.id } });
+    if (students.length > 0) {
+        const now = new Date();
+        const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+        const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        
+        await prisma.meeting.createMany({
+            data: [
+                {
+                    title: "Math Tutoring Session",
+                    description: "Working on algebra problems",
+                    startTime: new Date(tomorrow.getTime() + 2 * 60 * 60 * 1000), // 2 PM tomorrow
+                    endTime: new Date(tomorrow.getTime() + 3 * 60 * 60 * 1000), // 3 PM tomorrow
+                    isCompleted: false,
+                    userId: tutor.id,
+                    studentId: students[0].id,
+                },
+                {
+                    title: "Physics Review",
+                    description: "Preparing for upcoming test",
+                    startTime: new Date(nextWeek.getTime() + 10 * 60 * 60 * 1000), // 10 AM next week
+                    endTime: new Date(nextWeek.getTime() + 11 * 60 * 60 * 1000), // 11 AM next week
+                    isCompleted: false,
+                    userId: tutor.id,
+                    studentId: students[0].id,
+                },
+                {
+                    title: "English Essay Help",
+                    description: "Working on argumentative essay structure",
+                    startTime: new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+                    endTime: new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000), // 1 hour later
+                    isCompleted: false,
+                    userId: tutor.id,
+                    studentId: students[1]?.id || students[0].id,
+                },
+            ],
+            skipDuplicates: true,
+        });
+        console.log("Added sample meetings.");
+    }
 }
 
 main()

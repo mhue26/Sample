@@ -1,7 +1,7 @@
 import LandingClient from "./LandingClient";
 
 export const metadata = {
-	title: "{{ProductName}} — Modern Platform for {{TargetAudience}}",
+	title: "{TutorTools} — Modern Platform for {{TargetAudience}}",
 	description: "Manage your scheduling, billing, and students — all in one place.",
 };
 
@@ -9,44 +9,37 @@ export default function LandingPage() {
 	return (
 		<>
 			<LandingClient />
-			<header data-landing-header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b">
-				<div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+			<header data-landing-header className="fixed top-4 left-4 right-4 z-[60] bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl shadow-lg">
+				<div className="w-full px-6 py-4 flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<div className="h-8 w-8 rounded bg-gray-900" />
-						<div className="font-semibold">{{ProductName}}</div>
+						<div className="font-semibold">{TutorTools}</div>
 					</div>
 					<nav className="hidden md:flex items-center gap-6 text-sm text-gray-700">
 						<a href="#features" className="hover:text-black">Features</a>
 						<a href="#pricing" className="hover:text-black">Pricing</a>
 						<a href="#social" className="hover:text-black">Reviews</a>
 						<a href="/signin" className="hover:text-black">Sign in</a>
-						<a href="#trial" className="rounded-md bg-black text-white px-3 py-2 hover:opacity-90">Start Free Trial</a>
+						<a href="#trial" className="rounded-md bg-blue-600 text-white px-3 py-2 hover:bg-blue-700">Start Free Trial</a>
 					</nav>
 				</div>
 			</header>
 
-			<main>
+			<main className="pt-20">
 				<section className="bg-gradient-to-b from-white to-gray-50">
 					<div className="mx-auto max-w-7xl px-4 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 						<div>
 							<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-								{{ProductName}} is the #1 {{Industry}} platform for {{TargetAudience}}
+								{TutorTools} is the #1 {{Industry}} platform for {{TargetAudience}}
 							</h1>
 							<p className="mt-4 text-lg text-gray-700">
 								Manage your scheduling, billing, and students — all in one place.
 							</p>
 							<div className="mt-6 flex flex-col sm:flex-row gap-3">
-								<a href="#trial" className="rounded-md bg-black text-white px-5 py-3 text-center hover:opacity-90">Start Free Trial</a>
-								<a href="#demo" className="rounded-md border px-5 py-3 text-center hover:bg-gray-50">Book a Demo</a>
+								<a href="/signup" className="rounded-md bg-blue-600 text-white px-5 py-3 text-center hover:bg-blue-700">Create an account</a>
+								<a href="/about" className="rounded-md border px-5 py-3 text-center hover:bg-gray-50">About us</a>
 							</div>
 							<p className="mt-2 text-xs text-gray-500">No credit card required</p>
-
-							<div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-700" data-fade>
-								<div className="rounded-md border bg-white px-3 py-2">Easy Setup</div>
-								<div className="rounded-md border bg-white px-3 py-2">Custom Branding</div>
-								<div className="rounded-md border bg-white px-3 py-2">Online Payments</div>
-								<div className="rounded-md border bg-white px-3 py-2">Automated Reminders</div>
-							</div>
 						</div>
 						<div className="relative" data-fade>
 							<div className="aspect-[16/10] rounded-xl border bg-white shadow-sm" />
@@ -151,7 +144,7 @@ export default function LandingPage() {
 						<h3 className="text-2xl font-semibold">Try it Free for 30 Days</h3>
 						<p className="mt-2 text-gray-700">Upgrade any time. Cancel any time.</p>
 						<div className="mt-6 flex items-center justify-center gap-3">
-							<a href="#trial" className="rounded-md bg-black text-white px-5 py-3 hover:opacity-90">Start Free Trial</a>
+							<a href="#trial" className="rounded-md bg-blue-600 text-white px-5 py-3 hover:bg-blue-700">Start Free Trial</a>
 							<a href="/signin" className="rounded-md border px-5 py-3 hover:bg-gray-50">Sign in</a>
 						</div>
 					</div>
@@ -165,7 +158,7 @@ export default function LandingPage() {
 									<li>{{Feature2}}</li>
 									<li>{{Feature3}}</li>
 								</ul>
-								<a href="#trial" className="mt-6 inline-block rounded-md bg-black text-white px-4 py-2 hover:opacity-90">Start</a>
+								<a href="#trial" className="mt-6 inline-block rounded-md bg-blue-600 text-white px-4 py-2 hover:bg-blue-700">Start</a>
 							</div>
 						))}
 					</div>
@@ -192,7 +185,7 @@ export default function LandingPage() {
 							<div className="rounded-md border inline-flex items-center gap-2 px-3 py-2">English ▼</div>
 						</div>
 					</div>
-					<div className="mt-8 text-xs text-gray-500">© {new Date().getFullYear()} {{ProductName}}. All rights reserved.</div>
+					<div className="mt-8 text-xs text-gray-500">© {new Date().getFullYear()} {TutorTools}. All rights reserved.</div>
 				</div>
 			</footer>
 		</>

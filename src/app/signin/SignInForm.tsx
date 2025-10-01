@@ -30,7 +30,7 @@ export default function SignInForm() {
 
 	return (
 		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6">
-			<h2 className="text-xl font-semibold mb-4">Sign in</h2>
+			<h2 className="text-2xl font-semibold mb-4">Sign in</h2>
 			<form onSubmit={onSubmit} className="space-y-3">
 				<label className="block">
 					<div className="text-sm text-gray-700">Email</div>
@@ -41,7 +41,7 @@ export default function SignInForm() {
 					<input name="password" type="password" required className="mt-1 w-full border rounded-md px-3 py-2" />
 				</label>
 				{error && <div className="text-sm text-red-600">{error}</div>}
-				<button disabled={loading} className="rounded-md bg-black text-white px-3 py-2 text-sm hover:opacity-90 w-full">
+				<button disabled={loading} className="rounded-md bg-blue-600 text-white px-3 py-2 text-sm hover:bg-blue-700 w-full">
 					{loading ? 'Signing in…' : 'Sign in'}
 				</button>
 			</form>
