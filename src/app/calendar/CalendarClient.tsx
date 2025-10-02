@@ -51,7 +51,7 @@ export default function CalendarClient({
   };
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('en-US', { 
+    return new Date(date).toLocaleDateString('en-GB', { 
       weekday: 'long',
       year: 'numeric', 
       month: 'long', 
@@ -73,7 +73,7 @@ export default function CalendarClient({
     } else if (meetingDate.getTime() === tomorrowDate.getTime()) {
       return "Tomorrow";
     } else {
-      return new Date(date).toLocaleDateString('en-US', { 
+      return new Date(date).toLocaleDateString('en-GB', { 
         weekday: 'short',
         month: 'short', 
         day: 'numeric' 
@@ -122,7 +122,7 @@ export default function CalendarClient({
   };
 
   return (
-    <div className="space-y-6 pt-8 max-w-[90rem] mx-auto font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
+    <div className="space-y-6 pt-8 font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Calendar</h2>
         <button

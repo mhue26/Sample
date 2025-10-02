@@ -24,7 +24,7 @@ export default async function SignupPage() {
 	const session = await getServerSession(authOptions);
 	if (session?.user) redirect("/students");
 	return (
-		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6">
+		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6 mt-8">
 			<h2 className="text-2xl font-semibold mb-4">Create your account</h2>
 			<form action={doSignup} className="space-y-3">
 				<label className="block">

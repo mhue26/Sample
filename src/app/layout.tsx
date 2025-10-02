@@ -35,21 +35,21 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         style={{ fontFamily: "'Work Sans', sans-serif" }}
       >
         <div className="min-h-screen flex flex-col">
-          <header className="fixed top-4 left-4 right-4 z-[60] bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl shadow-lg">
-            <div className="w-full px-6 py-4 flex items-center justify-between">
+          <header className="fixed top-4 left-4 right-4 z-[60] bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg">
+            <div className="w-full px-4 sm:px-6 py-4 flex items-center justify-between">
               <a href="/" className="text-lg font-semibold hover:text-blue-600 transition-colors">
                 Tutor Tools
               </a>
               <Navigation session={session} />
             </div>
           </header>
-          <main className="flex-1 w-full px-4 py-6 pt-20">
-            <div className="mx-auto max-w-[90rem]">
+          <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6 pt-20">
+            <div className="mx-auto max-w-7xl">
               {children}
             </div>
           </main>
           <footer className="border-t bg-white mt-auto">
-            <div className="mx-auto max-w-[90rem] px-4 py-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 {/* Company Info */}
                 <div className="md:col-span-2">
@@ -103,7 +103,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
               <div className="mt-8 pt-8 border-t border-gray-200">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                   <p className="text-gray-500 text-sm">
-                    © 2024 TutorTools. All rights reserved.
+                    © 2025 TutorTools. All rights reserved.
                   </p>
                   <div className="flex space-x-6 mt-4 md:mt-0">
                     <a href="/" className="text-gray-500 hover:text-gray-900 text-sm">Privacy Policy</a>

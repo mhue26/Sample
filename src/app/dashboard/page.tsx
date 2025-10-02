@@ -41,7 +41,7 @@ export default async function DashboardPage() {
 	};
 
 	const formatDate = (date: Date) => {
-		return date.toLocaleDateString('en-US', { 
+		return date.toLocaleDateString('en-GB', { 
 			weekday: 'long',
 			year: 'numeric', 
 			month: 'long', 
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
 		} else if (meetingDate.getTime() === tomorrowDate.getTime()) {
 			return "Tomorrow";
 		} else {
-			return date.toLocaleDateString('en-US', { 
+			return date.toLocaleDateString('en-GB', { 
 				weekday: 'short',
 				month: 'short', 
 				day: 'numeric' 
@@ -72,7 +72,7 @@ export default async function DashboardPage() {
 	};
 
 	return (
-		<div className="space-y-6 pt-8 max-w-[90rem] mx-auto font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
+		<div className="space-y-6 pt-8 font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
 			<div>
 				<h1 className="text-2xl font-semibold">Dashboard</h1>
 			</div>

@@ -28,7 +28,7 @@ export default function StudentsClient({ students, archivedStudents }: { student
 	const [showPastStudents, setShowPastStudents] = useState(false);
 
 	return (
-		<div className="space-y-6 pt-8 max-w-[90rem] mx-auto font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
+		<div className="space-y-6 pt-8 font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
 			<div className="flex items-center justify-between">
 				<h2 className="text-2xl font-semibold">Students</h2>
 				<div className="flex items-center gap-2">
@@ -58,12 +58,10 @@ export default function StudentsClient({ students, archivedStudents }: { student
 					<table className="w-full text-left text-sm">
 						<thead className="bg-gray-50">
 							<tr>
-								<th className="px-3 py-2 w-1/6">Name</th>
-								<th className="px-3 py-2 w-1/6">Email</th>
-								<th className="px-3 py-2 w-1/6">Phone</th>
-								<th className="px-3 py-2 w-1/6">Subjects</th>
-								<th className="px-3 py-2 w-1/6">Rate</th>
-								<th className="px-3 py-2 w-1/6">Year</th>
+								<th className="px-3 py-2 w-1/4">Name</th>
+								<th className="px-3 py-2 w-1/4">Subjects</th>
+								<th className="px-3 py-2 w-1/4">Rate</th>
+								<th className="px-3 py-2 w-1/4">Year</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -74,13 +72,11 @@ export default function StudentsClient({ students, archivedStudents }: { student
 											{s.firstName} {s.lastName}
 										</Link>
 									</td>
-									<td className="px-3 py-2">{s.email ?? "—"}</td>
-									<td className="px-3 py-2">{s.phone ?? "—"}</td>
 									<td className="px-3 py-2">
 										<SubjectsDisplay subjects={s.subjects || ""} />
 									</td>
 									<td className="px-3 py-2">{formatCurrencyFromCents(s.hourlyRateCents)}</td>
-									<td className="px-3 py-2">{s.year ? `Grade ${s.year}` : "—"}</td>
+									<td className="px-3 py-2">{s.year ? `Year ${s.year}` : "—"}</td>
 								</tr>
 							))}
 						</tbody>
@@ -101,7 +97,7 @@ export default function StudentsClient({ students, archivedStudents }: { student
 									<p className="text-sm text-gray-600">{s.phone ?? "—"}</p>
 								</div>
 								<span className={`text-xs px-2 py-1 rounded ${s.year ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}>
-									{s.year ? `Grade ${s.year}` : "—"}
+									{s.year ? `Year ${s.year}` : "—"}
 								</span>
 							</div>
 							<div className="mt-3 text-sm text-gray-700">
@@ -164,7 +160,7 @@ export default function StudentsClient({ students, archivedStudents }: { student
 														<SubjectsDisplay subjects={s.subjects || ""} />
 													</td>
 													<td className="px-3 py-2">{formatCurrencyFromCents(s.hourlyRateCents)}</td>
-													<td className="px-3 py-2">{s.year ? `Grade ${s.year}` : "—"}</td>
+													<td className="px-3 py-2">{s.year ? `Year ${s.year}` : "—"}</td>
 												</tr>
 											))
 										) : (
@@ -197,7 +193,7 @@ export default function StudentsClient({ students, archivedStudents }: { student
 													<p className="text-sm text-gray-600">{s.phone ?? "—"}</p>
 												</div>
 												<span className={`text-xs px-2 py-1 rounded ${s.year ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}>
-													{s.year ? `Grade ${s.year}` : "—"}
+													{s.year ? `Year ${s.year}` : "—"}
 												</span>
 											</div>
 											<div className="mt-3 text-sm text-gray-700">

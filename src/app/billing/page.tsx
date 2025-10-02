@@ -14,7 +14,7 @@ export default async function BillingPage() {
 	}
 
 	return (
-		<div className="space-y-6 pt-8 max-w-[90rem] mx-auto font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
+		<div className="space-y-6 pt-8 font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
 			<div>
 				<h1 className="text-2xl font-semibold">Invoicing</h1>
 				<p className="text-gray-600 mt-2">Create and manage invoices for your students.</p>

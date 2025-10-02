@@ -29,7 +29,7 @@ export default function SignInForm() {
 	}
 
 	return (
-		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6">
+		<div className="max-w-sm mx-auto bg-white border rounded-lg p-6 mt-8">
 			<h2 className="text-2xl font-semibold mb-4">Sign in</h2>
 			<form onSubmit={onSubmit} className="space-y-3">
 				<label className="block">

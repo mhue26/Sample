@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { getSubjectColor } from './subjectColors';
 
 interface SubjectsMultiSelectProps {
   name: string;
@@ -34,12 +35,25 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
   const [availableSubjects, setAvailableSubjects] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Initialize available subjects from localStorage
   useEffect(() => {
     setAvailableSubjects(getAvailableSubjects());
+  }, []);
+
+  // Listen for color changes
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'customSubjectColors') {
+        setRefreshKey(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const filteredSubjects = availableSubjects.filter(subject =>
@@ -53,6 +67,7 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
         ? prev.filter(s => s !== subject)
         : [...prev, subject]
     );
+    // Keep dropdown open for multiple selections
   };
 
   const deleteAvailableSubject = (subject: string) => {
@@ -69,6 +84,7 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
     if (searchTerm.trim() && !selectedSubjects.includes(searchTerm.trim())) {
       setSelectedSubjects(prev => [...prev, searchTerm.trim()]);
       setSearchTerm("");
+      // Keep dropdown open for multiple selections
     }
   };
 
@@ -99,32 +115,42 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
         required={required}
       />
       
-      {/* Selected subjects display */}
-      <div className="min-h-[42px] border border-gray-300 rounded-md p-2 flex flex-wrap gap-1 cursor-pointer"
-           onClick={() => setIsOpen(!isOpen)}>
-        {selectedSubjects.length === 0 ? (
-          <span className="text-gray-500 text-sm">Select subjects...</span>
-        ) : (
-          selectedSubjects.map((subject) => (
-            <span
-              key={subject}
-              className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+      {/* Main input with selected subjects */}
+      <div className="min-h-[42px] border border-gray-300 rounded-md p-2 flex flex-wrap gap-1 items-center">
+        {selectedSubjects.map((subject, index) => (
+          <span
+            key={`${subject}-${index}-${refreshKey}`}
+            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getSubjectColor(subject)}`}
+          >
+            {subject}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeSubject(subject);
+              }}
+              className="ml-1 hover:opacity-70"
             >
-              {subject}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeSubject(subject);
-                }}
-                className="ml-1 text-blue-600 hover:text-blue-800"
-              >
-                ×
-              </button>
-            </span>
-          ))
-        )}
-        <div className="ml-auto text-gray-400">
+              ×
+            </button>
+          </span>
+        ))}
+        <input
+          ref={inputRef}
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={() => setIsOpen(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && searchTerm.trim()) {
+              e.preventDefault();
+              addCustomSubject();
+            }
+          }}
+          placeholder={selectedSubjects.length === 0 ? "Select subjects..." : ""}
+          className="flex-1 min-w-[120px] outline-none text-sm"
+        />
+        <div className="text-gray-400 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
@@ -133,43 +159,34 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
-          {/* Search input */}
-          <div className="p-2 border-b">
-            <input
-              ref={inputRef}
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search or add custom subject..."
-              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              autoFocus
-            />
-            {searchTerm && !COMMON_SUBJECTS.includes(searchTerm) && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-hidden">
+          {searchTerm && !COMMON_SUBJECTS.includes(searchTerm) && (
+            <div className="p-2 border-b">
               <button
                 type="button"
                 onClick={addCustomSubject}
-                className="mt-1 text-xs text-blue-600 hover:text-blue-800"
+                className="text-xs text-blue-600 hover:text-blue-800"
               >
                 Add "{searchTerm}"
               </button>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Subject options */}
-          <div className="py-1">
+          <div className="py-1 overflow-y-auto max-h-48 scrollbar-hide">
             {filteredSubjects.map((subject) => (
               <div
                 key={subject}
-                className="flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 group"
+                className="flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 group cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleSubject(subject);
+                }}
               >
-                <button
-                  type="button"
-                  onClick={() => toggleSubject(subject)}
-                  className="flex-1 text-left"
-                >
+                <span className="flex-1 text-left">
                   {subject}
-                </button>
+                </span>
                 <button
                   type="button"
                   onClick={(e) => {

@@ -13,7 +13,9 @@ async function createStudent(formData: FormData) {
 	const firstName = String(formData.get("firstName") || "").trim();
 	const lastName = String(formData.get("lastName") || "").trim();
 	const email = String(formData.get("email") || "").trim();
-	const phone = String(formData.get("phone") || "").trim() || null;
+	const contactMethod = String(formData.get("contactMethod") || "").trim();
+	const contactDetails = String(formData.get("contactDetails") || "").trim();
+	const phone = contactMethod && contactDetails ? `${contactMethod}: ${contactDetails}` : null;
 	const subjects = String(formData.get("subjects") || "").trim();
 	const year = Number(String(formData.get("year") || "0")) || null;
 	const hourlyRate = Number(String(formData.get("hourlyRate") || "0"));
@@ -62,10 +64,55 @@ export default function NewStudentPage() {
 						<div className="text-sm text-gray-700">Email</div>
 						<input type="email" name="email" required className="mt-1 w-full border rounded-md px-3 py-2" />
 					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Phone</div>
-						<input name="phone" className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
+					<div className="sm:col-span-2">
+						<div className="text-sm text-gray-700 mb-3">Alternative Contact</div>
+						<div className="space-y-3" id="alternative-contacts">
+							<div className="flex gap-2">
+								<select name="contactMethod1" className="flex-1 border rounded-md px-3 py-2">
+									<option value="">Select method</option>
+									<option value="Phone">Phone</option>
+									<option value="WhatsApp">WhatsApp</option>
+									<option value="Instagram">Instagram</option>
+									<option value="WeChat">WeChat</option>
+								</select>
+								<input name="contactDetails1" placeholder="Enter contact details" className="flex-1 border rounded-md px-3 py-2" />
+							</div>
+						</div>
+						<button 
+							type="button" 
+							className="mt-2 text-sm text-blue-600 hover:text-blue-800 add-contact-btn"
+						>
+							+ Add another alternative contact
+						</button>
+						<script dangerouslySetInnerHTML={{
+							__html: `
+								let contactCount = 1;
+								document.addEventListener('DOMContentLoaded', function() {
+									const addBtn = document.querySelector('.add-contact-btn');
+									if (addBtn) {
+										addBtn.addEventListener('click', function() {
+											contactCount++;
+											const container = document.getElementById('alternative-contacts');
+											const newContact = document.createElement('div');
+											newContact.className = 'flex gap-2';
+											newContact.innerHTML = \`
+												<select name="contactMethod\${contactCount}" class="flex-1 border rounded-md px-3 py-2">
+													<option value="">Select method</option>
+													<option value="Phone">Phone</option>
+													<option value="WhatsApp">WhatsApp</option>
+													<option value="Instagram">Instagram</option>
+													<option value="WeChat">WeChat</option>
+												</select>
+												<input name="contactDetails\${contactCount}" placeholder="Enter contact details" class="flex-1 border rounded-md px-3 py-2" />
+												<button type="button" class="px-2 py-1 text-red-600 hover:text-red-800" onclick="this.parentElement.remove()">×</button>
+											\`;
+											container.appendChild(newContact);
+										});
+									}
+								});
+							`
+						}} />
+					</div>
 					<label className="block sm:col-span-2">
 						<div className="text-sm text-gray-700">Subjects</div>
 						<SubjectsMultiSelect name="subjects" />
@@ -80,8 +127,8 @@ export default function NewStudentPage() {
 						</select>
 					</label>
 					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Hourly rate (e.g., 45)</div>
-						<input name="hourlyRate" type="number" step="0.01" min="0" className="mt-1 w-full border rounded-md px-3 py-2" />
+						<div className="text-sm text-gray-700">Hourly rate</div>
+						<input name="hourlyRate" type="number" step="0.01" min="0" className="mt-1 w-full border rounded-md px-3 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
 					</label>
 					<label className="block sm:col-span-2">
 						<div className="text-sm text-gray-700">Notes</div>

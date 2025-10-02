@@ -21,6 +21,8 @@ model Student {
   hourlyRateCents Int   // Store as integer cents to avoid floating-point issues
   year        Int?      // Year level as number (e.g., 5, 10, 12)
   notes       String?
+  meetingLocation String?  // Location for lessons (e.g., "Online", "Student's home", "Library")
+  resourceLink    String?  // Link to shared resources, documents, etc.
   isActive    Boolean   @default(true)
   isArchived  Boolean   @default(false)
   
