@@ -22,8 +22,10 @@ async function updateStudent(id: number, formData: FormData) {
 	const phone = String(formData.get("phone") || "").trim() || null;
 	const subjects = String(formData.get("subjects") || "").trim();
 	const year = Number(String(formData.get("year") || "0")) || null;
+	const school = String(formData.get("school") || "").trim() || null;
 	const hourlyRate = Number(String(formData.get("hourlyRate") || "0"));
 	const notes = String(formData.get("notes") || "").trim() || null;
+	
 	
 	// Parent information
 	const parentName = String(formData.get("parentName") || "").trim() || null;
@@ -39,6 +41,7 @@ async function updateStudent(id: number, formData: FormData) {
 			phone,
 			subjects,
 			year,
+			school,
 			hourlyRateCents: Math.round(hourlyRate * 100),
 			notes,
 			parentName,
@@ -180,9 +183,9 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 						<h3 className="text-lg font-medium mb-4">Academic Information</h3>
 						<div className="space-y-4">
 							<div>
-								<div className="text-sm text-gray-600">Subjects</div>
+								<div className="text-sm text-gray-600">School Subjects</div>
 								<div className="font-medium">
-									<SubjectsDisplay subjects={student.subjects || ""} allowColorPicker={true} />
+									<SubjectsDisplay subjects={student.schoolSubjects || ""} allowColorPicker={true} />
 								</div>
 							</div>
 							<div>
@@ -190,8 +193,8 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 								<div className="font-medium">{student.year ? `Year ${student.year}` : "—"}</div>
 							</div>
 							<div>
-								<div className="text-sm text-gray-600">Hourly Rate</div>
-								<div className="font-medium text-lg">{formatCurrencyFromCents(student.hourlyRateCents)}</div>
+								<div className="text-sm text-gray-600">School</div>
+								<div className="font-medium">{student.school || "—"}</div>
 							</div>
 							<div>
 								<div className="text-sm text-gray-600">Student Since</div>
@@ -222,7 +225,7 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 							</div>
 						</div>
 						<div>
-							<div className="text-sm text-gray-600">Meeting Location</div>
+							<div className="text-sm text-gray-600">Location</div>
 							<div className="font-medium">{student.meetingLocation || "—"}</div>
 						</div>
 						<div>

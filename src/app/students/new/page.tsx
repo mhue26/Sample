@@ -17,8 +17,11 @@ async function createStudent(formData: FormData) {
 	const contactDetails = String(formData.get("contactDetails") || "").trim();
 	const phone = contactMethod && contactDetails ? `${contactMethod}: ${contactDetails}` : null;
 	const subjects = String(formData.get("subjects") || "").trim();
+	const schoolSubjects = String(formData.get("schoolSubjects") || "").trim() || null;
 	const year = Number(String(formData.get("year") || "0")) || null;
+	const school = String(formData.get("school") || "").trim() || null;
 	const hourlyRate = Number(String(formData.get("hourlyRate") || "0"));
+	const meetingLocation = String(formData.get("meetingLocation") || "").trim() || null;
 	const notes = String(formData.get("notes") || "").trim() || null;
 	
 	// Parent information
@@ -33,8 +36,11 @@ async function createStudent(formData: FormData) {
 			email,
 			phone,
 			subjects,
+			schoolSubjects,
 			year,
+			school,
 			hourlyRateCents: Math.round(hourlyRate * 100),
+			meetingLocation,
 			notes,
 			parentName,
 			parentEmail,
@@ -113,27 +119,189 @@ export default function NewStudentPage() {
 							`
 						}} />
 					</div>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Subjects</div>
-						<SubjectsMultiSelect name="subjects" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Year level</div>
-						<select name="year" className="mt-1 w-full border rounded-md px-3 py-2">
-							<option value="">Select year level</option>
-							{Array.from({ length: 12 }, (_, i) => i + 1).map(year => (
-								<option key={year} value={year}>Year {year}</option>
-							))}
-						</select>
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Hourly rate</div>
-						<input name="hourlyRate" type="number" step="0.01" min="0" className="mt-1 w-full border rounded-md px-3 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-					</label>
-					<label className="block sm:col-span-2">
-						<div className="text-sm text-gray-700">Notes</div>
-						<textarea name="notes" rows={4} className="mt-1 w-full border rounded-md px-3 py-2" />
-					</label>
+				</div>
+				
+				{/* Academic Information Section */}
+				<div className="border-t pt-4">
+					<h3 className="text-lg font-medium text-gray-900 mb-4">Academic Information</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">School Subjects</div>
+							<SubjectsMultiSelect name="schoolSubjects" />
+						</label>
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">Year level</div>
+							<select name="year" className="mt-1 w-full border rounded-md px-3 py-2">
+								<option value="">Select year level</option>
+								{Array.from({ length: 12 }, (_, i) => i + 1).map(year => (
+									<option key={year} value={year}>Year {year}</option>
+								))}
+							</select>
+						</label>
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">School</div>
+							<input 
+								name="school" 
+								type="text" 
+								placeholder="Enter school name"
+								className="mt-1 w-full border rounded-md px-3 py-2" 
+							/>
+						</label>
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">Notes</div>
+							<textarea name="notes" rows={4} className="mt-1 w-full border rounded-md px-3 py-2" />
+						</label>
+					</div>
+				</div>
+
+				{/* Lesson Information Section */}
+				<div className="border-t pt-4">
+					<h3 className="text-lg font-medium text-gray-900 mb-4">Lesson Information</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">Subjects</div>
+							<SubjectsMultiSelect name="subjects" />
+						</label>
+						<label className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">Hourly rate</div>
+							<input name="hourlyRate" type="number" step="0.01" min="0" className="mt-1 w-full border rounded-md px-3 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+						</label>
+						<div className="block sm:col-span-2">
+							<div className="text-sm text-gray-700">Mode</div>
+							<select 
+								name="meetingLocationType" 
+								className="mt-1 w-full border rounded-md px-3 py-2"
+								id="locationTypeSelect"
+							>
+								<option value="">Select location type</option>
+								<option value="In-Person">In-Person</option>
+								<option value="Online">Online</option>
+							</select>
+						</div>
+						<div id="locationDetails" className="block sm:col-span-2" style={{display: "none"}}>
+							<div className="text-sm text-gray-700">Location</div>
+							<input 
+								id="location-input"
+								name="meetingLocationDetails" 
+								type="text" 
+								placeholder=""
+								className="mt-1 w-full border rounded-md px-3 py-2" 
+							/>
+						</div>
+						<div id="platformDetails" className="block sm:col-span-2" style={{display: "none"}}>
+							<div className="text-sm text-gray-700">Platform</div>
+							<select 
+								name="meetingPlatform" 
+								className="mt-1 w-full border rounded-md px-3 py-2"
+							>
+								<option value="">Select platform</option>
+								<option value="Zoom">Zoom</option>
+								<option value="Google Meet">Google Meet</option>
+								<option value="Microsoft Teams">Microsoft Teams</option>
+								<option value="Webex">Webex</option>
+							</select>
+						</div>
+						<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHcXZQq3Y8iCLQLb9Z1KxFqpSMik5vPs0&libraries=places" async defer></script>
+						<script dangerouslySetInnerHTML={{
+							__html: `
+								let autocomplete;
+								
+								function initAutocomplete() {
+									const locationInput = document.getElementById('location-input');
+									if (locationInput && window.google && window.google.maps && window.google.maps.places) {
+										autocomplete = new google.maps.places.Autocomplete(locationInput, {
+											types: ['establishment', 'geocode'],
+											componentRestrictions: { country: 'au' } // Restrict to Australia, change as needed
+										});
+										
+										// Optional: Listen for place selection
+										autocomplete.addListener('place_changed', function() {
+											const place = autocomplete.getPlace();
+											if (place.formatted_address) {
+												locationInput.value = place.formatted_address;
+											}
+										});
+									}
+								}
+								
+								document.addEventListener('DOMContentLoaded', function() {
+									const locationTypeSelect = document.getElementById('locationTypeSelect');
+									const locationDetails = document.getElementById('locationDetails');
+									const platformDetails = document.getElementById('platformDetails');
+									const locationDetailsInput = document.querySelector('input[name="meetingLocationDetails"]');
+									const platformSelect = document.querySelector('select[name="meetingPlatform"]');
+									
+									function toggleLocationInput() {
+										if (locationTypeSelect.value === 'In-Person') {
+											locationDetails.style.display = 'block';
+											platformDetails.style.display = 'none';
+											// Initialize autocomplete when the input becomes visible
+											setTimeout(initAutocomplete, 100);
+											// Clear platform selection
+											if (platformSelect) {
+												platformSelect.value = '';
+											}
+										} else if (locationTypeSelect.value === 'Online') {
+											locationDetails.style.display = 'none';
+											platformDetails.style.display = 'block';
+											// Clear location input
+											if (locationDetailsInput) {
+												locationDetailsInput.value = '';
+											}
+										} else {
+											locationDetails.style.display = 'none';
+											platformDetails.style.display = 'none';
+											if (locationDetailsInput) {
+												locationDetailsInput.value = '';
+											}
+											if (platformSelect) {
+												platformSelect.value = '';
+											}
+										}
+									}
+									
+									// Add event listener for dropdown change
+									if (locationTypeSelect) {
+										locationTypeSelect.addEventListener('change', toggleLocationInput);
+									}
+									
+									// Initialize autocomplete when Google Maps API loads
+									window.initAutocomplete = initAutocomplete;
+									
+									// Set up the form submission to combine the values
+									const form = document.querySelector('form');
+									if (form) {
+										form.addEventListener('submit', function(e) {
+											const locationType = locationTypeSelect ? locationTypeSelect.value : '';
+											const locationDetailsValue = locationDetailsInput ? locationDetailsInput.value : '';
+											const platformValue = platformSelect ? platformSelect.value : '';
+											
+											// Remove any existing hidden input
+											const existingHidden = form.querySelector('input[name="meetingLocation"][type="hidden"]');
+											if (existingHidden) {
+												existingHidden.remove();
+											}
+											
+											// Create a hidden input with the final meetingLocation value
+											const hiddenInput = document.createElement('input');
+											hiddenInput.type = 'hidden';
+											hiddenInput.name = 'meetingLocation';
+											
+											if (locationType === 'Online') {
+												hiddenInput.value = platformValue || 'Online';
+											} else if (locationType === 'In-Person') {
+												hiddenInput.value = locationDetailsValue || 'In-Person';
+											} else {
+												hiddenInput.value = '';
+											}
+											
+											form.appendChild(hiddenInput);
+										});
+									}
+								});
+							`
+						}} />
+					</div>
 				</div>
 				
 				{/* Parent Information Section */}

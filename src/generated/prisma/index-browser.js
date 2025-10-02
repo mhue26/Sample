@@ -124,17 +124,21 @@ exports.Prisma.StudentScalarFieldEnum = {
   email: 'email',
   phone: 'phone',
   subjects: 'subjects',
+  schoolSubjects: 'schoolSubjects',
   hourlyRateCents: 'hourlyRateCents',
-  year: 'year',
   notes: 'notes',
   isActive: 'isActive',
   isArchived: 'isArchived',
-  parentName: 'parentName',
-  parentEmail: 'parentEmail',
-  parentPhone: 'parentPhone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  userId: 'userId',
+  parentEmail: 'parentEmail',
+  parentName: 'parentName',
+  parentPhone: 'parentPhone',
+  year: 'year',
+  meetingLocation: 'meetingLocation',
+  resourceLink: 'resourceLink',
+  school: 'school'
 };
 
 exports.Prisma.UserScalarFieldEnum = {

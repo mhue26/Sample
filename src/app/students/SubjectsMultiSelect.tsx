@@ -35,12 +35,13 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
   const [availableSubjects, setAvailableSubjects] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize available subjects from localStorage
+  // Initialize client-side rendering
   useEffect(() => {
+    setIsClient(true);
     setAvailableSubjects(getAvailableSubjects());
   }, []);
 
@@ -48,7 +49,8 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'customSubjectColors') {
-        setRefreshKey(prev => prev + 1);
+        // Force re-render by updating selected subjects
+        setSelectedSubjects(prev => [...prev]);
       }
     };
 
@@ -119,8 +121,8 @@ export default function SubjectsMultiSelect({ name, defaultValue = "", required 
       <div className="min-h-[42px] border border-gray-300 rounded-md p-2 flex flex-wrap gap-1 items-center">
         {selectedSubjects.map((subject, index) => (
           <span
-            key={`${subject}-${index}-${refreshKey}`}
-            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getSubjectColor(subject)}`}
+            key={`${subject}-${index}`}
+            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${isClient ? getSubjectColor(subject) : 'bg-gray-200 text-gray-800'}`}
           >
             {subject}
             <button
