@@ -4,6 +4,7 @@ import { authOptions } from "@/utils/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import SubjectsMultiSelect from "../../SubjectsMultiSelect";
+import EditStudentClient from "./EditStudentClient";
 
 async function updateStudent(id: number, formData: FormData) {
 	"use server";
@@ -53,6 +54,9 @@ async function updateStudent(id: number, formData: FormData) {
 	const parentEmail = String(formData.get("parentEmail") || "").trim() || null;
 	const parentPhone = String(formData.get("parentPhone") || "").trim() || null;
 	
+	// Resource link
+	const resourceLink = String(formData.get("resourceLink") || "").trim() || null;
+	
 	try {
 		await prisma.student.update({
 			where: { id },
@@ -72,6 +76,7 @@ async function updateStudent(id: number, formData: FormData) {
 				parentName,
 				parentEmail,
 				parentPhone,
+				resourceLink,
 			},
 		});
 		
@@ -303,6 +308,16 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 									className="mt-1 w-full border rounded-md px-3 py-2" 
 								/>
 							</label>
+							<label className="block">
+								<div className="text-sm text-gray-700">Resource Link</div>
+								<input 
+									name="resourceLink" 
+									type="url" 
+									defaultValue={student.resourceLink || ""}
+									placeholder="https://example.com"
+									className="mt-1 w-full border rounded-md px-3 py-2" 
+								/>
+							</label>
 							<div className="block">
 								<div className="text-sm text-gray-700">Mode</div>
 								<select 
@@ -354,138 +369,8 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 				</div>
 			</form>
 
-			{/* Google Maps Script */}
-			<script
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHcXZQq3Y8iCLQLb9Z1KxFqpSMik5vPs0&libraries=places"
-				async
-				defer
-			></script>
-
-			{/* JavaScript for dynamic form behavior and Google Maps */}
-			<script
-				dangerouslySetInnerHTML={{
-					__html: `
-						document.addEventListener('DOMContentLoaded', function() {
-							const locationTypeSelect = document.getElementById('locationTypeSelect');
-							const locationDetails = document.getElementById('locationDetails');
-							const platformDetails = document.getElementById('platformDetails');
-							const locationInput = document.getElementById('location-input');
-							const platformSelect = document.querySelector('[name="meetingPlatform"]');
-
-							// Function to toggle visibility based on selection
-							function toggleLocationFields() {
-								const selectedValue = locationTypeSelect.value;
-								
-								if (selectedValue === 'In-Person') {
-									locationDetails.style.display = 'block';
-									platformDetails.style.display = 'none';
-									// Clear location input when switching to In-Person
-									if (locationInput) {
-										locationInput.value = '';
-									}
-								} else if (selectedValue === 'Online') {
-									locationDetails.style.display = 'none';
-									platformDetails.style.display = 'block';
-									// Clear platform selection when switching to Online
-									if (platformSelect) {
-										platformSelect.value = '';
-									}
-								} else {
-									locationDetails.style.display = 'none';
-									platformDetails.style.display = 'none';
-								}
-							}
-
-							// Initialize the correct field visibility based on current data
-							function initializeFields() {
-								const currentMeetingLocation = '${student.meetingLocation || ''}';
-								const platformOptions = ['Zoom', 'Google Meet', 'Microsoft Teams', 'Webex'];
-								
-								if (currentMeetingLocation === 'Online' || platformOptions.includes(currentMeetingLocation)) {
-									// Set to Online mode
-									locationTypeSelect.value = 'Online';
-									locationDetails.style.display = 'none';
-									platformDetails.style.display = 'block';
-									if (platformOptions.includes(currentMeetingLocation) && platformSelect) {
-										platformSelect.value = currentMeetingLocation;
-									}
-								} else if (currentMeetingLocation && currentMeetingLocation !== '') {
-									// Set to In-Person mode
-									locationTypeSelect.value = 'In-Person';
-									locationDetails.style.display = 'block';
-									platformDetails.style.display = 'none';
-									if (locationInput) {
-										locationInput.value = currentMeetingLocation;
-									}
-								} else {
-									// No selection
-									locationDetails.style.display = 'none';
-									platformDetails.style.display = 'none';
-								}
-							}
-
-							// Add event listener for mode selection change
-							if (locationTypeSelect) {
-								locationTypeSelect.addEventListener('change', toggleLocationFields);
-							}
-
-							// Initialize fields on page load
-							initializeFields();
-
-							// Initialize Google Places Autocomplete when Google Maps API is loaded
-							function initializeAutocomplete() {
-								try {
-									if (typeof google !== 'undefined' && google.maps && google.maps.places && locationInput) {
-										// Wait a bit to ensure DOM is fully hydrated
-										setTimeout(() => {
-											const autocomplete = new google.maps.places.Autocomplete(locationInput, {
-												types: ['establishment', 'geocode'],
-												componentRestrictions: { country: 'au' } // Restrict to Australia, change as needed
-											});
-
-											autocomplete.addListener('place_changed', function() {
-												const place = autocomplete.getPlace();
-												if (place.formatted_address) {
-													locationInput.value = place.formatted_address;
-												}
-											});
-											
-											console.log('Google Places Autocomplete initialized successfully');
-										}, 100);
-									} else {
-										console.warn('Google Maps API not available - using manual input only');
-									}
-								} catch (error) {
-									console.warn('Failed to initialize Google Places Autocomplete:', error);
-									// Fallback: location input will work as a regular text input
-								}
-							}
-
-							// Handle Google Maps API errors
-							window.gm_authFailure = function() {
-								console.warn('Google Maps API authentication failed - using manual input only');
-							};
-
-							// Check if Google Maps API is already loaded
-							if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-								initializeAutocomplete();
-							} else {
-								// Wait for Google Maps API to load
-								window.initMap = initializeAutocomplete;
-								
-								// Also try to initialize after a delay in case the API loads asynchronously
-								setTimeout(function() {
-									if (typeof google === 'undefined') {
-										console.warn('Google Maps API failed to load - using manual input only');
-									} else {
-										initializeAutocomplete();
-									}
-								}, 2000);
-							}
-						});
-					`
-				}}
-			/>
+			{/* Client component to handle dynamic form behavior */}
+			<EditStudentClient meetingLocation={student.meetingLocation} />
 		</div>
 	);
 }

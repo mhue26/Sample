@@ -69,7 +69,23 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 	const session = await getServerSession(authOptions);
 	if (!session?.user) redirect("/signin");
 
-	const student = await prisma.student.findFirst({ where: { id, userId: (session.user as any).id } });
+	const student = await prisma.student.findFirst({ 
+		where: { id, userId: (session.user as any).id },
+		include: {
+			meetings: {
+				where: {
+					startTime: {
+						gte: new Date()
+					},
+					isCompleted: false
+				},
+				orderBy: {
+					startTime: 'asc'
+				},
+				take: 1
+			}
+		}
+	});
 	if (!student) notFound();
 
 	// Parse contact information (multiple contacts separated by " | ")
@@ -130,6 +146,54 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 			</div>
 
 			<div className="space-y-6">
+				{/* Next Lesson Card */}
+				{student.meetings.length > 0 ? (
+					<div className="bg-white rounded-lg border p-6">
+						<h3 className="text-lg font-medium mb-4">Next Lesson</h3>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+							<div>
+								<div className="text-sm text-gray-600">Title</div>
+								<div className="font-medium">{student.meetings[0].title}</div>
+							</div>
+							<div>
+								<div className="text-sm text-gray-600">Date</div>
+								<div className="font-medium">{new Date(student.meetings[0].startTime).toLocaleDateString('en-GB')}</div>
+							</div>
+							<div>
+								<div className="text-sm text-gray-600">Time</div>
+								<div className="font-medium">
+									{new Date(student.meetings[0].startTime).toLocaleTimeString('en-GB', { 
+										hour: '2-digit', 
+										minute: '2-digit',
+										hour12: true 
+									})} - {new Date(student.meetings[0].endTime).toLocaleTimeString('en-GB', { 
+										hour: '2-digit', 
+										minute: '2-digit',
+										hour12: true 
+									})}
+								</div>
+							</div>
+							<div>
+								<div className="text-sm text-gray-600">Duration</div>
+								<div className="font-medium">
+									{Math.round((new Date(student.meetings[0].endTime).getTime() - new Date(student.meetings[0].startTime).getTime()) / (1000 * 60 * 60))} hours
+								</div>
+							</div>
+						</div>
+						{student.meetings[0].description && (
+							<div className="mt-4">
+								<div className="text-sm text-gray-600">Description</div>
+								<div className="font-medium text-gray-700">{student.meetings[0].description}</div>
+							</div>
+						)}
+					</div>
+				) : (
+					<div className="bg-white rounded-lg border p-6">
+						<h3 className="text-lg font-medium mb-4">Next Lesson</h3>
+						<div className="text-gray-500">No upcoming lessons scheduled</div>
+					</div>
+				)}
+
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 					{/* Student Information Card */}
 					<div className="bg-white rounded-lg border p-6">

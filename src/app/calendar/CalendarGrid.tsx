@@ -201,50 +201,86 @@ export default function CalendarGrid({ meetings, currentYear, currentMonth, onDa
           const firstDayOfWeek = firstDayOfMonth.getDay();
           const firstDateOfWeek = new Date(currentYear, currentMonth, weekIndex * 7 - firstDayOfWeek + 1);
           
-          // Get the teaching period to calculate total weeks across ALL months
-          const teachingPeriod = teachingPeriods.find(period => period.type === 'term');
-          let totalWeeks = 0;
-          let currentWeekNumber = 0;
+          // Compute week labels for ALL teaching periods that overlap this week row
+          const weekStart = new Date(firstDateOfWeek);
+          const weekEnd = new Date(firstDateOfWeek);
+          weekEnd.setDate(weekEnd.getDate() + 6);
 
-          if (teachingPeriod) {
-            // Calculate total weeks for the ENTIRE term (across all months)
-            const startDate = new Date(teachingPeriod.startDate);
-            const endDate = new Date(teachingPeriod.endDate);
-            const totalTime = endDate.getTime() - startDate.getTime();
-            totalWeeks = Math.ceil(totalTime / (1000 * 60 * 60 * 24 * 7));
+          const rowPeriodInfos = teachingPeriods
+            .filter(period => {
+              const startDate = new Date(period.startDate);
+              const endDate = new Date(period.endDate);
+              const normalizedStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+              const normalizedEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+              // overlap if period starts before week ends and ends after week starts
+              return normalizedStart <= weekEnd && normalizedEnd >= weekStart;
+            })
+            .map(period => {
+              const startDate = new Date(period.startDate);
+              const endDate = new Date(period.endDate);
+              const normalizedStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+              const normalizedEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
 
-            // Calculate which week this current row represents in the ENTIRE term
-            const rowHasTermDay = Array.from({ length: 7 }, (_, dayIndex) => {
-              const date = new Date(firstDateOfWeek);
-              date.setDate(date.getDate() + dayIndex);
-              const dayTeachingPeriods = getDayTeachingPeriods(date);
-              return dayTeachingPeriods.some(period => period.type === 'term');
-            }).some(hasTerm => hasTerm);
+              // Calculate total weeks by counting weeks that contain any part of the period
+              // Start from the Sunday of the week containing the period start
+              const periodStartWeek = new Date(normalizedStart);
+              periodStartWeek.setDate(periodStartWeek.getDate() - periodStartWeek.getDay());
+              
+              // End at the Saturday of the week containing the period end
+              const periodEndWeek = new Date(normalizedEnd);
+              periodEndWeek.setDate(periodEndWeek.getDate() + (6 - periodEndWeek.getDay()));
+              
+              // Count the number of weeks between start and end (inclusive)
+              const totalTime = periodEndWeek.getTime() - periodStartWeek.getTime();
+              const totalWeeks = Math.floor(totalTime / (1000 * 60 * 60 * 24 * 7)) + 1;
 
-            if (rowHasTermDay) {
-              // Calculate how many weeks into the term this row is
-              const diffTime = firstDateOfWeek.getTime() - startDate.getTime();
-              const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-              currentWeekNumber = Math.max(1, Math.floor(diffDays / 7) + 1);
-            }
-          }
+              // Calculate which week this calendar week represents in the period
+              // Base it on the week end so the last overlapping week shows the final count
+              const msPerWeek = 1000 * 60 * 60 * 24 * 7;
+              const effectiveEnd = Math.min(weekEnd.getTime(), periodEndWeek.getTime());
+              const weeksElapsed = Math.floor((effectiveEnd - periodStartWeek.getTime()) / msPerWeek) + 1;
+              const currentWeekNumber = Math.max(1, weeksElapsed);
+              // Ensure we don't exceed the total weeks
+              const finalWeekNumber = Math.min(currentWeekNumber, totalWeeks);
 
-          // Get the current row's week label
-          const currentRowWeekLabel = currentWeekNumber > 0 ? `Week ${currentWeekNumber}/${totalWeeks}` : null;
+              return {
+                id: period.id,
+                name: period.name,
+                type: period.type,
+                color: period.color,
+                currentWeekNumber: finalWeekNumber,
+                totalWeeks,
+                // Add the period's start date for sorting
+                periodStartDate: normalizedStart
+              };
+            })
+            .sort((a, b) => {
+              // Sort by period start date, then by type (holidays first if same start date)
+              const startDiff = a.periodStartDate.getTime() - b.periodStartDate.getTime();
+              if (startDiff === 0) {
+                // If same start date, put holidays before terms
+                return a.type === 'holiday' ? -1 : 1;
+              }
+              return startDiff;
+            });
           
           
           return (
             <React.Fragment key={weekIndex}>
               {/* Week indicator cell */}
               <div className="min-h-[100px] p-2 rounded-lg border bg-gray-50 border-gray-200 flex items-center justify-center">
-                {currentRowWeekLabel ? (
-                  <div className="text-center">
-                    <div className="text-sm font-medium text-gray-700">
-                      {currentRowWeekLabel}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      Term
-                    </div>
+                {rowPeriodInfos.length > 0 ? (
+                  <div className="space-y-2">
+                    {rowPeriodInfos.map(info => (
+                      <div key={`${info.type}-${info.id}`} className="text-center">
+                        <div className="text-sm font-medium text-gray-700">
+                          {`Week ${info.currentWeekNumber}/${info.totalWeeks}`}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-0.5">
+                          {info.name}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-sm text-gray-400">-</div>

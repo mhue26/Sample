@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import SignOutButton from "./SignOutButton";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface NavigationProps {
   session: any;
@@ -52,9 +52,7 @@ export default function Navigation({ session }: NavigationProps) {
           <a href="/signup" className="rounded-md bg-blue-600 text-white px-3 py-1.5 hover:bg-blue-700">Sign up</a>
         </div>
       ) : (
-        <div className="rounded-md border px-3 py-1.5">
-          <SignOutButton />
-        </div>
+        <ProfileDropdown user={session.user} />
       )}
     </nav>
   );

@@ -235,14 +235,6 @@ export default function CalendarClient({
             <CalendarNavigation onScheduleClick={() => setShowForm(!showForm)} userId={userId} />
             
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-1 mb-4">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className="p-2 text-center text-sm font-medium text-gray-500">
-                  {day}
-                </div>
-              ))}
-            </div>
-
             <CalendarGrid 
               meetings={meetings} 
               currentYear={currentYear} 

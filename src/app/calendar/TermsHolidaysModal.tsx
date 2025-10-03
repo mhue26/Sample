@@ -163,6 +163,32 @@ export default function TeachingPeriodsModal({ isOpen, onClose, userId }: Teachi
     }
   };
 
+  // Utility: format Date for <input type="date"> (yyyy-mm-dd)
+  const toInputDate = (date: Date) => {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Open form prefilled to cover a detected gap
+  const openGapForm = (gapStart: Date, gapEnd: Date) => {
+    setEditingPeriod(null);
+    setFormData({
+      name: '',
+      startDate: toInputDate(gapStart),
+      endDate: toInputDate(gapEnd),
+      year: gapStart.getFullYear(),
+      isActive: true,
+      color: '#3B82F6',
+      type: 'term'
+    });
+    setShowForm(true);
+  };
+
+  // Keep the list ordered by start date
+  const sortedPeriods = [...teachingPeriods].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+
   const getCurrentTerm = () => {
     const today = new Date();
     return teachingPeriods.find(period => {
@@ -337,7 +363,7 @@ export default function TeachingPeriodsModal({ isOpen, onClose, userId }: Teachi
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700">
-                      Active term
+                      Active
                     </label>
                   </div>
                 )}
@@ -363,45 +389,77 @@ export default function TeachingPeriodsModal({ isOpen, onClose, userId }: Teachi
 
           {/* List */}
           <div className="space-y-3">
-            {teachingPeriods.map((period) => (
-              <div key={`${period.type}-${period.id}`} className="flex items-center justify-between p-3 border rounded-lg">
-                <div>
-                  <div className="font-medium flex items-center gap-2">
-                    <div 
-                      className="w-4 h-4 rounded-full border border-gray-300"
-                      style={{ backgroundColor: period.color }}
-                    ></div>
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      period.type === 'term' 
-                        ? 'bg-blue-100 text-blue-800' 
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {period.type === 'term' ? 'Term' : 'Holiday'}
-                    </span>
-                    {period.name} ({period.year})
+            {/* Periods with gap insertors between them */}
+            {sortedPeriods.map((period, index) => {
+              const periodElement = (
+                <div key={`${period.type}-${period.id}`} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div>
+                    <div className="font-medium flex items-center gap-2">
+                      <div 
+                        className="w-4 h-4 rounded-full border border-gray-300"
+                        style={{ backgroundColor: period.color }}
+                      ></div>
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        period.type === 'term' 
+                          ? 'bg-blue-100 text-blue-800' 
+                          : 'bg-orange-100 text-orange-800'
+                      }`}>
+                        {period.type === 'term' ? 'Term' : 'Holiday'}
+                      </span>
+                      {period.name} ({period.year})
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {new Date(period.startDate).toLocaleDateString()} - {new Date(period.endDate).toLocaleDateString()}
+                      {period.type === 'term' && period.isActive && <span className="ml-2 text-green-600 font-medium">• Active</span>}
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600">
-                    {new Date(period.startDate).toLocaleDateString()} - {new Date(period.endDate).toLocaleDateString()}
-                    {period.type === 'term' && period.isActive && <span className="ml-2 text-green-600 font-medium">• Active</span>}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(period)}
+                      className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(period)}
+                      className="px-3 py-1 text-red-600 hover:bg-red-50 rounded"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(period)}
-                    className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(period)}
-                    className="px-3 py-1 text-red-600 hover:bg-red-50 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-            {teachingPeriods.length === 0 && (
+              );
+
+              // Check for gap after this period
+              if (index < sortedPeriods.length - 1) {
+                const currentEnd = new Date(new Date(period.endDate).getFullYear(), new Date(period.endDate).getMonth(), new Date(period.endDate).getDate());
+                const next = sortedPeriods[index + 1];
+                const nextStart = new Date(new Date(next.startDate).getFullYear(), new Date(next.startDate).getMonth(), new Date(next.startDate).getDate());
+                // Define gap as at least one day between current end and next start
+                const gapStart = new Date(currentEnd);
+                gapStart.setDate(gapStart.getDate() + 1);
+                const gapEnd = new Date(nextStart);
+                gapEnd.setDate(gapEnd.getDate() - 1);
+                
+                if (gapStart.getTime() <= gapEnd.getTime()) {
+                  const gapElement = (
+                    <div key={`gap-${period.id}-${next.id}`} className="flex items-center justify-center py-1">
+                      <button
+                        onClick={() => openGapForm(gapStart, gapEnd)}
+                        className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700"
+                        title="Add period to fill this gap"
+                      >
+                        +
+                      </button>
+                    </div>
+                  );
+                  return [periodElement, gapElement];
+                }
+              }
+              
+              return periodElement;
+            }).flat()}
+            {sortedPeriods.length === 0 && (
               <p className="text-gray-500 text-center py-8">
                 No teaching periods found. Click "Add Teaching Period" to get started.
               </p>
