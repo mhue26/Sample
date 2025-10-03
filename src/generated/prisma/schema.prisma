@@ -43,6 +43,8 @@ model User {
   passwordHash  String?
   meetings      Meeting[]
   students      Student[]
+  terms         Term[]
+  holidays      Holiday[]
 }
 
 model Meeting {
@@ -58,4 +60,31 @@ model Meeting {
   studentId   Int
   student     Student  @relation(fields: [studentId], references: [id])
   user        User     @relation(fields: [userId], references: [id])
+}
+
+model Term {
+  id        Int      @id @default(autoincrement())
+  name      String // e.g., "Term 1", "Semester 1"
+  startDate DateTime
+  endDate   DateTime
+  year      Int // e.g., 2025
+  isActive  Boolean  @default(true)
+  color     String   @default("#3B82F6") // Hex color code
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Holiday {
+  id        Int      @id @default(autoincrement())
+  name      String // e.g., "Easter Break", "Summer Holidays"
+  startDate DateTime
+  endDate   DateTime
+  year      Int // e.g., 2025
+  color     String   @default("#F59E0B") // Hex color code
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }

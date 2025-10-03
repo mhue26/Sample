@@ -28,6 +28,16 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Meeting = $Result.DefaultSelection<Prisma.$MeetingPayload>
+/**
+ * Model Term
+ * 
+ */
+export type Term = $Result.DefaultSelection<Prisma.$TermPayload>
+/**
+ * Model Holiday
+ * 
+ */
+export type Holiday = $Result.DefaultSelection<Prisma.$HolidayPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -176,6 +186,26 @@ export class PrismaClient<
     * ```
     */
   get meeting(): Prisma.MeetingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.term`: Exposes CRUD operations for the **Term** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Terms
+    * const terms = await prisma.term.findMany()
+    * ```
+    */
+  get term(): Prisma.TermDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.holiday`: Exposes CRUD operations for the **Holiday** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Holidays
+    * const holidays = await prisma.holiday.findMany()
+    * ```
+    */
+  get holiday(): Prisma.HolidayDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -618,7 +648,9 @@ export namespace Prisma {
   export const ModelName: {
     Student: 'Student',
     User: 'User',
-    Meeting: 'Meeting'
+    Meeting: 'Meeting',
+    Term: 'Term',
+    Holiday: 'Holiday'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -637,7 +669,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "student" | "user" | "meeting"
+      modelProps: "student" | "user" | "meeting" | "term" | "holiday"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -863,6 +895,154 @@ export namespace Prisma {
           }
         }
       }
+      Term: {
+        payload: Prisma.$TermPayload<ExtArgs>
+        fields: Prisma.TermFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TermFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TermFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          findFirst: {
+            args: Prisma.TermFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TermFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          findMany: {
+            args: Prisma.TermFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>[]
+          }
+          create: {
+            args: Prisma.TermCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          createMany: {
+            args: Prisma.TermCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TermCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>[]
+          }
+          delete: {
+            args: Prisma.TermDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          update: {
+            args: Prisma.TermUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          deleteMany: {
+            args: Prisma.TermDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TermUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TermUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>[]
+          }
+          upsert: {
+            args: Prisma.TermUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TermPayload>
+          }
+          aggregate: {
+            args: Prisma.TermAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTerm>
+          }
+          groupBy: {
+            args: Prisma.TermGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TermGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TermCountArgs<ExtArgs>
+            result: $Utils.Optional<TermCountAggregateOutputType> | number
+          }
+        }
+      }
+      Holiday: {
+        payload: Prisma.$HolidayPayload<ExtArgs>
+        fields: Prisma.HolidayFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HolidayFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HolidayFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          findFirst: {
+            args: Prisma.HolidayFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HolidayFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          findMany: {
+            args: Prisma.HolidayFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>[]
+          }
+          create: {
+            args: Prisma.HolidayCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          createMany: {
+            args: Prisma.HolidayCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HolidayCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>[]
+          }
+          delete: {
+            args: Prisma.HolidayDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          update: {
+            args: Prisma.HolidayUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          deleteMany: {
+            args: Prisma.HolidayDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HolidayUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HolidayUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>[]
+          }
+          upsert: {
+            args: Prisma.HolidayUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HolidayPayload>
+          }
+          aggregate: {
+            args: Prisma.HolidayAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHoliday>
+          }
+          groupBy: {
+            args: Prisma.HolidayGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HolidayGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HolidayCountArgs<ExtArgs>
+            result: $Utils.Optional<HolidayCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -962,6 +1142,8 @@ export namespace Prisma {
     student?: StudentOmit
     user?: UserOmit
     meeting?: MeetingOmit
+    term?: TermOmit
+    holiday?: HolidayOmit
   }
 
   /* Types for Logging */
@@ -1075,11 +1257,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     meetings: number
     students: number
+    terms: number
+    holidays: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meetings?: boolean | UserCountOutputTypeCountMeetingsArgs
     students?: boolean | UserCountOutputTypeCountStudentsArgs
+    terms?: boolean | UserCountOutputTypeCountTermsArgs
+    holidays?: boolean | UserCountOutputTypeCountHolidaysArgs
   }
 
   // Custom InputTypes
@@ -1105,6 +1291,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountStudentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTermsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TermWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHolidaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HolidayWhereInput
   }
 
 
@@ -2641,6 +2841,8 @@ export namespace Prisma {
     passwordHash?: boolean
     meetings?: boolean | User$meetingsArgs<ExtArgs>
     students?: boolean | User$studentsArgs<ExtArgs>
+    terms?: boolean | User$termsArgs<ExtArgs>
+    holidays?: boolean | User$holidaysArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2675,6 +2877,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meetings?: boolean | User$meetingsArgs<ExtArgs>
     students?: boolean | User$studentsArgs<ExtArgs>
+    terms?: boolean | User$termsArgs<ExtArgs>
+    holidays?: boolean | User$holidaysArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2685,6 +2889,8 @@ export namespace Prisma {
     objects: {
       meetings: Prisma.$MeetingPayload<ExtArgs>[]
       students: Prisma.$StudentPayload<ExtArgs>[]
+      terms: Prisma.$TermPayload<ExtArgs>[]
+      holidays: Prisma.$HolidayPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3089,6 +3295,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     meetings<T extends User$meetingsArgs<ExtArgs> = {}>(args?: Subset<T, User$meetingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     students<T extends User$studentsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    terms<T extends User$termsArgs<ExtArgs> = {}>(args?: Subset<T, User$termsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    holidays<T extends User$holidaysArgs<ExtArgs> = {}>(args?: Subset<T, User$holidaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3555,6 +3763,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
+  }
+
+  /**
+   * User.terms
+   */
+  export type User$termsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    where?: TermWhereInput
+    orderBy?: TermOrderByWithRelationInput | TermOrderByWithRelationInput[]
+    cursor?: TermWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TermScalarFieldEnum | TermScalarFieldEnum[]
+  }
+
+  /**
+   * User.holidays
+   */
+  export type User$holidaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    where?: HolidayWhereInput
+    orderBy?: HolidayOrderByWithRelationInput | HolidayOrderByWithRelationInput[]
+    cursor?: HolidayWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HolidayScalarFieldEnum | HolidayScalarFieldEnum[]
   }
 
   /**
@@ -4744,6 +5000,2311 @@ export namespace Prisma {
 
 
   /**
+   * Model Term
+   */
+
+  export type AggregateTerm = {
+    _count: TermCountAggregateOutputType | null
+    _avg: TermAvgAggregateOutputType | null
+    _sum: TermSumAggregateOutputType | null
+    _min: TermMinAggregateOutputType | null
+    _max: TermMaxAggregateOutputType | null
+  }
+
+  export type TermAvgAggregateOutputType = {
+    id: number | null
+    year: number | null
+  }
+
+  export type TermSumAggregateOutputType = {
+    id: number | null
+    year: number | null
+  }
+
+  export type TermMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    year: number | null
+    isActive: boolean | null
+    color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type TermMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    year: number | null
+    isActive: boolean | null
+    color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type TermCountAggregateOutputType = {
+    id: number
+    name: number
+    startDate: number
+    endDate: number
+    year: number
+    isActive: number
+    color: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type TermAvgAggregateInputType = {
+    id?: true
+    year?: true
+  }
+
+  export type TermSumAggregateInputType = {
+    id?: true
+    year?: true
+  }
+
+  export type TermMinAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    isActive?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type TermMaxAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    isActive?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type TermCountAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    isActive?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type TermAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Term to aggregate.
+     */
+    where?: TermWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Terms to fetch.
+     */
+    orderBy?: TermOrderByWithRelationInput | TermOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TermWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Terms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Terms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Terms
+    **/
+    _count?: true | TermCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TermAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TermSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TermMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TermMaxAggregateInputType
+  }
+
+  export type GetTermAggregateType<T extends TermAggregateArgs> = {
+        [P in keyof T & keyof AggregateTerm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTerm[P]>
+      : GetScalarType<T[P], AggregateTerm[P]>
+  }
+
+
+
+
+  export type TermGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TermWhereInput
+    orderBy?: TermOrderByWithAggregationInput | TermOrderByWithAggregationInput[]
+    by: TermScalarFieldEnum[] | TermScalarFieldEnum
+    having?: TermScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TermCountAggregateInputType | true
+    _avg?: TermAvgAggregateInputType
+    _sum?: TermSumAggregateInputType
+    _min?: TermMinAggregateInputType
+    _max?: TermMaxAggregateInputType
+  }
+
+  export type TermGroupByOutputType = {
+    id: number
+    name: string
+    startDate: Date
+    endDate: Date
+    year: number
+    isActive: boolean
+    color: string
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    _count: TermCountAggregateOutputType | null
+    _avg: TermAvgAggregateOutputType | null
+    _sum: TermSumAggregateOutputType | null
+    _min: TermMinAggregateOutputType | null
+    _max: TermMaxAggregateOutputType | null
+  }
+
+  type GetTermGroupByPayload<T extends TermGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TermGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TermGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TermGroupByOutputType[P]>
+            : GetScalarType<T[P], TermGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TermSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    isActive?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["term"]>
+
+  export type TermSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    isActive?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["term"]>
+
+  export type TermSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    isActive?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["term"]>
+
+  export type TermSelectScalar = {
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    isActive?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type TermOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "startDate" | "endDate" | "year" | "isActive" | "color" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["term"]>
+  export type TermInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TermIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TermIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TermPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Term"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      startDate: Date
+      endDate: Date
+      year: number
+      isActive: boolean
+      color: string
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+    }, ExtArgs["result"]["term"]>
+    composites: {}
+  }
+
+  type TermGetPayload<S extends boolean | null | undefined | TermDefaultArgs> = $Result.GetResult<Prisma.$TermPayload, S>
+
+  type TermCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TermFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TermCountAggregateInputType | true
+    }
+
+  export interface TermDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Term'], meta: { name: 'Term' } }
+    /**
+     * Find zero or one Term that matches the filter.
+     * @param {TermFindUniqueArgs} args - Arguments to find a Term
+     * @example
+     * // Get one Term
+     * const term = await prisma.term.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TermFindUniqueArgs>(args: SelectSubset<T, TermFindUniqueArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Term that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TermFindUniqueOrThrowArgs} args - Arguments to find a Term
+     * @example
+     * // Get one Term
+     * const term = await prisma.term.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TermFindUniqueOrThrowArgs>(args: SelectSubset<T, TermFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Term that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermFindFirstArgs} args - Arguments to find a Term
+     * @example
+     * // Get one Term
+     * const term = await prisma.term.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TermFindFirstArgs>(args?: SelectSubset<T, TermFindFirstArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Term that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermFindFirstOrThrowArgs} args - Arguments to find a Term
+     * @example
+     * // Get one Term
+     * const term = await prisma.term.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TermFindFirstOrThrowArgs>(args?: SelectSubset<T, TermFindFirstOrThrowArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Terms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Terms
+     * const terms = await prisma.term.findMany()
+     * 
+     * // Get first 10 Terms
+     * const terms = await prisma.term.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const termWithIdOnly = await prisma.term.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TermFindManyArgs>(args?: SelectSubset<T, TermFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Term.
+     * @param {TermCreateArgs} args - Arguments to create a Term.
+     * @example
+     * // Create one Term
+     * const Term = await prisma.term.create({
+     *   data: {
+     *     // ... data to create a Term
+     *   }
+     * })
+     * 
+     */
+    create<T extends TermCreateArgs>(args: SelectSubset<T, TermCreateArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Terms.
+     * @param {TermCreateManyArgs} args - Arguments to create many Terms.
+     * @example
+     * // Create many Terms
+     * const term = await prisma.term.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TermCreateManyArgs>(args?: SelectSubset<T, TermCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Terms and returns the data saved in the database.
+     * @param {TermCreateManyAndReturnArgs} args - Arguments to create many Terms.
+     * @example
+     * // Create many Terms
+     * const term = await prisma.term.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Terms and only return the `id`
+     * const termWithIdOnly = await prisma.term.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TermCreateManyAndReturnArgs>(args?: SelectSubset<T, TermCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Term.
+     * @param {TermDeleteArgs} args - Arguments to delete one Term.
+     * @example
+     * // Delete one Term
+     * const Term = await prisma.term.delete({
+     *   where: {
+     *     // ... filter to delete one Term
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TermDeleteArgs>(args: SelectSubset<T, TermDeleteArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Term.
+     * @param {TermUpdateArgs} args - Arguments to update one Term.
+     * @example
+     * // Update one Term
+     * const term = await prisma.term.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TermUpdateArgs>(args: SelectSubset<T, TermUpdateArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Terms.
+     * @param {TermDeleteManyArgs} args - Arguments to filter Terms to delete.
+     * @example
+     * // Delete a few Terms
+     * const { count } = await prisma.term.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TermDeleteManyArgs>(args?: SelectSubset<T, TermDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Terms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Terms
+     * const term = await prisma.term.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TermUpdateManyArgs>(args: SelectSubset<T, TermUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Terms and returns the data updated in the database.
+     * @param {TermUpdateManyAndReturnArgs} args - Arguments to update many Terms.
+     * @example
+     * // Update many Terms
+     * const term = await prisma.term.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Terms and only return the `id`
+     * const termWithIdOnly = await prisma.term.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TermUpdateManyAndReturnArgs>(args: SelectSubset<T, TermUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Term.
+     * @param {TermUpsertArgs} args - Arguments to update or create a Term.
+     * @example
+     * // Update or create a Term
+     * const term = await prisma.term.upsert({
+     *   create: {
+     *     // ... data to create a Term
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Term we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TermUpsertArgs>(args: SelectSubset<T, TermUpsertArgs<ExtArgs>>): Prisma__TermClient<$Result.GetResult<Prisma.$TermPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Terms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermCountArgs} args - Arguments to filter Terms to count.
+     * @example
+     * // Count the number of Terms
+     * const count = await prisma.term.count({
+     *   where: {
+     *     // ... the filter for the Terms we want to count
+     *   }
+     * })
+    **/
+    count<T extends TermCountArgs>(
+      args?: Subset<T, TermCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TermCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Term.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TermAggregateArgs>(args: Subset<T, TermAggregateArgs>): Prisma.PrismaPromise<GetTermAggregateType<T>>
+
+    /**
+     * Group by Term.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TermGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TermGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TermGroupByArgs['orderBy'] }
+        : { orderBy?: TermGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TermGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTermGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Term model
+   */
+  readonly fields: TermFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Term.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TermClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Term model
+   */
+  interface TermFieldRefs {
+    readonly id: FieldRef<"Term", 'Int'>
+    readonly name: FieldRef<"Term", 'String'>
+    readonly startDate: FieldRef<"Term", 'DateTime'>
+    readonly endDate: FieldRef<"Term", 'DateTime'>
+    readonly year: FieldRef<"Term", 'Int'>
+    readonly isActive: FieldRef<"Term", 'Boolean'>
+    readonly color: FieldRef<"Term", 'String'>
+    readonly createdAt: FieldRef<"Term", 'DateTime'>
+    readonly updatedAt: FieldRef<"Term", 'DateTime'>
+    readonly userId: FieldRef<"Term", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Term findUnique
+   */
+  export type TermFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter, which Term to fetch.
+     */
+    where: TermWhereUniqueInput
+  }
+
+  /**
+   * Term findUniqueOrThrow
+   */
+  export type TermFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter, which Term to fetch.
+     */
+    where: TermWhereUniqueInput
+  }
+
+  /**
+   * Term findFirst
+   */
+  export type TermFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter, which Term to fetch.
+     */
+    where?: TermWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Terms to fetch.
+     */
+    orderBy?: TermOrderByWithRelationInput | TermOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Terms.
+     */
+    cursor?: TermWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Terms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Terms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Terms.
+     */
+    distinct?: TermScalarFieldEnum | TermScalarFieldEnum[]
+  }
+
+  /**
+   * Term findFirstOrThrow
+   */
+  export type TermFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter, which Term to fetch.
+     */
+    where?: TermWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Terms to fetch.
+     */
+    orderBy?: TermOrderByWithRelationInput | TermOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Terms.
+     */
+    cursor?: TermWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Terms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Terms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Terms.
+     */
+    distinct?: TermScalarFieldEnum | TermScalarFieldEnum[]
+  }
+
+  /**
+   * Term findMany
+   */
+  export type TermFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter, which Terms to fetch.
+     */
+    where?: TermWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Terms to fetch.
+     */
+    orderBy?: TermOrderByWithRelationInput | TermOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Terms.
+     */
+    cursor?: TermWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Terms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Terms.
+     */
+    skip?: number
+    distinct?: TermScalarFieldEnum | TermScalarFieldEnum[]
+  }
+
+  /**
+   * Term create
+   */
+  export type TermCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Term.
+     */
+    data: XOR<TermCreateInput, TermUncheckedCreateInput>
+  }
+
+  /**
+   * Term createMany
+   */
+  export type TermCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Terms.
+     */
+    data: TermCreateManyInput | TermCreateManyInput[]
+  }
+
+  /**
+   * Term createManyAndReturn
+   */
+  export type TermCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * The data used to create many Terms.
+     */
+    data: TermCreateManyInput | TermCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Term update
+   */
+  export type TermUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Term.
+     */
+    data: XOR<TermUpdateInput, TermUncheckedUpdateInput>
+    /**
+     * Choose, which Term to update.
+     */
+    where: TermWhereUniqueInput
+  }
+
+  /**
+   * Term updateMany
+   */
+  export type TermUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Terms.
+     */
+    data: XOR<TermUpdateManyMutationInput, TermUncheckedUpdateManyInput>
+    /**
+     * Filter which Terms to update
+     */
+    where?: TermWhereInput
+    /**
+     * Limit how many Terms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Term updateManyAndReturn
+   */
+  export type TermUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * The data used to update Terms.
+     */
+    data: XOR<TermUpdateManyMutationInput, TermUncheckedUpdateManyInput>
+    /**
+     * Filter which Terms to update
+     */
+    where?: TermWhereInput
+    /**
+     * Limit how many Terms to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Term upsert
+   */
+  export type TermUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Term to update in case it exists.
+     */
+    where: TermWhereUniqueInput
+    /**
+     * In case the Term found by the `where` argument doesn't exist, create a new Term with this data.
+     */
+    create: XOR<TermCreateInput, TermUncheckedCreateInput>
+    /**
+     * In case the Term was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TermUpdateInput, TermUncheckedUpdateInput>
+  }
+
+  /**
+   * Term delete
+   */
+  export type TermDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+    /**
+     * Filter which Term to delete.
+     */
+    where: TermWhereUniqueInput
+  }
+
+  /**
+   * Term deleteMany
+   */
+  export type TermDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Terms to delete
+     */
+    where?: TermWhereInput
+    /**
+     * Limit how many Terms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Term without action
+   */
+  export type TermDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Term
+     */
+    select?: TermSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Term
+     */
+    omit?: TermOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TermInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Holiday
+   */
+
+  export type AggregateHoliday = {
+    _count: HolidayCountAggregateOutputType | null
+    _avg: HolidayAvgAggregateOutputType | null
+    _sum: HolidaySumAggregateOutputType | null
+    _min: HolidayMinAggregateOutputType | null
+    _max: HolidayMaxAggregateOutputType | null
+  }
+
+  export type HolidayAvgAggregateOutputType = {
+    id: number | null
+    year: number | null
+  }
+
+  export type HolidaySumAggregateOutputType = {
+    id: number | null
+    year: number | null
+  }
+
+  export type HolidayMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    year: number | null
+    color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type HolidayMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    year: number | null
+    color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type HolidayCountAggregateOutputType = {
+    id: number
+    name: number
+    startDate: number
+    endDate: number
+    year: number
+    color: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type HolidayAvgAggregateInputType = {
+    id?: true
+    year?: true
+  }
+
+  export type HolidaySumAggregateInputType = {
+    id?: true
+    year?: true
+  }
+
+  export type HolidayMinAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type HolidayMaxAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type HolidayCountAggregateInputType = {
+    id?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    year?: true
+    color?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type HolidayAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Holiday to aggregate.
+     */
+    where?: HolidayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Holidays to fetch.
+     */
+    orderBy?: HolidayOrderByWithRelationInput | HolidayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HolidayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Holidays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Holidays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Holidays
+    **/
+    _count?: true | HolidayCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HolidayAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HolidaySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HolidayMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HolidayMaxAggregateInputType
+  }
+
+  export type GetHolidayAggregateType<T extends HolidayAggregateArgs> = {
+        [P in keyof T & keyof AggregateHoliday]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHoliday[P]>
+      : GetScalarType<T[P], AggregateHoliday[P]>
+  }
+
+
+
+
+  export type HolidayGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HolidayWhereInput
+    orderBy?: HolidayOrderByWithAggregationInput | HolidayOrderByWithAggregationInput[]
+    by: HolidayScalarFieldEnum[] | HolidayScalarFieldEnum
+    having?: HolidayScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HolidayCountAggregateInputType | true
+    _avg?: HolidayAvgAggregateInputType
+    _sum?: HolidaySumAggregateInputType
+    _min?: HolidayMinAggregateInputType
+    _max?: HolidayMaxAggregateInputType
+  }
+
+  export type HolidayGroupByOutputType = {
+    id: number
+    name: string
+    startDate: Date
+    endDate: Date
+    year: number
+    color: string
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    _count: HolidayCountAggregateOutputType | null
+    _avg: HolidayAvgAggregateOutputType | null
+    _sum: HolidaySumAggregateOutputType | null
+    _min: HolidayMinAggregateOutputType | null
+    _max: HolidayMaxAggregateOutputType | null
+  }
+
+  type GetHolidayGroupByPayload<T extends HolidayGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HolidayGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HolidayGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HolidayGroupByOutputType[P]>
+            : GetScalarType<T[P], HolidayGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HolidaySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["holiday"]>
+
+  export type HolidaySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["holiday"]>
+
+  export type HolidaySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["holiday"]>
+
+  export type HolidaySelectScalar = {
+    id?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    year?: boolean
+    color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type HolidayOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "startDate" | "endDate" | "year" | "color" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["holiday"]>
+  export type HolidayInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type HolidayIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type HolidayIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $HolidayPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Holiday"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      startDate: Date
+      endDate: Date
+      year: number
+      color: string
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+    }, ExtArgs["result"]["holiday"]>
+    composites: {}
+  }
+
+  type HolidayGetPayload<S extends boolean | null | undefined | HolidayDefaultArgs> = $Result.GetResult<Prisma.$HolidayPayload, S>
+
+  type HolidayCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HolidayFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HolidayCountAggregateInputType | true
+    }
+
+  export interface HolidayDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Holiday'], meta: { name: 'Holiday' } }
+    /**
+     * Find zero or one Holiday that matches the filter.
+     * @param {HolidayFindUniqueArgs} args - Arguments to find a Holiday
+     * @example
+     * // Get one Holiday
+     * const holiday = await prisma.holiday.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HolidayFindUniqueArgs>(args: SelectSubset<T, HolidayFindUniqueArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Holiday that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HolidayFindUniqueOrThrowArgs} args - Arguments to find a Holiday
+     * @example
+     * // Get one Holiday
+     * const holiday = await prisma.holiday.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HolidayFindUniqueOrThrowArgs>(args: SelectSubset<T, HolidayFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Holiday that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayFindFirstArgs} args - Arguments to find a Holiday
+     * @example
+     * // Get one Holiday
+     * const holiday = await prisma.holiday.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HolidayFindFirstArgs>(args?: SelectSubset<T, HolidayFindFirstArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Holiday that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayFindFirstOrThrowArgs} args - Arguments to find a Holiday
+     * @example
+     * // Get one Holiday
+     * const holiday = await prisma.holiday.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HolidayFindFirstOrThrowArgs>(args?: SelectSubset<T, HolidayFindFirstOrThrowArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Holidays that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Holidays
+     * const holidays = await prisma.holiday.findMany()
+     * 
+     * // Get first 10 Holidays
+     * const holidays = await prisma.holiday.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const holidayWithIdOnly = await prisma.holiday.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HolidayFindManyArgs>(args?: SelectSubset<T, HolidayFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Holiday.
+     * @param {HolidayCreateArgs} args - Arguments to create a Holiday.
+     * @example
+     * // Create one Holiday
+     * const Holiday = await prisma.holiday.create({
+     *   data: {
+     *     // ... data to create a Holiday
+     *   }
+     * })
+     * 
+     */
+    create<T extends HolidayCreateArgs>(args: SelectSubset<T, HolidayCreateArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Holidays.
+     * @param {HolidayCreateManyArgs} args - Arguments to create many Holidays.
+     * @example
+     * // Create many Holidays
+     * const holiday = await prisma.holiday.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HolidayCreateManyArgs>(args?: SelectSubset<T, HolidayCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Holidays and returns the data saved in the database.
+     * @param {HolidayCreateManyAndReturnArgs} args - Arguments to create many Holidays.
+     * @example
+     * // Create many Holidays
+     * const holiday = await prisma.holiday.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Holidays and only return the `id`
+     * const holidayWithIdOnly = await prisma.holiday.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HolidayCreateManyAndReturnArgs>(args?: SelectSubset<T, HolidayCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Holiday.
+     * @param {HolidayDeleteArgs} args - Arguments to delete one Holiday.
+     * @example
+     * // Delete one Holiday
+     * const Holiday = await prisma.holiday.delete({
+     *   where: {
+     *     // ... filter to delete one Holiday
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HolidayDeleteArgs>(args: SelectSubset<T, HolidayDeleteArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Holiday.
+     * @param {HolidayUpdateArgs} args - Arguments to update one Holiday.
+     * @example
+     * // Update one Holiday
+     * const holiday = await prisma.holiday.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HolidayUpdateArgs>(args: SelectSubset<T, HolidayUpdateArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Holidays.
+     * @param {HolidayDeleteManyArgs} args - Arguments to filter Holidays to delete.
+     * @example
+     * // Delete a few Holidays
+     * const { count } = await prisma.holiday.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HolidayDeleteManyArgs>(args?: SelectSubset<T, HolidayDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Holidays.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Holidays
+     * const holiday = await prisma.holiday.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HolidayUpdateManyArgs>(args: SelectSubset<T, HolidayUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Holidays and returns the data updated in the database.
+     * @param {HolidayUpdateManyAndReturnArgs} args - Arguments to update many Holidays.
+     * @example
+     * // Update many Holidays
+     * const holiday = await prisma.holiday.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Holidays and only return the `id`
+     * const holidayWithIdOnly = await prisma.holiday.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HolidayUpdateManyAndReturnArgs>(args: SelectSubset<T, HolidayUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Holiday.
+     * @param {HolidayUpsertArgs} args - Arguments to update or create a Holiday.
+     * @example
+     * // Update or create a Holiday
+     * const holiday = await prisma.holiday.upsert({
+     *   create: {
+     *     // ... data to create a Holiday
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Holiday we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HolidayUpsertArgs>(args: SelectSubset<T, HolidayUpsertArgs<ExtArgs>>): Prisma__HolidayClient<$Result.GetResult<Prisma.$HolidayPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Holidays.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayCountArgs} args - Arguments to filter Holidays to count.
+     * @example
+     * // Count the number of Holidays
+     * const count = await prisma.holiday.count({
+     *   where: {
+     *     // ... the filter for the Holidays we want to count
+     *   }
+     * })
+    **/
+    count<T extends HolidayCountArgs>(
+      args?: Subset<T, HolidayCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HolidayCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Holiday.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HolidayAggregateArgs>(args: Subset<T, HolidayAggregateArgs>): Prisma.PrismaPromise<GetHolidayAggregateType<T>>
+
+    /**
+     * Group by Holiday.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HolidayGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HolidayGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HolidayGroupByArgs['orderBy'] }
+        : { orderBy?: HolidayGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HolidayGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHolidayGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Holiday model
+   */
+  readonly fields: HolidayFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Holiday.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HolidayClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Holiday model
+   */
+  interface HolidayFieldRefs {
+    readonly id: FieldRef<"Holiday", 'Int'>
+    readonly name: FieldRef<"Holiday", 'String'>
+    readonly startDate: FieldRef<"Holiday", 'DateTime'>
+    readonly endDate: FieldRef<"Holiday", 'DateTime'>
+    readonly year: FieldRef<"Holiday", 'Int'>
+    readonly color: FieldRef<"Holiday", 'String'>
+    readonly createdAt: FieldRef<"Holiday", 'DateTime'>
+    readonly updatedAt: FieldRef<"Holiday", 'DateTime'>
+    readonly userId: FieldRef<"Holiday", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Holiday findUnique
+   */
+  export type HolidayFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter, which Holiday to fetch.
+     */
+    where: HolidayWhereUniqueInput
+  }
+
+  /**
+   * Holiday findUniqueOrThrow
+   */
+  export type HolidayFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter, which Holiday to fetch.
+     */
+    where: HolidayWhereUniqueInput
+  }
+
+  /**
+   * Holiday findFirst
+   */
+  export type HolidayFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter, which Holiday to fetch.
+     */
+    where?: HolidayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Holidays to fetch.
+     */
+    orderBy?: HolidayOrderByWithRelationInput | HolidayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Holidays.
+     */
+    cursor?: HolidayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Holidays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Holidays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Holidays.
+     */
+    distinct?: HolidayScalarFieldEnum | HolidayScalarFieldEnum[]
+  }
+
+  /**
+   * Holiday findFirstOrThrow
+   */
+  export type HolidayFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter, which Holiday to fetch.
+     */
+    where?: HolidayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Holidays to fetch.
+     */
+    orderBy?: HolidayOrderByWithRelationInput | HolidayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Holidays.
+     */
+    cursor?: HolidayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Holidays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Holidays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Holidays.
+     */
+    distinct?: HolidayScalarFieldEnum | HolidayScalarFieldEnum[]
+  }
+
+  /**
+   * Holiday findMany
+   */
+  export type HolidayFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter, which Holidays to fetch.
+     */
+    where?: HolidayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Holidays to fetch.
+     */
+    orderBy?: HolidayOrderByWithRelationInput | HolidayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Holidays.
+     */
+    cursor?: HolidayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Holidays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Holidays.
+     */
+    skip?: number
+    distinct?: HolidayScalarFieldEnum | HolidayScalarFieldEnum[]
+  }
+
+  /**
+   * Holiday create
+   */
+  export type HolidayCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Holiday.
+     */
+    data: XOR<HolidayCreateInput, HolidayUncheckedCreateInput>
+  }
+
+  /**
+   * Holiday createMany
+   */
+  export type HolidayCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Holidays.
+     */
+    data: HolidayCreateManyInput | HolidayCreateManyInput[]
+  }
+
+  /**
+   * Holiday createManyAndReturn
+   */
+  export type HolidayCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * The data used to create many Holidays.
+     */
+    data: HolidayCreateManyInput | HolidayCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Holiday update
+   */
+  export type HolidayUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Holiday.
+     */
+    data: XOR<HolidayUpdateInput, HolidayUncheckedUpdateInput>
+    /**
+     * Choose, which Holiday to update.
+     */
+    where: HolidayWhereUniqueInput
+  }
+
+  /**
+   * Holiday updateMany
+   */
+  export type HolidayUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Holidays.
+     */
+    data: XOR<HolidayUpdateManyMutationInput, HolidayUncheckedUpdateManyInput>
+    /**
+     * Filter which Holidays to update
+     */
+    where?: HolidayWhereInput
+    /**
+     * Limit how many Holidays to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Holiday updateManyAndReturn
+   */
+  export type HolidayUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * The data used to update Holidays.
+     */
+    data: XOR<HolidayUpdateManyMutationInput, HolidayUncheckedUpdateManyInput>
+    /**
+     * Filter which Holidays to update
+     */
+    where?: HolidayWhereInput
+    /**
+     * Limit how many Holidays to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Holiday upsert
+   */
+  export type HolidayUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Holiday to update in case it exists.
+     */
+    where: HolidayWhereUniqueInput
+    /**
+     * In case the Holiday found by the `where` argument doesn't exist, create a new Holiday with this data.
+     */
+    create: XOR<HolidayCreateInput, HolidayUncheckedCreateInput>
+    /**
+     * In case the Holiday was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HolidayUpdateInput, HolidayUncheckedUpdateInput>
+  }
+
+  /**
+   * Holiday delete
+   */
+  export type HolidayDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+    /**
+     * Filter which Holiday to delete.
+     */
+    where: HolidayWhereUniqueInput
+  }
+
+  /**
+   * Holiday deleteMany
+   */
+  export type HolidayDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Holidays to delete
+     */
+    where?: HolidayWhereInput
+    /**
+     * Limit how many Holidays to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Holiday without action
+   */
+  export type HolidayDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Holiday
+     */
+    select?: HolidaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Holiday
+     */
+    omit?: HolidayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HolidayInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4807,6 +7368,37 @@ export namespace Prisma {
   };
 
   export type MeetingScalarFieldEnum = (typeof MeetingScalarFieldEnum)[keyof typeof MeetingScalarFieldEnum]
+
+
+  export const TermScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    year: 'year',
+    isActive: 'isActive',
+    color: 'color',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type TermScalarFieldEnum = (typeof TermScalarFieldEnum)[keyof typeof TermScalarFieldEnum]
+
+
+  export const HolidayScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    year: 'year',
+    color: 'color',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type HolidayScalarFieldEnum = (typeof HolidayScalarFieldEnum)[keyof typeof HolidayScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5020,6 +7612,8 @@ export namespace Prisma {
     passwordHash?: StringNullableFilter<"User"> | string | null
     meetings?: MeetingListRelationFilter
     students?: StudentListRelationFilter
+    terms?: TermListRelationFilter
+    holidays?: HolidayListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5031,6 +7625,8 @@ export namespace Prisma {
     passwordHash?: SortOrderInput | SortOrder
     meetings?: MeetingOrderByRelationAggregateInput
     students?: StudentOrderByRelationAggregateInput
+    terms?: TermOrderByRelationAggregateInput
+    holidays?: HolidayOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5045,6 +7641,8 @@ export namespace Prisma {
     passwordHash?: StringNullableFilter<"User"> | string | null
     meetings?: MeetingListRelationFilter
     students?: StudentListRelationFilter
+    terms?: TermListRelationFilter
+    holidays?: HolidayListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -5154,6 +7752,165 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Meeting"> | Date | string
     userId?: StringWithAggregatesFilter<"Meeting"> | string
     studentId?: IntWithAggregatesFilter<"Meeting"> | number
+  }
+
+  export type TermWhereInput = {
+    AND?: TermWhereInput | TermWhereInput[]
+    OR?: TermWhereInput[]
+    NOT?: TermWhereInput | TermWhereInput[]
+    id?: IntFilter<"Term"> | number
+    name?: StringFilter<"Term"> | string
+    startDate?: DateTimeFilter<"Term"> | Date | string
+    endDate?: DateTimeFilter<"Term"> | Date | string
+    year?: IntFilter<"Term"> | number
+    isActive?: BoolFilter<"Term"> | boolean
+    color?: StringFilter<"Term"> | string
+    createdAt?: DateTimeFilter<"Term"> | Date | string
+    updatedAt?: DateTimeFilter<"Term"> | Date | string
+    userId?: StringFilter<"Term"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TermOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    isActive?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TermWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TermWhereInput | TermWhereInput[]
+    OR?: TermWhereInput[]
+    NOT?: TermWhereInput | TermWhereInput[]
+    name?: StringFilter<"Term"> | string
+    startDate?: DateTimeFilter<"Term"> | Date | string
+    endDate?: DateTimeFilter<"Term"> | Date | string
+    year?: IntFilter<"Term"> | number
+    isActive?: BoolFilter<"Term"> | boolean
+    color?: StringFilter<"Term"> | string
+    createdAt?: DateTimeFilter<"Term"> | Date | string
+    updatedAt?: DateTimeFilter<"Term"> | Date | string
+    userId?: StringFilter<"Term"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type TermOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    isActive?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    _count?: TermCountOrderByAggregateInput
+    _avg?: TermAvgOrderByAggregateInput
+    _max?: TermMaxOrderByAggregateInput
+    _min?: TermMinOrderByAggregateInput
+    _sum?: TermSumOrderByAggregateInput
+  }
+
+  export type TermScalarWhereWithAggregatesInput = {
+    AND?: TermScalarWhereWithAggregatesInput | TermScalarWhereWithAggregatesInput[]
+    OR?: TermScalarWhereWithAggregatesInput[]
+    NOT?: TermScalarWhereWithAggregatesInput | TermScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Term"> | number
+    name?: StringWithAggregatesFilter<"Term"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Term"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Term"> | Date | string
+    year?: IntWithAggregatesFilter<"Term"> | number
+    isActive?: BoolWithAggregatesFilter<"Term"> | boolean
+    color?: StringWithAggregatesFilter<"Term"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Term"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Term"> | Date | string
+    userId?: StringWithAggregatesFilter<"Term"> | string
+  }
+
+  export type HolidayWhereInput = {
+    AND?: HolidayWhereInput | HolidayWhereInput[]
+    OR?: HolidayWhereInput[]
+    NOT?: HolidayWhereInput | HolidayWhereInput[]
+    id?: IntFilter<"Holiday"> | number
+    name?: StringFilter<"Holiday"> | string
+    startDate?: DateTimeFilter<"Holiday"> | Date | string
+    endDate?: DateTimeFilter<"Holiday"> | Date | string
+    year?: IntFilter<"Holiday"> | number
+    color?: StringFilter<"Holiday"> | string
+    createdAt?: DateTimeFilter<"Holiday"> | Date | string
+    updatedAt?: DateTimeFilter<"Holiday"> | Date | string
+    userId?: StringFilter<"Holiday"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type HolidayOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type HolidayWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HolidayWhereInput | HolidayWhereInput[]
+    OR?: HolidayWhereInput[]
+    NOT?: HolidayWhereInput | HolidayWhereInput[]
+    name?: StringFilter<"Holiday"> | string
+    startDate?: DateTimeFilter<"Holiday"> | Date | string
+    endDate?: DateTimeFilter<"Holiday"> | Date | string
+    year?: IntFilter<"Holiday"> | number
+    color?: StringFilter<"Holiday"> | string
+    createdAt?: DateTimeFilter<"Holiday"> | Date | string
+    updatedAt?: DateTimeFilter<"Holiday"> | Date | string
+    userId?: StringFilter<"Holiday"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type HolidayOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    _count?: HolidayCountOrderByAggregateInput
+    _avg?: HolidayAvgOrderByAggregateInput
+    _max?: HolidayMaxOrderByAggregateInput
+    _min?: HolidayMinOrderByAggregateInput
+    _sum?: HolidaySumOrderByAggregateInput
+  }
+
+  export type HolidayScalarWhereWithAggregatesInput = {
+    AND?: HolidayScalarWhereWithAggregatesInput | HolidayScalarWhereWithAggregatesInput[]
+    OR?: HolidayScalarWhereWithAggregatesInput[]
+    NOT?: HolidayScalarWhereWithAggregatesInput | HolidayScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Holiday"> | number
+    name?: StringWithAggregatesFilter<"Holiday"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Holiday"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Holiday"> | Date | string
+    year?: IntWithAggregatesFilter<"Holiday"> | number
+    color?: StringWithAggregatesFilter<"Holiday"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Holiday"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Holiday"> | Date | string
+    userId?: StringWithAggregatesFilter<"Holiday"> | string
   }
 
   export type StudentCreateInput = {
@@ -5333,6 +8090,8 @@ export namespace Prisma {
     passwordHash?: string | null
     meetings?: MeetingCreateNestedManyWithoutUserInput
     students?: StudentCreateNestedManyWithoutUserInput
+    terms?: TermCreateNestedManyWithoutUserInput
+    holidays?: HolidayCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5344,6 +8103,8 @@ export namespace Prisma {
     passwordHash?: string | null
     meetings?: MeetingUncheckedCreateNestedManyWithoutUserInput
     students?: StudentUncheckedCreateNestedManyWithoutUserInput
+    terms?: TermUncheckedCreateNestedManyWithoutUserInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -5355,6 +8116,8 @@ export namespace Prisma {
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     meetings?: MeetingUpdateManyWithoutUserNestedInput
     students?: StudentUpdateManyWithoutUserNestedInput
+    terms?: TermUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5366,6 +8129,8 @@ export namespace Prisma {
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     meetings?: MeetingUncheckedUpdateManyWithoutUserNestedInput
     students?: StudentUncheckedUpdateManyWithoutUserNestedInput
+    terms?: TermUncheckedUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5479,6 +8244,173 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TermCreateInput = {
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTermsInput
+  }
+
+  export type TermUncheckedCreateInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type TermUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTermsNestedInput
+  }
+
+  export type TermUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TermCreateManyInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type TermUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TermUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HolidayCreateInput = {
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutHolidaysInput
+  }
+
+  export type HolidayUncheckedCreateInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type HolidayUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHolidaysNestedInput
+  }
+
+  export type HolidayUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HolidayCreateManyInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type HolidayUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HolidayUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5756,7 +8688,27 @@ export namespace Prisma {
     none?: StudentWhereInput
   }
 
+  export type TermListRelationFilter = {
+    every?: TermWhereInput
+    some?: TermWhereInput
+    none?: TermWhereInput
+  }
+
+  export type HolidayListRelationFilter = {
+    every?: HolidayWhereInput
+    some?: HolidayWhereInput
+    none?: HolidayWhereInput
+  }
+
   export type StudentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TermOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HolidayOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5858,6 +8810,101 @@ export namespace Prisma {
   export type MeetingSumOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
+  }
+
+  export type TermCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    isActive?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TermAvgOrderByAggregateInput = {
+    id?: SortOrder
+    year?: SortOrder
+  }
+
+  export type TermMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    isActive?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TermMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    isActive?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TermSumOrderByAggregateInput = {
+    id?: SortOrder
+    year?: SortOrder
+  }
+
+  export type HolidayCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type HolidayAvgOrderByAggregateInput = {
+    id?: SortOrder
+    year?: SortOrder
+  }
+
+  export type HolidayMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type HolidayMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    year?: SortOrder
+    color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type HolidaySumOrderByAggregateInput = {
+    id?: SortOrder
+    year?: SortOrder
   }
 
   export type MeetingCreateNestedManyWithoutStudentInput = {
@@ -5964,6 +9011,20 @@ export namespace Prisma {
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
+  export type TermCreateNestedManyWithoutUserInput = {
+    create?: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput> | TermCreateWithoutUserInput[] | TermUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TermCreateOrConnectWithoutUserInput | TermCreateOrConnectWithoutUserInput[]
+    createMany?: TermCreateManyUserInputEnvelope
+    connect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+  }
+
+  export type HolidayCreateNestedManyWithoutUserInput = {
+    create?: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput> | HolidayCreateWithoutUserInput[] | HolidayUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HolidayCreateOrConnectWithoutUserInput | HolidayCreateOrConnectWithoutUserInput[]
+    createMany?: HolidayCreateManyUserInputEnvelope
+    connect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+  }
+
   export type MeetingUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<MeetingCreateWithoutUserInput, MeetingUncheckedCreateWithoutUserInput> | MeetingCreateWithoutUserInput[] | MeetingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MeetingCreateOrConnectWithoutUserInput | MeetingCreateOrConnectWithoutUserInput[]
@@ -5976,6 +9037,20 @@ export namespace Prisma {
     connectOrCreate?: StudentCreateOrConnectWithoutUserInput | StudentCreateOrConnectWithoutUserInput[]
     createMany?: StudentCreateManyUserInputEnvelope
     connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+  }
+
+  export type TermUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput> | TermCreateWithoutUserInput[] | TermUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TermCreateOrConnectWithoutUserInput | TermCreateOrConnectWithoutUserInput[]
+    createMany?: TermCreateManyUserInputEnvelope
+    connect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+  }
+
+  export type HolidayUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput> | HolidayCreateWithoutUserInput[] | HolidayUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HolidayCreateOrConnectWithoutUserInput | HolidayCreateOrConnectWithoutUserInput[]
+    createMany?: HolidayCreateManyUserInputEnvelope
+    connect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -6010,6 +9085,34 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
+  export type TermUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput> | TermCreateWithoutUserInput[] | TermUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TermCreateOrConnectWithoutUserInput | TermCreateOrConnectWithoutUserInput[]
+    upsert?: TermUpsertWithWhereUniqueWithoutUserInput | TermUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TermCreateManyUserInputEnvelope
+    set?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    disconnect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    delete?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    connect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    update?: TermUpdateWithWhereUniqueWithoutUserInput | TermUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TermUpdateManyWithWhereWithoutUserInput | TermUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TermScalarWhereInput | TermScalarWhereInput[]
+  }
+
+  export type HolidayUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput> | HolidayCreateWithoutUserInput[] | HolidayUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HolidayCreateOrConnectWithoutUserInput | HolidayCreateOrConnectWithoutUserInput[]
+    upsert?: HolidayUpsertWithWhereUniqueWithoutUserInput | HolidayUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HolidayCreateManyUserInputEnvelope
+    set?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    disconnect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    delete?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    connect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    update?: HolidayUpdateWithWhereUniqueWithoutUserInput | HolidayUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HolidayUpdateManyWithWhereWithoutUserInput | HolidayUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HolidayScalarWhereInput | HolidayScalarWhereInput[]
+  }
+
   export type MeetingUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<MeetingCreateWithoutUserInput, MeetingUncheckedCreateWithoutUserInput> | MeetingCreateWithoutUserInput[] | MeetingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MeetingCreateOrConnectWithoutUserInput | MeetingCreateOrConnectWithoutUserInput[]
@@ -6038,6 +9141,34 @@ export namespace Prisma {
     deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
+  export type TermUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput> | TermCreateWithoutUserInput[] | TermUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TermCreateOrConnectWithoutUserInput | TermCreateOrConnectWithoutUserInput[]
+    upsert?: TermUpsertWithWhereUniqueWithoutUserInput | TermUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TermCreateManyUserInputEnvelope
+    set?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    disconnect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    delete?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    connect?: TermWhereUniqueInput | TermWhereUniqueInput[]
+    update?: TermUpdateWithWhereUniqueWithoutUserInput | TermUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TermUpdateManyWithWhereWithoutUserInput | TermUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TermScalarWhereInput | TermScalarWhereInput[]
+  }
+
+  export type HolidayUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput> | HolidayCreateWithoutUserInput[] | HolidayUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HolidayCreateOrConnectWithoutUserInput | HolidayCreateOrConnectWithoutUserInput[]
+    upsert?: HolidayUpsertWithWhereUniqueWithoutUserInput | HolidayUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HolidayCreateManyUserInputEnvelope
+    set?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    disconnect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    delete?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    connect?: HolidayWhereUniqueInput | HolidayWhereUniqueInput[]
+    update?: HolidayUpdateWithWhereUniqueWithoutUserInput | HolidayUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HolidayUpdateManyWithWhereWithoutUserInput | HolidayUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HolidayScalarWhereInput | HolidayScalarWhereInput[]
+  }
+
   export type StudentCreateNestedOneWithoutMeetingsInput = {
     create?: XOR<StudentCreateWithoutMeetingsInput, StudentUncheckedCreateWithoutMeetingsInput>
     connectOrCreate?: StudentCreateOrConnectWithoutMeetingsInput
@@ -6064,6 +9195,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutMeetingsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMeetingsInput, UserUpdateWithoutMeetingsInput>, UserUncheckedUpdateWithoutMeetingsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTermsInput = {
+    create?: XOR<UserCreateWithoutTermsInput, UserUncheckedCreateWithoutTermsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTermsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTermsNestedInput = {
+    create?: XOR<UserCreateWithoutTermsInput, UserUncheckedCreateWithoutTermsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTermsInput
+    upsert?: UserUpsertWithoutTermsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTermsInput, UserUpdateWithoutTermsInput>, UserUncheckedUpdateWithoutTermsInput>
+  }
+
+  export type UserCreateNestedOneWithoutHolidaysInput = {
+    create?: XOR<UserCreateWithoutHolidaysInput, UserUncheckedCreateWithoutHolidaysInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHolidaysInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutHolidaysNestedInput = {
+    create?: XOR<UserCreateWithoutHolidaysInput, UserUncheckedCreateWithoutHolidaysInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHolidaysInput
+    upsert?: UserUpsertWithoutHolidaysInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHolidaysInput, UserUpdateWithoutHolidaysInput>, UserUncheckedUpdateWithoutHolidaysInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -6307,6 +9466,8 @@ export namespace Prisma {
     image?: string | null
     passwordHash?: string | null
     meetings?: MeetingCreateNestedManyWithoutUserInput
+    terms?: TermCreateNestedManyWithoutUserInput
+    holidays?: HolidayCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStudentsInput = {
@@ -6317,6 +9478,8 @@ export namespace Prisma {
     image?: string | null
     passwordHash?: string | null
     meetings?: MeetingUncheckedCreateNestedManyWithoutUserInput
+    terms?: TermUncheckedCreateNestedManyWithoutUserInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStudentsInput = {
@@ -6375,6 +9538,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     meetings?: MeetingUpdateManyWithoutUserNestedInput
+    terms?: TermUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentsInput = {
@@ -6385,6 +9550,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     meetings?: MeetingUncheckedUpdateManyWithoutUserNestedInput
+    terms?: TermUncheckedUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MeetingCreateWithoutUserInput = {
@@ -6475,6 +9642,68 @@ export namespace Prisma {
     data: StudentCreateManyUserInput | StudentCreateManyUserInput[]
   }
 
+  export type TermCreateWithoutUserInput = {
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TermUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TermCreateOrConnectWithoutUserInput = {
+    where: TermWhereUniqueInput
+    create: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput>
+  }
+
+  export type TermCreateManyUserInputEnvelope = {
+    data: TermCreateManyUserInput | TermCreateManyUserInput[]
+  }
+
+  export type HolidayCreateWithoutUserInput = {
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HolidayUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HolidayCreateOrConnectWithoutUserInput = {
+    where: HolidayWhereUniqueInput
+    create: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput>
+  }
+
+  export type HolidayCreateManyUserInputEnvelope = {
+    data: HolidayCreateManyUserInput | HolidayCreateManyUserInput[]
+  }
+
   export type MeetingUpsertWithWhereUniqueWithoutUserInput = {
     where: MeetingWhereUniqueInput
     update: XOR<MeetingUpdateWithoutUserInput, MeetingUncheckedUpdateWithoutUserInput>
@@ -6532,6 +9761,69 @@ export namespace Prisma {
     meetingLocation?: StringNullableFilter<"Student"> | string | null
     resourceLink?: StringNullableFilter<"Student"> | string | null
     school?: StringNullableFilter<"Student"> | string | null
+  }
+
+  export type TermUpsertWithWhereUniqueWithoutUserInput = {
+    where: TermWhereUniqueInput
+    update: XOR<TermUpdateWithoutUserInput, TermUncheckedUpdateWithoutUserInput>
+    create: XOR<TermCreateWithoutUserInput, TermUncheckedCreateWithoutUserInput>
+  }
+
+  export type TermUpdateWithWhereUniqueWithoutUserInput = {
+    where: TermWhereUniqueInput
+    data: XOR<TermUpdateWithoutUserInput, TermUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TermUpdateManyWithWhereWithoutUserInput = {
+    where: TermScalarWhereInput
+    data: XOR<TermUpdateManyMutationInput, TermUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TermScalarWhereInput = {
+    AND?: TermScalarWhereInput | TermScalarWhereInput[]
+    OR?: TermScalarWhereInput[]
+    NOT?: TermScalarWhereInput | TermScalarWhereInput[]
+    id?: IntFilter<"Term"> | number
+    name?: StringFilter<"Term"> | string
+    startDate?: DateTimeFilter<"Term"> | Date | string
+    endDate?: DateTimeFilter<"Term"> | Date | string
+    year?: IntFilter<"Term"> | number
+    isActive?: BoolFilter<"Term"> | boolean
+    color?: StringFilter<"Term"> | string
+    createdAt?: DateTimeFilter<"Term"> | Date | string
+    updatedAt?: DateTimeFilter<"Term"> | Date | string
+    userId?: StringFilter<"Term"> | string
+  }
+
+  export type HolidayUpsertWithWhereUniqueWithoutUserInput = {
+    where: HolidayWhereUniqueInput
+    update: XOR<HolidayUpdateWithoutUserInput, HolidayUncheckedUpdateWithoutUserInput>
+    create: XOR<HolidayCreateWithoutUserInput, HolidayUncheckedCreateWithoutUserInput>
+  }
+
+  export type HolidayUpdateWithWhereUniqueWithoutUserInput = {
+    where: HolidayWhereUniqueInput
+    data: XOR<HolidayUpdateWithoutUserInput, HolidayUncheckedUpdateWithoutUserInput>
+  }
+
+  export type HolidayUpdateManyWithWhereWithoutUserInput = {
+    where: HolidayScalarWhereInput
+    data: XOR<HolidayUpdateManyMutationInput, HolidayUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type HolidayScalarWhereInput = {
+    AND?: HolidayScalarWhereInput | HolidayScalarWhereInput[]
+    OR?: HolidayScalarWhereInput[]
+    NOT?: HolidayScalarWhereInput | HolidayScalarWhereInput[]
+    id?: IntFilter<"Holiday"> | number
+    name?: StringFilter<"Holiday"> | string
+    startDate?: DateTimeFilter<"Holiday"> | Date | string
+    endDate?: DateTimeFilter<"Holiday"> | Date | string
+    year?: IntFilter<"Holiday"> | number
+    color?: StringFilter<"Holiday"> | string
+    createdAt?: DateTimeFilter<"Holiday"> | Date | string
+    updatedAt?: DateTimeFilter<"Holiday"> | Date | string
+    userId?: StringFilter<"Holiday"> | string
   }
 
   export type StudentCreateWithoutMeetingsInput = {
@@ -6594,6 +9886,8 @@ export namespace Prisma {
     image?: string | null
     passwordHash?: string | null
     students?: StudentCreateNestedManyWithoutUserInput
+    terms?: TermCreateNestedManyWithoutUserInput
+    holidays?: HolidayCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMeetingsInput = {
@@ -6604,6 +9898,8 @@ export namespace Prisma {
     image?: string | null
     passwordHash?: string | null
     students?: StudentUncheckedCreateNestedManyWithoutUserInput
+    terms?: TermUncheckedCreateNestedManyWithoutUserInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMeetingsInput = {
@@ -6688,6 +9984,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     students?: StudentUpdateManyWithoutUserNestedInput
+    terms?: TermUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMeetingsInput = {
@@ -6698,6 +9996,136 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     students?: StudentUncheckedUpdateManyWithoutUserNestedInput
+    terms?: TermUncheckedUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutTermsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    passwordHash?: string | null
+    meetings?: MeetingCreateNestedManyWithoutUserInput
+    students?: StudentCreateNestedManyWithoutUserInput
+    holidays?: HolidayCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTermsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    passwordHash?: string | null
+    meetings?: MeetingUncheckedCreateNestedManyWithoutUserInput
+    students?: StudentUncheckedCreateNestedManyWithoutUserInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTermsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTermsInput, UserUncheckedCreateWithoutTermsInput>
+  }
+
+  export type UserUpsertWithoutTermsInput = {
+    update: XOR<UserUpdateWithoutTermsInput, UserUncheckedUpdateWithoutTermsInput>
+    create: XOR<UserCreateWithoutTermsInput, UserUncheckedCreateWithoutTermsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTermsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTermsInput, UserUncheckedUpdateWithoutTermsInput>
+  }
+
+  export type UserUpdateWithoutTermsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    meetings?: MeetingUpdateManyWithoutUserNestedInput
+    students?: StudentUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTermsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    meetings?: MeetingUncheckedUpdateManyWithoutUserNestedInput
+    students?: StudentUncheckedUpdateManyWithoutUserNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutHolidaysInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    passwordHash?: string | null
+    meetings?: MeetingCreateNestedManyWithoutUserInput
+    students?: StudentCreateNestedManyWithoutUserInput
+    terms?: TermCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutHolidaysInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    passwordHash?: string | null
+    meetings?: MeetingUncheckedCreateNestedManyWithoutUserInput
+    students?: StudentUncheckedCreateNestedManyWithoutUserInput
+    terms?: TermUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutHolidaysInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutHolidaysInput, UserUncheckedCreateWithoutHolidaysInput>
+  }
+
+  export type UserUpsertWithoutHolidaysInput = {
+    update: XOR<UserUpdateWithoutHolidaysInput, UserUncheckedUpdateWithoutHolidaysInput>
+    create: XOR<UserCreateWithoutHolidaysInput, UserUncheckedCreateWithoutHolidaysInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHolidaysInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHolidaysInput, UserUncheckedUpdateWithoutHolidaysInput>
+  }
+
+  export type UserUpdateWithoutHolidaysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    meetings?: MeetingUpdateManyWithoutUserNestedInput
+    students?: StudentUpdateManyWithoutUserNestedInput
+    terms?: TermUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutHolidaysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    meetings?: MeetingUncheckedUpdateManyWithoutUserNestedInput
+    students?: StudentUncheckedUpdateManyWithoutUserNestedInput
+    terms?: TermUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MeetingCreateManyStudentInput = {
@@ -6780,6 +10208,29 @@ export namespace Prisma {
     meetingLocation?: string | null
     resourceLink?: string | null
     school?: string | null
+  }
+
+  export type TermCreateManyUserInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    isActive?: boolean
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HolidayCreateManyUserInput = {
+    id?: number
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    year: number
+    color?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MeetingUpdateWithoutUserInput = {
@@ -6885,6 +10336,73 @@ export namespace Prisma {
     meetingLocation?: NullableStringFieldUpdateOperationsInput | string | null
     resourceLink?: NullableStringFieldUpdateOperationsInput | string | null
     school?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TermUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TermUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TermUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HolidayUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HolidayUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HolidayUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    year?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

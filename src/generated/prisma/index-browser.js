@@ -163,6 +163,31 @@ exports.Prisma.MeetingScalarFieldEnum = {
   studentId: 'studentId'
 };
 
+exports.Prisma.TermScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  year: 'year',
+  isActive: 'isActive',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.HolidayScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  year: 'year',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -177,7 +202,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Student: 'Student',
   User: 'User',
-  Meeting: 'Meeting'
+  Meeting: 'Meeting',
+  Term: 'Term',
+  Holiday: 'Holiday'
 };
 
 /**

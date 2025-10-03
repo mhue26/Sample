@@ -1,0 +1,33 @@
+-- AlterTable
+ALTER TABLE "Student" ADD COLUMN "meetingLocation" TEXT;
+ALTER TABLE "Student" ADD COLUMN "resourceLink" TEXT;
+ALTER TABLE "Student" ADD COLUMN "school" TEXT;
+ALTER TABLE "Student" ADD COLUMN "schoolSubjects" TEXT;
+ALTER TABLE "Student" ADD COLUMN "year" INTEGER;
+
+-- CreateTable
+CREATE TABLE "Term" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "startDate" DATETIME NOT NULL,
+    "endDate" DATETIME NOT NULL,
+    "year" INTEGER NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Term_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Holiday" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "startDate" DATETIME NOT NULL,
+    "endDate" DATETIME NOT NULL,
+    "year" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Holiday_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

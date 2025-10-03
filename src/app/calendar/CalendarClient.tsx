@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import CalendarNavigation from "./CalendarNavigation";
 import CalendarGrid from "./CalendarGrid";
@@ -28,6 +28,7 @@ interface CalendarClientProps {
   currentMonth: number;
   students: Student[];
   createMeeting: (formData: FormData) => Promise<void>;
+  userId: string;
 }
 
 export default function CalendarClient({ 
@@ -36,11 +37,59 @@ export default function CalendarClient({
   currentYear, 
   currentMonth, 
   students,
-  createMeeting
+  createMeeting,
+  userId
 }: CalendarClientProps) {
   const [showForm, setShowForm] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [timeRange, setTimeRange] = useState<string>('week');
+  const [currentTerm, setCurrentTerm] = useState<any>(null);
+  const [currentWeek, setCurrentWeek] = useState<number | null>(null);
+  const [teachingPeriods, setTeachingPeriods] = useState<any[]>([]);
+
+  const loadCurrentTerm = async () => {
+    try {
+      const [termsResponse, holidaysResponse] = await Promise.all([
+        fetch(`/api/terms?userId=${userId}`),
+        fetch(`/api/holidays?userId=${userId}`)
+      ]);
+      
+      const terms = termsResponse.ok ? await termsResponse.json() : [];
+      const holidays = holidaysResponse.ok ? await holidaysResponse.json() : [];
+      
+      // Combine all teaching periods
+      const allPeriods = [
+        ...terms.map((term: any) => ({ ...term, type: 'term' as const })),
+        ...holidays.map((holiday: any) => ({ ...holiday, type: 'holiday' as const }))
+      ];
+      
+      setTeachingPeriods(allPeriods);
+      
+      const today = new Date();
+      
+      // Find current active term
+      const activeTerm = terms.find((term: any) => {
+        const startDate = new Date(term.startDate);
+        const endDate = new Date(term.endDate);
+        return today >= startDate && today <= endDate && term.isActive;
+      });
+      
+      if (activeTerm) {
+        setCurrentTerm(activeTerm);
+        // Calculate current week
+        const startDate = new Date(activeTerm.startDate);
+        const diffTime = today.getTime() - startDate.getTime();
+        const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
+        setCurrentWeek(Math.max(1, diffWeeks));
+      }
+    } catch (error) {
+      console.error('Error loading current term:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadCurrentTerm();
+  }, [userId]);
 
   const formatTime = (date: Date) => {
     return new Date(date).toLocaleTimeString('en-US', { 
@@ -125,12 +174,14 @@ export default function CalendarClient({
     <div className="space-y-6 pt-8 font-sans" style={{ fontFamily: "'Work Sans', sans-serif" }}>
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Calendar</h2>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="rounded-md bg-blue-600 text-white px-3 py-2 text-sm hover:bg-blue-700"
-        >
-          Schedule Meeting
-        </button>
+        {currentTerm && (
+          <div className="text-sm text-gray-600 bg-blue-50 px-3 py-2 rounded-lg">
+            <span className="font-medium">{currentTerm.name}</span>
+            {currentWeek && (
+              <span className="ml-2">• Week {currentWeek}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="flex gap-6">
@@ -152,7 +203,7 @@ export default function CalendarClient({
               </select>
             </div>
             {getFilteredMeetings().length === 0 ? (
-              <p className="text-gray-500">No upcoming meetings scheduled.</p>
+              <p className="text-gray-500">No upcoming events scheduled.</p>
             ) : (
               <div className="space-y-3">
                 {getFilteredMeetings().map((meeting) => (
@@ -181,7 +232,7 @@ export default function CalendarClient({
 
           {/* Monthly Calendar View */}
           <div className="bg-white rounded-lg border p-6 mt-6">
-            <CalendarNavigation />
+            <CalendarNavigation onScheduleClick={() => setShowForm(!showForm)} userId={userId} />
             
             {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-1 mb-4">
@@ -198,6 +249,7 @@ export default function CalendarClient({
               currentMonth={currentMonth}
               onDateSelect={handleDateSelect}
               isFormOpen={showForm}
+              teachingPeriods={teachingPeriods}
             />
           </div>
         </div>

@@ -84,6 +84,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
       currentMonth={currentMonth}
       students={students}
       createMeeting={createMeeting}
+      userId={(session.user as any).id}
     />
   );
 }

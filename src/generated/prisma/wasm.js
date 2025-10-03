@@ -135,6 +135,31 @@ exports.Prisma.MeetingScalarFieldEnum = {
   studentId: 'studentId'
 };
 
+exports.Prisma.TermScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  year: 'year',
+  isActive: 'isActive',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.HolidayScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  year: 'year',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -149,7 +174,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Student: 'Student',
   User: 'User',
-  Meeting: 'Meeting'
+  Meeting: 'Meeting',
+  Term: 'Term',
+  Holiday: 'Holiday'
 };
 /**
  * Create the Client
@@ -180,7 +207,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -190,7 +217,6 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -199,13 +225,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Student {\n  id              Int       @id @default(autoincrement())\n  firstName       String\n  lastName        String\n  email           String    @unique\n  phone           String?\n  subjects        String    @default(\"\") // Tutoring subjects (e.g., \"Math,Physics\")\n  schoolSubjects  String? // School subjects (e.g., \"Math,English,Science,History\")\n  hourlyRateCents Int\n  notes           String?\n  isActive        Boolean   @default(true)\n  isArchived      Boolean   @default(false)\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  userId          String?\n  parentEmail     String?\n  parentName      String?\n  parentPhone     String?\n  year            Int?\n  meetingLocation String?\n  resourceLink    String?\n  school          String?\n  meetings        Meeting[]\n  user            User?     @relation(fields: [userId], references: [id])\n}\n\nmodel User {\n  id            String    @id @default(cuid())\n  name          String?\n  email         String?   @unique\n  emailVerified DateTime?\n  image         String?\n  passwordHash  String?\n  meetings      Meeting[]\n  students      Student[]\n}\n\nmodel Meeting {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  startTime   DateTime\n  endTime     DateTime\n  isCompleted Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  userId      String\n  studentId   Int\n  student     Student  @relation(fields: [studentId], references: [id])\n  user        User     @relation(fields: [userId], references: [id])\n}\n",
-  "inlineSchemaHash": "ea50eb1ffb025767d723167589a8815a597d469b5209fb990e4a9031787ac95f",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Student {\n  id              Int       @id @default(autoincrement())\n  firstName       String\n  lastName        String\n  email           String    @unique\n  phone           String?\n  subjects        String    @default(\"\") // Tutoring subjects (e.g., \"Math,Physics\")\n  schoolSubjects  String? // School subjects (e.g., \"Math,English,Science,History\")\n  hourlyRateCents Int\n  notes           String?\n  isActive        Boolean   @default(true)\n  isArchived      Boolean   @default(false)\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  userId          String?\n  parentEmail     String?\n  parentName      String?\n  parentPhone     String?\n  year            Int?\n  meetingLocation String?\n  resourceLink    String?\n  school          String?\n  meetings        Meeting[]\n  user            User?     @relation(fields: [userId], references: [id])\n}\n\nmodel User {\n  id            String    @id @default(cuid())\n  name          String?\n  email         String?   @unique\n  emailVerified DateTime?\n  image         String?\n  passwordHash  String?\n  meetings      Meeting[]\n  students      Student[]\n  terms         Term[]\n  holidays      Holiday[]\n}\n\nmodel Meeting {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  startTime   DateTime\n  endTime     DateTime\n  isCompleted Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  userId      String\n  studentId   Int\n  student     Student  @relation(fields: [studentId], references: [id])\n  user        User     @relation(fields: [userId], references: [id])\n}\n\nmodel Term {\n  id        Int      @id @default(autoincrement())\n  name      String // e.g., \"Term 1\", \"Semester 1\"\n  startDate DateTime\n  endDate   DateTime\n  year      Int // e.g., 2025\n  isActive  Boolean  @default(true)\n  color     String   @default(\"#3B82F6\") // Hex color code\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  userId    String\n  user      User     @relation(fields: [userId], references: [id])\n}\n\nmodel Holiday {\n  id        Int      @id @default(autoincrement())\n  name      String // e.g., \"Easter Break\", \"Summer Holidays\"\n  startDate DateTime\n  endDate   DateTime\n  year      Int // e.g., 2025\n  color     String   @default(\"#F59E0B\") // Hex color code\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  userId    String\n  user      User     @relation(fields: [userId], references: [id])\n}\n",
+  "inlineSchemaHash": "a83de665d83b82d4435d4c8fa42ae601a312730285a08c3a2e0807b1887518d7",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Student\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"subjects\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schoolSubjects\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hourlyRateCents\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isArchived\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentPhone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"meetingLocation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"resourceLink\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"school\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meetings\",\"kind\":\"object\",\"type\":\"Meeting\",\"relationName\":\"MeetingToStudent\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentToUser\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meetings\",\"kind\":\"object\",\"type\":\"Meeting\",\"relationName\":\"MeetingToUser\"},{\"name\":\"students\",\"kind\":\"object\",\"type\":\"Student\",\"relationName\":\"StudentToUser\"}],\"dbName\":null},\"Meeting\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"student\",\"kind\":\"object\",\"type\":\"Student\",\"relationName\":\"MeetingToStudent\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MeetingToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Student\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"subjects\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schoolSubjects\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hourlyRateCents\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isArchived\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentPhone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"meetingLocation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"resourceLink\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"school\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meetings\",\"kind\":\"object\",\"type\":\"Meeting\",\"relationName\":\"MeetingToStudent\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StudentToUser\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meetings\",\"kind\":\"object\",\"type\":\"Meeting\",\"relationName\":\"MeetingToUser\"},{\"name\":\"students\",\"kind\":\"object\",\"type\":\"Student\",\"relationName\":\"StudentToUser\"},{\"name\":\"terms\",\"kind\":\"object\",\"type\":\"Term\",\"relationName\":\"TermToUser\"},{\"name\":\"holidays\",\"kind\":\"object\",\"type\":\"Holiday\",\"relationName\":\"HolidayToUser\"}],\"dbName\":null},\"Meeting\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"student\",\"kind\":\"object\",\"type\":\"Student\",\"relationName\":\"MeetingToStudent\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MeetingToUser\"}],\"dbName\":null},\"Term\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TermToUser\"}],\"dbName\":null},\"Holiday\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"HolidayToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

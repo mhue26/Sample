@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface Meeting {
   id: string;
@@ -15,15 +15,27 @@ interface Meeting {
   };
 }
 
+interface TeachingPeriod {
+  id: number;
+  name: string;
+  startDate: string;
+  endDate: string;
+  year: number;
+  isActive: boolean;
+  color: string;
+  type: 'term' | 'holiday';
+}
+
 interface CalendarGridProps {
   meetings: Meeting[];
   currentYear: number;
   currentMonth: number;
   onDateSelect?: (date: Date) => void;
   isFormOpen?: boolean;
+  teachingPeriods?: TeachingPeriod[];
 }
 
-export default function CalendarGrid({ meetings, currentYear, currentMonth, onDateSelect, isFormOpen }: CalendarGridProps) {
+export default function CalendarGrid({ meetings, currentYear, currentMonth, onDateSelect, isFormOpen, teachingPeriods = [] }: CalendarGridProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number } | null>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -36,6 +48,51 @@ export default function CalendarGrid({ meetings, currentYear, currentMonth, onDa
              meetingDate.getMonth() === date.getMonth() &&
              meetingDate.getFullYear() === date.getFullYear();
     });
+  };
+
+  const getDayTeachingPeriods = (date: Date) => {
+    return teachingPeriods.filter(period => {
+      // Normalize dates to compare only date parts (year, month, day)
+      const startDate = new Date(period.startDate);
+      const endDate = new Date(period.endDate);
+      
+      // Create normalized dates for comparison (set to local midnight)
+      const normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const normalizedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const normalizedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+      
+      return normalizedDate >= normalizedStartDate && normalizedDate <= normalizedEndDate;
+    });
+  };
+
+  const getWeekInfo = (date: Date) => {
+    const dayTeachingPeriods = getDayTeachingPeriods(date);
+    if (dayTeachingPeriods.length === 0) return null;
+
+    const period = dayTeachingPeriods[0]; // Use the first (primary) period
+    const startDate = new Date(period.startDate);
+    const endDate = new Date(period.endDate);
+    
+    // Normalize dates for accurate calculation
+    const normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const normalizedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const normalizedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    
+    // Calculate week number (1-based)
+    const diffTime = normalizedDate.getTime() - normalizedStartDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const currentWeek = Math.max(1, Math.floor(diffDays / 7) + 1);
+    
+    // Calculate total weeks in the period
+    const totalTime = normalizedEndDate.getTime() - normalizedStartDate.getTime();
+    const totalWeeks = Math.ceil(totalTime / (1000 * 60 * 60 * 24 * 7));
+    
+    return {
+      currentWeek,
+      totalWeeks,
+      periodName: period.name,
+      periodType: period.type
+    };
   };
 
   const formatTime = (date: Date) => {
@@ -123,48 +180,130 @@ export default function CalendarGrid({ meetings, currentYear, currentMonth, onDa
 
   return (
     <div className="relative" ref={gridRef}>
-      <div className="grid grid-cols-7 gap-2">
-        {Array.from({ length: 35 }, (_, i) => {
-          // Calculate the correct date for each cell
+      <div className="grid grid-cols-8 gap-2">
+        {/* Week indicator column header */}
+        <div className="text-sm font-medium text-gray-500 text-center p-2">
+          Week
+        </div>
+        {/* Day headers */}
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <div key={day} className="text-sm font-medium text-gray-500 text-center p-2">
+            {day}
+          </div>
+        ))}
+      </div>
+      
+      {/* Calendar rows */}
+      <div className="grid grid-cols-8 gap-2">
+        {Array.from({ length: 5 }, (_, weekIndex) => {
+          // Calculate the first day of this week
           const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-          const firstDayOfWeek = firstDayOfMonth.getDay(); // 0 = Sunday, 1 = Monday, etc.
-          const date = new Date(currentYear, currentMonth, i - firstDayOfWeek + 1);
+          const firstDayOfWeek = firstDayOfMonth.getDay();
+          const firstDateOfWeek = new Date(currentYear, currentMonth, weekIndex * 7 - firstDayOfWeek + 1);
           
-          const dayMeetings = getDayMeetings(date);
-          const isCurrentMonth = date.getMonth() === currentMonth;
-          const isToday = date.toDateString() === new Date().toDateString();
-          const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+          // Get the teaching period to calculate total weeks across ALL months
+          const teachingPeriod = teachingPeriods.find(period => period.type === 'term');
+          let totalWeeks = 0;
+          let currentWeekNumber = 0;
 
+          if (teachingPeriod) {
+            // Calculate total weeks for the ENTIRE term (across all months)
+            const startDate = new Date(teachingPeriod.startDate);
+            const endDate = new Date(teachingPeriod.endDate);
+            const totalTime = endDate.getTime() - startDate.getTime();
+            totalWeeks = Math.ceil(totalTime / (1000 * 60 * 60 * 24 * 7));
+
+            // Calculate which week this current row represents in the ENTIRE term
+            const rowHasTermDay = Array.from({ length: 7 }, (_, dayIndex) => {
+              const date = new Date(firstDateOfWeek);
+              date.setDate(date.getDate() + dayIndex);
+              const dayTeachingPeriods = getDayTeachingPeriods(date);
+              return dayTeachingPeriods.some(period => period.type === 'term');
+            }).some(hasTerm => hasTerm);
+
+            if (rowHasTermDay) {
+              // Calculate how many weeks into the term this row is
+              const diffTime = firstDateOfWeek.getTime() - startDate.getTime();
+              const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+              currentWeekNumber = Math.max(1, Math.floor(diffDays / 7) + 1);
+            }
+          }
+
+          // Get the current row's week label
+          const currentRowWeekLabel = currentWeekNumber > 0 ? `Week ${currentWeekNumber}/${totalWeeks}` : null;
+          
+          
           return (
-            <div
-              key={i}
-              onClick={(e) => handleDateClick(date, e)}
-              className={`date-cell min-h-[100px] p-2 rounded-lg border cursor-pointer transition-all ${
-                isCurrentMonth ? 'bg-white border-gray-200' : 'bg-gray-50 border-gray-100'
-              } ${isToday ? 'bg-blue-50 border-blue-300 ring-2 ring-blue-200' : ''} ${
-                isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''
-              } hover:shadow-md hover:scale-105`}
-            >
-              <div className={`text-sm font-medium mb-2 ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}`}>
-                {date.getDate()}
-              </div>
-              <div className="space-y-1">
-                {dayMeetings.slice(0, 3).map((meeting) => (
-                  <div
-                    key={meeting.id}
-                    className="text-xs p-1.5 bg-blue-100 text-blue-800 rounded-md truncate hover:bg-blue-200 transition-colors"
-                    title={`${meeting.title} with ${meeting.student.firstName} ${meeting.student.lastName}`}
-                  >
-                    {meeting.title}
+            <React.Fragment key={weekIndex}>
+              {/* Week indicator cell */}
+              <div className="min-h-[100px] p-2 rounded-lg border bg-gray-50 border-gray-200 flex items-center justify-center">
+                {currentRowWeekLabel ? (
+                  <div className="text-center">
+                    <div className="text-sm font-medium text-gray-700">
+                      {currentRowWeekLabel}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      Term
+                    </div>
                   </div>
-                ))}
-                {dayMeetings.length > 3 && (
-                  <div className="text-xs text-gray-500 font-medium">
-                    +{dayMeetings.length - 3} more
-                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">-</div>
                 )}
               </div>
-            </div>
+              
+              {/* Days of the week */}
+              {Array.from({ length: 7 }, (_, dayIndex) => {
+                const date = new Date(firstDateOfWeek);
+                date.setDate(date.getDate() + dayIndex);
+                
+                const dayMeetings = getDayMeetings(date);
+                const dayTeachingPeriods = getDayTeachingPeriods(date);
+                const isCurrentMonth = date.getMonth() === currentMonth;
+                const isToday = date.toDateString() === new Date().toDateString();
+                const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+
+                // Get the primary teaching period color (first one found)
+                const primaryPeriod = dayTeachingPeriods[0];
+                const backgroundColor = primaryPeriod ? primaryPeriod.color : undefined;
+                const backgroundOpacity = primaryPeriod ? '20' : undefined;
+
+                return (
+                  <div
+                    key={`${weekIndex}-${dayIndex}`}
+                    onClick={(e) => handleDateClick(date, e)}
+                    className={`date-cell min-h-[100px] p-2 rounded-lg border cursor-pointer transition-all ${
+                      isCurrentMonth ? 'bg-white border-gray-200' : 'bg-gray-50 border-gray-100'
+                    } ${isToday ? 'bg-blue-50 border-blue-300 ring-2 ring-blue-200' : ''} ${
+                      isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''
+                    } hover:shadow-md hover:scale-105`}
+                    style={{
+                      backgroundColor: backgroundColor ? `${backgroundColor}${backgroundOpacity}` : undefined,
+                      borderColor: backgroundColor ? backgroundColor : undefined
+                    }}
+                  >
+                    <div className={`text-sm font-medium mb-2 ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}`}>
+                      {date.getDate()}
+                    </div>
+                    <div className="space-y-1">
+                      {dayMeetings.slice(0, 3).map((meeting) => (
+                        <div
+                          key={meeting.id}
+                          className="text-xs p-1.5 bg-blue-100 text-blue-800 rounded-md truncate hover:bg-blue-200 transition-colors"
+                          title={`${meeting.title} with ${meeting.student.firstName} ${meeting.student.lastName}`}
+                        >
+                          {meeting.title}
+                        </div>
+                      ))}
+                      {dayMeetings.length > 3 && (
+                        <div className="text-xs text-gray-500 font-medium">
+                          +{dayMeetings.length - 3} more
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </React.Fragment>
           );
         })}
       </div>

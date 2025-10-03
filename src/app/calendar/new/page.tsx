@@ -28,8 +28,7 @@ export default async function NewMeetingPage() {
         >
           ← Back to Calendar
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Schedule New Meeting</h1>
-        <p className="text-gray-600 mt-1">Create a new meeting with one of your students</p>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">Schedule</h1>
       </div>
 
       <form action={createMeeting} className="space-y-6">

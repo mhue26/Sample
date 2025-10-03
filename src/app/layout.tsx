@@ -4,6 +4,8 @@ import "./globals.css";
 import { authOptions } from "@/utils/auth";
 import { getServerSession } from "next-auth";
 import Navigation from "./Navigation";
+import { ModalProvider } from "./contexts/ModalContext";
+import Header from "./Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,15 +36,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900`}
         style={{ fontFamily: "'Work Sans', sans-serif" }}
       >
-        <div className="min-h-screen flex flex-col">
-          <header className="fixed top-4 left-4 right-4 z-[60] bg-white/95 backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg">
-            <div className="w-full px-4 sm:px-6 py-4 flex items-center justify-between">
-              <a href="/" className="text-lg font-semibold hover:text-blue-600 transition-colors">
-                Tutor Tools
-              </a>
-              <Navigation session={session} />
-            </div>
-          </header>
+        <ModalProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header session={session} />
           <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6 pt-20">
             <div className="mx-auto max-w-7xl">
               {children}
@@ -114,7 +110,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
               </div>
             </div>
           </footer>
-        </div>
+          </div>
+        </ModalProvider>
       </body>
     </html>
   );
