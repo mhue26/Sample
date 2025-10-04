@@ -30,8 +30,10 @@ model Student {
   meetingLocation String?
   resourceLink    String?
   school          String?
+  classId         Int?
   meetings        Meeting[]
   user            User?     @relation(fields: [userId], references: [id])
+  class           Class?    @relation(fields: [classId], references: [id])
 }
 
 model User {
@@ -45,6 +47,19 @@ model User {
   students      Student[]
   terms         Term[]
   holidays      Holiday[]
+  classes       Class[]
+}
+
+model Class {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  color       String    @default("#3B82F6")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String
+  students    Student[]
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Meeting {

@@ -29,6 +29,13 @@ export default function Navigation({ session }: NavigationProps) {
           </a>
           <span className="px-2">·</span>
           <a 
+            href="/classes" 
+            className={`hover:underline ${pathname.startsWith("/classes") ? "underline" : ""}`}
+          >
+            Classes
+          </a>
+          <span className="px-2">·</span>
+          <a 
             href="/calendar" 
             className={`hover:underline ${pathname.startsWith("/calendar") ? "underline" : ""}`}
           >

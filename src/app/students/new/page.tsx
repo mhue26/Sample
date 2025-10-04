@@ -147,10 +147,6 @@ export default function NewStudentPage() {
 								className="mt-1 w-full border rounded-md px-3 py-2" 
 							/>
 						</label>
-						<label className="block sm:col-span-2">
-							<div className="text-sm text-gray-700">Notes</div>
-							<textarea name="notes" rows={4} className="mt-1 w-full border rounded-md px-3 py-2" />
-						</label>
 					</div>
 				</div>
 

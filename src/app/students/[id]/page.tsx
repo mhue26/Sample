@@ -5,7 +5,10 @@ import { authOptions } from "@/utils/auth";
 import { getServerSession } from "next-auth";
 import DeleteIcon from "./DeleteIcon";
 import ArchiveIcon from "./ArchiveIcon";
+import EditIcon from "./EditIcon";
 import SubjectsDisplay from "../SubjectsDisplay";
+import LessonBreakdown from "../LessonBreakdown";
+import StudentTabs from "../StudentTabs";
 
 function formatCurrencyFromCents(valueInCents: number): string {
 	const dollars = (valueInCents / 100).toFixed(2);
@@ -83,9 +86,38 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 					startTime: 'asc'
 				},
 				take: 1
-			}
+			},
+			class: true
 		}
 	});
+
+	// Fetch all meetings for lesson breakdown
+	const allMeetings = await prisma.meeting.findMany({
+		where: {
+			studentId: id,
+			userId: (session.user as any).id
+		},
+		orderBy: {
+			startTime: 'desc'
+		}
+	});
+
+	// Fetch teaching periods (terms and holidays)
+	const [terms, holidays] = await Promise.all([
+		prisma.term.findMany({
+			where: { userId: (session.user as any).id },
+			orderBy: { startDate: 'desc' }
+		}),
+		prisma.holiday.findMany({
+			where: { userId: (session.user as any).id },
+			orderBy: { startDate: 'desc' }
+		})
+	]);
+
+	const teachingPeriods = [
+		...terms.map(term => ({ ...term, type: 'term' as const })),
+		...holidays.map(holiday => ({ ...holiday, type: 'holiday' as const }))
+	];
 	if (!student) notFound();
 
 	// Parse contact information (multiple contacts separated by " | ")
@@ -139,17 +171,44 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-3">
 					<h2 className="text-2xl font-semibold">{student.firstName} {student.lastName}</h2>
+					<EditIcon studentId={student.id} />
 					<ArchiveIcon studentId={student.id} />
 					<DeleteIcon studentId={student.id} deleteAction={deleteStudent} />
 				</div>
 				<Link href="/students" className="text-sm text-gray-600 hover:underline">← Back to list</Link>
 			</div>
 
-			<div className="space-y-6">
+			{/* Goals Callout */}
+			<div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+				<div className="flex items-start gap-3">
+					<div className="flex-shrink-0">
+						<svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+						</svg>
+					</div>
+					<div className="flex-1">
+						<h3 className="text-sm font-medium text-blue-900 mb-1">Student Goals</h3>
+						<div className="text-sm text-blue-800">
+							{student.notes ? (
+								<div className="whitespace-pre-wrap">{student.notes}</div>
+							) : (
+								<div className="text-blue-600 italic">No goals set yet. Click edit to add student goals and objectives.</div>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<StudentTabs 
+				meetings={allMeetings}
+				teachingPeriods={teachingPeriods}
+				studentName={`${student.firstName} ${student.lastName}`}
+				studentSubjects={student.schoolSubjects || ""}
+			>
 				{/* Next Lesson Card */}
 				{student.meetings.length > 0 ? (
 					<div className="bg-white rounded-lg border p-6">
-						<h3 className="text-lg font-medium mb-4">Next Lesson</h3>
+						<h3 className="text-lg font-medium mb-4">Upcoming</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 							<div>
 								<div className="text-sm text-gray-600">Title</div>
@@ -189,8 +248,8 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 					</div>
 				) : (
 					<div className="bg-white rounded-lg border p-6">
-						<h3 className="text-lg font-medium mb-4">Next Lesson</h3>
-						<div className="text-gray-500">No upcoming lessons scheduled</div>
+						<h3 className="text-lg font-medium mb-4">Upcoming</h3>
+						<div className="text-gray-500">No upcoming events scheduled</div>
 					</div>
 				)}
 
@@ -224,23 +283,55 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 					</div>
 
 					{/* Parent Information Card */}
-					<div className="bg-white rounded-lg border p-6">
-						<h3 className="text-lg font-medium mb-4">Parent Information</h3>
-						<div className="space-y-4">
-							<div>
-								<div className="text-sm text-gray-600">Name</div>
-								<div className="font-medium">{student.parentName || "—"}</div>
-							</div>
-							<div>
-								<div className="text-sm text-gray-600">Email</div>
-								<div className="font-medium">{student.parentEmail || "—"}</div>
-							</div>
-							<div>
-								<div className="text-sm text-gray-600">Phone</div>
-								<div className="font-medium">{student.parentPhone || "—"}</div>
+					{student.parentEmail !== "N/A" && (
+						<div className="bg-white rounded-lg border p-6">
+							<h3 className="text-lg font-medium mb-4">Parent Information</h3>
+							<div className="space-y-4">
+								{student.parentEmail && (
+									<div>
+										<div className="text-sm text-gray-600">Relationship</div>
+										<div className="font-medium">{student.parentEmail}</div>
+									</div>
+								)}
+								<div>
+									<div className="text-sm text-gray-600">Name</div>
+									<div className="font-medium">{student.parentName || "—"}</div>
+								</div>
+							{student.parentPhone && (
+								<div>
+									<div className="text-sm text-gray-600">Preferred Contact</div>
+									<div className="font-medium">{student.parentPhone}</div>
+								</div>
+							)}
+							{(() => {
+								// Parse alternative contacts from notes
+								try {
+									if (student.notes && student.notes.startsWith('{"alternativeContacts":')) {
+										const parsed = JSON.parse(student.notes);
+										const alternativeContacts = parsed.alternativeContacts || [];
+										if (alternativeContacts.length > 0) {
+											return (
+												<div>
+													<div className="text-sm text-gray-600">Alternative Contacts</div>
+													<div className="space-y-2">
+														{alternativeContacts.map((contact: any, index: number) => (
+															<div key={index} className="font-medium">
+																{contact.method}: {contact.details}
+															</div>
+														))}
+													</div>
+												</div>
+											);
+										}
+									}
+								} catch (e) {
+									// Ignore parsing errors
+								}
+								return null;
+							})()}
 							</div>
 						</div>
-					</div>
+					)}
 
 					{/* Academic Information Card */}
 					<div className="bg-white rounded-lg border p-6">
@@ -264,6 +355,18 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 								<div className="text-sm text-gray-600">Student Since</div>
 								<div className="font-medium">{new Date(student.createdAt).toLocaleDateString('en-GB')} <span className="text-gray-500">{timeAgo}</span></div>
 							</div>
+							{student.class && (
+								<div>
+									<div className="text-sm text-gray-600">Class</div>
+									<div className="font-medium flex items-center gap-2">
+										<div 
+											className="w-3 h-3 rounded-full" 
+											style={{ backgroundColor: student.class.color }}
+										></div>
+										{student.class.name}
+									</div>
+								</div>
+							)}
 							{student.isArchived && (
 								<div>
 									<div className="text-sm text-gray-600">Archived On</div>
@@ -277,7 +380,7 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 				{/* Lesson Information Card */}
 				<div className="bg-white rounded-lg border p-6">
 					<h3 className="text-lg font-medium mb-4">Lesson Information</h3>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						<div>
 							<div className="text-sm text-gray-600">Hourly Rate</div>
 							<div className="font-medium text-lg">{formatCurrencyFromCents(student.hourlyRateCents)}</div>
@@ -292,23 +395,6 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 							<div className="text-sm text-gray-600">Location</div>
 							<div className="font-medium">{student.meetingLocation || "—"}</div>
 						</div>
-						<div>
-							<div className="text-sm text-gray-600">Resource Link</div>
-							<div className="font-medium">
-								{student.resourceLink ? (
-									<a 
-										href={student.resourceLink} 
-										target="_blank" 
-										rel="noopener noreferrer"
-										className="text-blue-600 hover:text-blue-800 underline break-all"
-									>
-										{student.resourceLink}
-									</a>
-								) : (
-									"—"
-								)}
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -319,17 +405,8 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 						<div className="text-gray-700 whitespace-pre-wrap">{student.notes}</div>
 					</div>
 				)}
-			</div>
+			</StudentTabs>
 
-			{/* Action Buttons */}
-			<div className="flex items-center gap-3">
-				<Link 
-					href={`/students/${student.id}/edit`}
-					className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm hover:bg-blue-700"
-				>
-					Edit Student
-				</Link>
-			</div>
 		</div>
 	);
 }

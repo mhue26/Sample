@@ -3,8 +3,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import ParentInformationClient from "./ParentInformationClient";
 import SubjectsMultiSelect from "../../SubjectsMultiSelect";
 import EditStudentClient from "./EditStudentClient";
+import ClassSelector from "../../ClassSelector";
 
 async function updateStudent(id: number, formData: FormData) {
 	"use server";
@@ -33,6 +35,7 @@ async function updateStudent(id: number, formData: FormData) {
 	const year = Number(String(formData.get("year") || "0")) || null;
 	const school = String(formData.get("school") || "").trim() || null;
 	const hourlyRate = Number(String(formData.get("hourlyRate") || "0"));
+	const classId = Number(String(formData.get("classId") || "0")) || null;
 	
 	// Handle meeting location based on type
 	const meetingLocationType = String(formData.get("meetingLocationType") || "").trim();
@@ -50,12 +53,38 @@ async function updateStudent(id: number, formData: FormData) {
 	const studentSince = String(formData.get("studentSince") || "");
 	
 	// Parent information
-	const parentName = String(formData.get("parentName") || "").trim() || null;
-	const parentEmail = String(formData.get("parentEmail") || "").trim() || null;
-	const parentPhone = String(formData.get("parentPhone") || "").trim() || null;
+	const parentRelationship = String(formData.get("parentRelationship") || "").trim() || null;
+	const parentRelationshipOther = String(formData.get("parentRelationshipOther") || "").trim();
 	
-	// Resource link
-	const resourceLink = String(formData.get("resourceLink") || "").trim() || null;
+	// Handle "Other" relationship
+	const finalRelationship = parentRelationship === "Other" && parentRelationshipOther 
+		? parentRelationshipOther 
+		: parentRelationship;
+	
+	// If N/A is selected, clear all parent information
+	const parentName = parentRelationship === "N/A" ? null : String(formData.get("parentName") || "").trim() || null;
+	const parentContactMethod = String(formData.get("parentContactMethod") || "").trim();
+	const parentContactDetails = String(formData.get("parentContactDetails") || "").trim();
+	const parentContact = (parentContactMethod && parentContactDetails) ? `${parentContactMethod}: ${parentContactDetails}` : null;
+	
+	// Process alternative contacts
+	const alternativeContacts = [];
+	let index = 0;
+	while (formData.get(`alternativeContactMethod-${index}`) !== null) {
+		const method = String(formData.get(`alternativeContactMethod-${index}`) || "").trim();
+		const details = String(formData.get(`alternativeContactDetails-${index}`) || "").trim();
+		if (method && details) {
+			alternativeContacts.push({ method, details });
+		}
+		index++;
+	}
+	
+	
+	// Combine notes with alternative contacts
+	const originalNotes = String(formData.get("notes") || "").trim() || null;
+	const notesWithAlternativeContacts = alternativeContacts.length > 0 
+		? JSON.stringify({ alternativeContacts, notes: originalNotes })
+		: originalNotes;
 	
 	try {
 		await prisma.student.update({
@@ -71,12 +100,12 @@ async function updateStudent(id: number, formData: FormData) {
 				school,
 				hourlyRateCents: Math.round(hourlyRate * 100),
 				meetingLocation,
-				notes,
 				createdAt: new Date(studentSince),
 				parentName,
-				parentEmail,
-				parentPhone,
-				resourceLink,
+				parentEmail: finalRelationship,
+				parentPhone: parentContact,
+				notes: notesWithAlternativeContacts,
+				classId,
 			},
 		});
 		
@@ -125,6 +154,45 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 	if (contactInfos.length === 0) {
 		contactInfos.push({ method: "", details: "" });
 	}
+
+	// Parse parent contact information
+	let parentContactInfo = { method: "", details: "" };
+	if (student.parentPhone) {
+		const [method, ...details] = student.parentPhone.split(": ");
+		if (method && details.length > 0) {
+			parentContactInfo = {
+				method: method.trim(),
+				details: details.join(": ").trim()
+			};
+		}
+	}
+
+	// Parse parent relationship
+	const parentRelationship = student.parentEmail || "";
+	const isOtherRelationship = !["Mother", "Father", "N/A"].includes(parentRelationship);
+	const otherRelationship = isOtherRelationship ? parentRelationship : "";
+
+	// Parse alternative contacts (stored in notes field as JSON for now)
+	let alternativeContacts = [];
+	try {
+		if (student.notes && student.notes.startsWith('{"alternativeContacts":')) {
+			const parsed = JSON.parse(student.notes);
+			alternativeContacts = parsed.alternativeContacts || [];
+		}
+	} catch (e) {
+		// If parsing fails, use empty array
+		alternativeContacts = [];
+	}
+
+	// Fetch classes for the current user
+	const classes = await prisma.class.findMany({
+		where: {
+			userId: (session.user as any).id
+		},
+		orderBy: {
+			name: 'asc'
+		}
+	});
 
 	const updateStudentAction = updateStudent.bind(null, studentId);
 
@@ -206,38 +274,14 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 						</div>
 					</div>
 
-					<div className="bg-white p-6 rounded-lg border">
-						<h3 className="text-lg font-medium text-gray-900 mb-4">Parent Information</h3>
-						<div className="space-y-4">
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-								<label className="block">
-									<div className="text-sm text-gray-700">Name</div>
-									<input 
-										name="parentName" 
-										defaultValue={student.parentName || ""}
-										className="mt-1 w-full border rounded-md px-3 py-2" 
-									/>
-								</label>
-								<label className="block">
-									<div className="text-sm text-gray-700">Email</div>
-									<input 
-										type="email" 
-										name="parentEmail" 
-										defaultValue={student.parentEmail || ""}
-										className="mt-1 w-full border rounded-md px-3 py-2" 
-									/>
-								</label>
-							</div>
-							<label className="block">
-								<div className="text-sm text-gray-700">Phone</div>
-								<input 
-									name="parentPhone" 
-									defaultValue={student.parentPhone || ""}
-									className="mt-1 w-full border rounded-md px-3 py-2" 
-								/>
-							</label>
-						</div>
-					</div>
+					<ParentInformationClient 
+						student={student}
+						parentContactInfo={parentContactInfo}
+						parentRelationship={parentRelationship}
+						isOtherRelationship={isOtherRelationship}
+						otherRelationship={otherRelationship}
+						initialAlternativeContacts={alternativeContacts}
+					/>
 
 					<div className="bg-white p-6 rounded-lg border">
 						<h3 className="text-lg font-medium text-gray-900 mb-4">Academic Information</h3>
@@ -278,15 +322,10 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 									className="mt-1 w-full border rounded-md px-3 py-2" 
 								/>
 							</label>
-							<label className="block">
-								<div className="text-sm text-gray-700">Notes</div>
-								<textarea 
-									name="notes" 
-									rows={4} 
-									defaultValue={student.notes || ""}
-									className="mt-1 w-full border rounded-md px-3 py-2" 
-								/>
-							</label>
+							<ClassSelector 
+								classes={classes}
+								selectedClassId={student.classId}
+							/>
 						</div>
 					</div>
 
@@ -305,17 +344,7 @@ export default async function EditStudentPage({ params }: { params: Promise<{ id
 									step="0.01" 
 									min="0" 
 									defaultValue={student.hourlyRateCents / 100}
-									className="mt-1 w-full border rounded-md px-3 py-2" 
-								/>
-							</label>
-							<label className="block">
-								<div className="text-sm text-gray-700">Resource Link</div>
-								<input 
-									name="resourceLink" 
-									type="url" 
-									defaultValue={student.resourceLink || ""}
-									placeholder="https://example.com"
-									className="mt-1 w-full border rounded-md px-3 py-2" 
+									className="mt-1 w-full border rounded-md px-3 py-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
 								/>
 							</label>
 							<div className="block">

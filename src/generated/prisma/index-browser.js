@@ -138,7 +138,8 @@ exports.Prisma.StudentScalarFieldEnum = {
   year: 'year',
   meetingLocation: 'meetingLocation',
   resourceLink: 'resourceLink',
-  school: 'school'
+  school: 'school',
+  classId: 'classId'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -148,6 +149,16 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   passwordHash: 'passwordHash'
+};
+
+exports.Prisma.ClassScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 };
 
 exports.Prisma.MeetingScalarFieldEnum = {
@@ -202,6 +213,7 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Student: 'Student',
   User: 'User',
+  Class: 'Class',
   Meeting: 'Meeting',
   Term: 'Term',
   Holiday: 'Holiday'
