@@ -14,6 +14,9 @@ export async function saveBillingSettings(formData: FormData) {
 	const currency = String(formData.get("currency") || "AUD").trim();
 	const taxRatePercent = parseFloat(String(formData.get("taxRatePercent") || "0")) || 0;
 	const taxInclusive = formData.get("taxInclusive") === "on";
+	const chargeTimingRaw = String(formData.get("chargeTiming") || "ON_SCHEDULE");
+	const chargeTiming =
+		chargeTimingRaw === "ON_COMPLETE" ? "ON_COMPLETE" : "ON_SCHEDULE";
 
 	await prisma.billingSettings.upsert({
 		where: { organisationId: ctx.organisationId },
@@ -23,12 +26,14 @@ export async function saveBillingSettings(formData: FormData) {
 			currency,
 			taxRatePercent,
 			taxInclusive,
+			chargeTiming,
 		},
 		update: {
 			defaultTermRateCents: Math.round(defaultTermRate * 100),
 			currency,
 			taxRatePercent,
 			taxInclusive,
+			chargeTiming,
 		},
 	});
 

@@ -375,6 +375,7 @@ exports.Prisma.BillingSettingsScalarFieldEnum = {
   currency: 'currency',
   taxRatePercent: 'taxRatePercent',
   taxInclusive: 'taxInclusive',
+  chargeTiming: 'chargeTiming',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organisationId: 'organisationId'
@@ -461,6 +462,22 @@ exports.Prisma.PaymentScalarFieldEnum = {
   recordedById: 'recordedById'
 };
 
+exports.Prisma.LedgerEntryScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  amountCents: 'amountCents',
+  effectiveDate: 'effectiveDate',
+  description: 'description',
+  voidedAt: 'voidedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organisationId: 'organisationId',
+  studentId: 'studentId',
+  meetingId: 'meetingId',
+  paymentId: 'paymentId',
+  invoiceId: 'invoiceId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -539,6 +556,11 @@ exports.CheckInRecurrence = exports.$Enums.CheckInRecurrence = {
   YEAR: 'YEAR'
 };
 
+exports.BillingChargeTiming = exports.$Enums.BillingChargeTiming = {
+  ON_SCHEDULE: 'ON_SCHEDULE',
+  ON_COMPLETE: 'ON_COMPLETE'
+};
+
 exports.DiscountType = exports.$Enums.DiscountType = {
   PERCENTAGE: 'PERCENTAGE',
   FIXED: 'FIXED'
@@ -568,6 +590,12 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
   OTHER: 'OTHER'
 };
 
+exports.LedgerEntryType = exports.$Enums.LedgerEntryType = {
+  LESSON_CHARGE: 'LESSON_CHARGE',
+  PAYMENT: 'PAYMENT',
+  ADJUSTMENT: 'ADJUSTMENT'
+};
+
 exports.Prisma.ModelName = {
   Organisation: 'Organisation',
   OrganisationMember: 'OrganisationMember',
@@ -593,7 +621,8 @@ exports.Prisma.ModelName = {
   Invoice: 'Invoice',
   InvoiceLineItem: 'InvoiceLineItem',
   Quote: 'Quote',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  LedgerEntry: 'LedgerEntry'
 };
 
 /**

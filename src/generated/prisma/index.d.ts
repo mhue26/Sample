@@ -138,6 +138,11 @@ export type Quote = $Result.DefaultSelection<Prisma.$QuotePayload>
  * 
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model LedgerEntry
+ * 
+ */
+export type LedgerEntry = $Result.DefaultSelection<Prisma.$LedgerEntryPayload>
 
 /**
  * Enums
@@ -269,6 +274,23 @@ export const ClassFormat: {
 
 export type ClassFormat = (typeof ClassFormat)[keyof typeof ClassFormat]
 
+
+export const BillingChargeTiming: {
+  ON_SCHEDULE: 'ON_SCHEDULE',
+  ON_COMPLETE: 'ON_COMPLETE'
+};
+
+export type BillingChargeTiming = (typeof BillingChargeTiming)[keyof typeof BillingChargeTiming]
+
+
+export const LedgerEntryType: {
+  LESSON_CHARGE: 'LESSON_CHARGE',
+  PAYMENT: 'PAYMENT',
+  ADJUSTMENT: 'ADJUSTMENT'
+};
+
+export type LedgerEntryType = (typeof LedgerEntryType)[keyof typeof LedgerEntryType]
+
 }
 
 export type Role = $Enums.Role
@@ -322,6 +344,14 @@ export const JoinRequestStatus: typeof $Enums.JoinRequestStatus
 export type ClassFormat = $Enums.ClassFormat
 
 export const ClassFormat: typeof $Enums.ClassFormat
+
+export type BillingChargeTiming = $Enums.BillingChargeTiming
+
+export const BillingChargeTiming: typeof $Enums.BillingChargeTiming
+
+export type LedgerEntryType = $Enums.LedgerEntryType
+
+export const LedgerEntryType: typeof $Enums.LedgerEntryType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -690,6 +720,16 @@ export class PrismaClient<
     * ```
     */
   get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ledgerEntry`: Exposes CRUD operations for the **LedgerEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LedgerEntries
+    * const ledgerEntries = await prisma.ledgerEntry.findMany()
+    * ```
+    */
+  get ledgerEntry(): Prisma.LedgerEntryDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1154,7 +1194,8 @@ export namespace Prisma {
     Invoice: 'Invoice',
     InvoiceLineItem: 'InvoiceLineItem',
     Quote: 'Quote',
-    Payment: 'Payment'
+    Payment: 'Payment',
+    LedgerEntry: 'LedgerEntry'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1173,7 +1214,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organisation" | "organisationMember" | "invitation" | "organisationJoinRequest" | "user" | "organisationPreferences" | "userPreferences" | "student" | "class" | "meeting" | "term" | "holiday" | "keyDate" | "assessment" | "classSession" | "classSessionAttendance" | "checkIn" | "checkInRule" | "billingSettings" | "discount" | "studentDiscount" | "invoice" | "invoiceLineItem" | "quote" | "payment"
+      modelProps: "organisation" | "organisationMember" | "invitation" | "organisationJoinRequest" | "user" | "organisationPreferences" | "userPreferences" | "student" | "class" | "meeting" | "term" | "holiday" | "keyDate" | "assessment" | "classSession" | "classSessionAttendance" | "checkIn" | "checkInRule" | "billingSettings" | "discount" | "studentDiscount" | "invoice" | "invoiceLineItem" | "quote" | "payment" | "ledgerEntry"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3027,6 +3068,80 @@ export namespace Prisma {
           }
         }
       }
+      LedgerEntry: {
+        payload: Prisma.$LedgerEntryPayload<ExtArgs>
+        fields: Prisma.LedgerEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LedgerEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LedgerEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.LedgerEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LedgerEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          findMany: {
+            args: Prisma.LedgerEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>[]
+          }
+          create: {
+            args: Prisma.LedgerEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          createMany: {
+            args: Prisma.LedgerEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LedgerEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.LedgerEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          update: {
+            args: Prisma.LedgerEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.LedgerEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LedgerEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LedgerEntryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>[]
+          }
+          upsert: {
+            args: Prisma.LedgerEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LedgerEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.LedgerEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLedgerEntry>
+          }
+          groupBy: {
+            args: Prisma.LedgerEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LedgerEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LedgerEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<LedgerEntryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3148,6 +3263,7 @@ export namespace Prisma {
     invoiceLineItem?: InvoiceLineItemOmit
     quote?: QuoteOmit
     payment?: PaymentOmit
+    ledgerEntry?: LedgerEntryOmit
   }
 
   /* Types for Logging */
@@ -3246,6 +3362,7 @@ export namespace Prisma {
     invoices: number
     quotes: number
     payments: number
+    ledgerEntries: number
   }
 
   export type OrganisationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3267,6 +3384,7 @@ export namespace Prisma {
     invoices?: boolean | OrganisationCountOutputTypeCountInvoicesArgs
     quotes?: boolean | OrganisationCountOutputTypeCountQuotesArgs
     payments?: boolean | OrganisationCountOutputTypeCountPaymentsArgs
+    ledgerEntries?: boolean | OrganisationCountOutputTypeCountLedgerEntriesArgs
   }
 
   // Custom InputTypes
@@ -3406,6 +3524,13 @@ export namespace Prisma {
     where?: PaymentWhereInput
   }
 
+  /**
+   * OrganisationCountOutputType without action
+   */
+  export type OrganisationCountOutputTypeCountLedgerEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LedgerEntryWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -3533,6 +3658,7 @@ export namespace Prisma {
     discounts: number
     classSessionAttendances: number
     checkInRules: number
+    ledgerEntries: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3545,6 +3671,7 @@ export namespace Prisma {
     discounts?: boolean | StudentCountOutputTypeCountDiscountsArgs
     classSessionAttendances?: boolean | StudentCountOutputTypeCountClassSessionAttendancesArgs
     checkInRules?: boolean | StudentCountOutputTypeCountCheckInRulesArgs
+    ledgerEntries?: boolean | StudentCountOutputTypeCountLedgerEntriesArgs
   }
 
   // Custom InputTypes
@@ -3619,6 +3746,13 @@ export namespace Prisma {
    */
   export type StudentCountOutputTypeCountCheckInRulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CheckInRuleWhereInput
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountLedgerEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LedgerEntryWhereInput
   }
 
 
@@ -4128,6 +4262,7 @@ export namespace Prisma {
     invoices?: boolean | Organisation$invoicesArgs<ExtArgs>
     quotes?: boolean | Organisation$quotesArgs<ExtArgs>
     payments?: boolean | Organisation$paymentsArgs<ExtArgs>
+    ledgerEntries?: boolean | Organisation$ledgerEntriesArgs<ExtArgs>
     _count?: boolean | OrganisationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organisation"]>
 
@@ -4189,6 +4324,7 @@ export namespace Prisma {
     invoices?: boolean | Organisation$invoicesArgs<ExtArgs>
     quotes?: boolean | Organisation$quotesArgs<ExtArgs>
     payments?: boolean | Organisation$paymentsArgs<ExtArgs>
+    ledgerEntries?: boolean | Organisation$ledgerEntriesArgs<ExtArgs>
     _count?: boolean | OrganisationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganisationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4222,6 +4358,7 @@ export namespace Prisma {
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       quotes: Prisma.$QuotePayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
+      ledgerEntries: Prisma.$LedgerEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4647,6 +4784,7 @@ export namespace Prisma {
     invoices<T extends Organisation$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, Organisation$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quotes<T extends Organisation$quotesArgs<ExtArgs> = {}>(args?: Subset<T, Organisation$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends Organisation$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Organisation$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ledgerEntries<T extends Organisation$ledgerEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Organisation$ledgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5566,6 +5704,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Organisation.ledgerEntries
+   */
+  export type Organisation$ledgerEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    where?: LedgerEntryWhereInput
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    cursor?: LedgerEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LedgerEntryScalarFieldEnum | LedgerEntryScalarFieldEnum[]
   }
 
   /**
@@ -12880,6 +13042,7 @@ export namespace Prisma {
     discounts?: boolean | Student$discountsArgs<ExtArgs>
     classSessionAttendances?: boolean | Student$classSessionAttendancesArgs<ExtArgs>
     checkInRules?: boolean | Student$checkInRulesArgs<ExtArgs>
+    ledgerEntries?: boolean | Student$ledgerEntriesArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -12978,6 +13141,7 @@ export namespace Prisma {
     discounts?: boolean | Student$discountsArgs<ExtArgs>
     classSessionAttendances?: boolean | Student$classSessionAttendancesArgs<ExtArgs>
     checkInRules?: boolean | Student$checkInRulesArgs<ExtArgs>
+    ledgerEntries?: boolean | Student$ledgerEntriesArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13003,6 +13167,7 @@ export namespace Prisma {
       discounts: Prisma.$StudentDiscountPayload<ExtArgs>[]
       classSessionAttendances: Prisma.$ClassSessionAttendancePayload<ExtArgs>[]
       checkInRules: Prisma.$CheckInRulePayload<ExtArgs>[]
+      ledgerEntries: Prisma.$LedgerEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -13433,6 +13598,7 @@ export namespace Prisma {
     discounts<T extends Student$discountsArgs<ExtArgs> = {}>(args?: Subset<T, Student$discountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     classSessionAttendances<T extends Student$classSessionAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, Student$classSessionAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClassSessionAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checkInRules<T extends Student$checkInRulesArgs<ExtArgs> = {}>(args?: Subset<T, Student$checkInRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckInRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ledgerEntries<T extends Student$ledgerEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Student$ledgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14113,6 +14279,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CheckInRuleScalarFieldEnum | CheckInRuleScalarFieldEnum[]
+  }
+
+  /**
+   * Student.ledgerEntries
+   */
+  export type Student$ledgerEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    where?: LedgerEntryWhereInput
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    cursor?: LedgerEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LedgerEntryScalarFieldEnum | LedgerEntryScalarFieldEnum[]
   }
 
   /**
@@ -15793,6 +15983,7 @@ export namespace Prisma {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
     assessments?: boolean | Meeting$assessmentsArgs<ExtArgs>
+    ledgerEntry?: boolean | Meeting$ledgerEntryArgs<ExtArgs>
     _count?: boolean | MeetingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["meeting"]>
 
@@ -15883,6 +16074,7 @@ export namespace Prisma {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
     assessments?: boolean | Meeting$assessmentsArgs<ExtArgs>
+    ledgerEntry?: boolean | Meeting$ledgerEntryArgs<ExtArgs>
     _count?: boolean | MeetingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MeetingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15903,6 +16095,7 @@ export namespace Prisma {
       createdBy: Prisma.$UserPayload<ExtArgs>
       student: Prisma.$StudentPayload<ExtArgs>
       assessments: Prisma.$AssessmentPayload<ExtArgs>[]
+      ledgerEntry: Prisma.$LedgerEntryPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -16325,6 +16518,7 @@ export namespace Prisma {
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     assessments<T extends Meeting$assessmentsArgs<ExtArgs> = {}>(args?: Subset<T, Meeting$assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ledgerEntry<T extends Meeting$ledgerEntryArgs<ExtArgs> = {}>(args?: Subset<T, Meeting$ledgerEntryArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16793,6 +16987,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AssessmentScalarFieldEnum | AssessmentScalarFieldEnum[]
+  }
+
+  /**
+   * Meeting.ledgerEntry
+   */
+  export type Meeting$ledgerEntryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    where?: LedgerEntryWhereInput
   }
 
   /**
@@ -26526,6 +26739,7 @@ export namespace Prisma {
     currency: string | null
     taxRatePercent: number | null
     taxInclusive: boolean | null
+    chargeTiming: $Enums.BillingChargeTiming | null
     createdAt: Date | null
     updatedAt: Date | null
     organisationId: string | null
@@ -26537,6 +26751,7 @@ export namespace Prisma {
     currency: string | null
     taxRatePercent: number | null
     taxInclusive: boolean | null
+    chargeTiming: $Enums.BillingChargeTiming | null
     createdAt: Date | null
     updatedAt: Date | null
     organisationId: string | null
@@ -26548,6 +26763,7 @@ export namespace Prisma {
     currency: number
     taxRatePercent: number
     taxInclusive: number
+    chargeTiming: number
     createdAt: number
     updatedAt: number
     organisationId: number
@@ -26571,6 +26787,7 @@ export namespace Prisma {
     currency?: true
     taxRatePercent?: true
     taxInclusive?: true
+    chargeTiming?: true
     createdAt?: true
     updatedAt?: true
     organisationId?: true
@@ -26582,6 +26799,7 @@ export namespace Prisma {
     currency?: true
     taxRatePercent?: true
     taxInclusive?: true
+    chargeTiming?: true
     createdAt?: true
     updatedAt?: true
     organisationId?: true
@@ -26593,6 +26811,7 @@ export namespace Prisma {
     currency?: true
     taxRatePercent?: true
     taxInclusive?: true
+    chargeTiming?: true
     createdAt?: true
     updatedAt?: true
     organisationId?: true
@@ -26691,6 +26910,7 @@ export namespace Prisma {
     currency: string
     taxRatePercent: number
     taxInclusive: boolean
+    chargeTiming: $Enums.BillingChargeTiming
     createdAt: Date
     updatedAt: Date
     organisationId: string
@@ -26721,6 +26941,7 @@ export namespace Prisma {
     currency?: boolean
     taxRatePercent?: boolean
     taxInclusive?: boolean
+    chargeTiming?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     organisationId?: boolean
@@ -26735,6 +26956,7 @@ export namespace Prisma {
     currency?: boolean
     taxRatePercent?: boolean
     taxInclusive?: boolean
+    chargeTiming?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     organisationId?: boolean
@@ -26747,6 +26969,7 @@ export namespace Prisma {
     currency?: boolean
     taxRatePercent?: boolean
     taxInclusive?: boolean
+    chargeTiming?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     organisationId?: boolean
@@ -26759,12 +26982,13 @@ export namespace Prisma {
     currency?: boolean
     taxRatePercent?: boolean
     taxInclusive?: boolean
+    chargeTiming?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     organisationId?: boolean
   }
 
-  export type BillingSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "defaultTermRateCents" | "currency" | "taxRatePercent" | "taxInclusive" | "createdAt" | "updatedAt" | "organisationId", ExtArgs["result"]["billingSettings"]>
+  export type BillingSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "defaultTermRateCents" | "currency" | "taxRatePercent" | "taxInclusive" | "chargeTiming" | "createdAt" | "updatedAt" | "organisationId", ExtArgs["result"]["billingSettings"]>
   export type BillingSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
     discounts?: boolean | BillingSettings$discountsArgs<ExtArgs>
@@ -26789,6 +27013,7 @@ export namespace Prisma {
       currency: string
       taxRatePercent: number
       taxInclusive: boolean
+      chargeTiming: $Enums.BillingChargeTiming
       createdAt: Date
       updatedAt: Date
       organisationId: string
@@ -27222,6 +27447,7 @@ export namespace Prisma {
     readonly currency: FieldRef<"BillingSettings", 'String'>
     readonly taxRatePercent: FieldRef<"BillingSettings", 'Float'>
     readonly taxInclusive: FieldRef<"BillingSettings", 'Boolean'>
+    readonly chargeTiming: FieldRef<"BillingSettings", 'BillingChargeTiming'>
     readonly createdAt: FieldRef<"BillingSettings", 'DateTime'>
     readonly updatedAt: FieldRef<"BillingSettings", 'DateTime'>
     readonly organisationId: FieldRef<"BillingSettings", 'String'>
@@ -33991,6 +34217,7 @@ export namespace Prisma {
     student?: boolean | StudentDefaultArgs<ExtArgs>
     invoice?: boolean | Payment$invoiceArgs<ExtArgs>
     recordedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ledgerEntry?: boolean | Payment$ledgerEntryArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -34052,6 +34279,7 @@ export namespace Prisma {
     student?: boolean | StudentDefaultArgs<ExtArgs>
     invoice?: boolean | Payment$invoiceArgs<ExtArgs>
     recordedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ledgerEntry?: boolean | Payment$ledgerEntryArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
@@ -34073,6 +34301,7 @@ export namespace Prisma {
       student: Prisma.$StudentPayload<ExtArgs>
       invoice: Prisma.$InvoicePayload<ExtArgs> | null
       recordedBy: Prisma.$UserPayload<ExtArgs>
+      ledgerEntry: Prisma.$LedgerEntryPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -34485,6 +34714,7 @@ export namespace Prisma {
     student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     invoice<T extends Payment$invoiceArgs<ExtArgs> = {}>(args?: Subset<T, Payment$invoiceArgs<ExtArgs>>): Prisma__InvoiceClient<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     recordedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ledgerEntry<T extends Payment$ledgerEntryArgs<ExtArgs> = {}>(args?: Subset<T, Payment$ledgerEntryArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -34941,6 +35171,25 @@ export namespace Prisma {
   }
 
   /**
+   * Payment.ledgerEntry
+   */
+  export type Payment$ledgerEntryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    where?: LedgerEntryWhereInput
+  }
+
+  /**
    * Payment without action
    */
   export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -34956,6 +35205,1272 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PaymentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LedgerEntry
+   */
+
+  export type AggregateLedgerEntry = {
+    _count: LedgerEntryCountAggregateOutputType | null
+    _avg: LedgerEntryAvgAggregateOutputType | null
+    _sum: LedgerEntrySumAggregateOutputType | null
+    _min: LedgerEntryMinAggregateOutputType | null
+    _max: LedgerEntryMaxAggregateOutputType | null
+  }
+
+  export type LedgerEntryAvgAggregateOutputType = {
+    amountCents: number | null
+    studentId: number | null
+    meetingId: number | null
+  }
+
+  export type LedgerEntrySumAggregateOutputType = {
+    amountCents: number | null
+    studentId: number | null
+    meetingId: number | null
+  }
+
+  export type LedgerEntryMinAggregateOutputType = {
+    id: string | null
+    type: $Enums.LedgerEntryType | null
+    amountCents: number | null
+    effectiveDate: Date | null
+    description: string | null
+    voidedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    organisationId: string | null
+    studentId: number | null
+    meetingId: number | null
+    paymentId: string | null
+    invoiceId: string | null
+  }
+
+  export type LedgerEntryMaxAggregateOutputType = {
+    id: string | null
+    type: $Enums.LedgerEntryType | null
+    amountCents: number | null
+    effectiveDate: Date | null
+    description: string | null
+    voidedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    organisationId: string | null
+    studentId: number | null
+    meetingId: number | null
+    paymentId: string | null
+    invoiceId: string | null
+  }
+
+  export type LedgerEntryCountAggregateOutputType = {
+    id: number
+    type: number
+    amountCents: number
+    effectiveDate: number
+    description: number
+    voidedAt: number
+    createdAt: number
+    updatedAt: number
+    organisationId: number
+    studentId: number
+    meetingId: number
+    paymentId: number
+    invoiceId: number
+    _all: number
+  }
+
+
+  export type LedgerEntryAvgAggregateInputType = {
+    amountCents?: true
+    studentId?: true
+    meetingId?: true
+  }
+
+  export type LedgerEntrySumAggregateInputType = {
+    amountCents?: true
+    studentId?: true
+    meetingId?: true
+  }
+
+  export type LedgerEntryMinAggregateInputType = {
+    id?: true
+    type?: true
+    amountCents?: true
+    effectiveDate?: true
+    description?: true
+    voidedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    organisationId?: true
+    studentId?: true
+    meetingId?: true
+    paymentId?: true
+    invoiceId?: true
+  }
+
+  export type LedgerEntryMaxAggregateInputType = {
+    id?: true
+    type?: true
+    amountCents?: true
+    effectiveDate?: true
+    description?: true
+    voidedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    organisationId?: true
+    studentId?: true
+    meetingId?: true
+    paymentId?: true
+    invoiceId?: true
+  }
+
+  export type LedgerEntryCountAggregateInputType = {
+    id?: true
+    type?: true
+    amountCents?: true
+    effectiveDate?: true
+    description?: true
+    voidedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    organisationId?: true
+    studentId?: true
+    meetingId?: true
+    paymentId?: true
+    invoiceId?: true
+    _all?: true
+  }
+
+  export type LedgerEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LedgerEntry to aggregate.
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LedgerEntries to fetch.
+     */
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LedgerEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LedgerEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LedgerEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LedgerEntries
+    **/
+    _count?: true | LedgerEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LedgerEntryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LedgerEntrySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LedgerEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LedgerEntryMaxAggregateInputType
+  }
+
+  export type GetLedgerEntryAggregateType<T extends LedgerEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateLedgerEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLedgerEntry[P]>
+      : GetScalarType<T[P], AggregateLedgerEntry[P]>
+  }
+
+
+
+
+  export type LedgerEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LedgerEntryWhereInput
+    orderBy?: LedgerEntryOrderByWithAggregationInput | LedgerEntryOrderByWithAggregationInput[]
+    by: LedgerEntryScalarFieldEnum[] | LedgerEntryScalarFieldEnum
+    having?: LedgerEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LedgerEntryCountAggregateInputType | true
+    _avg?: LedgerEntryAvgAggregateInputType
+    _sum?: LedgerEntrySumAggregateInputType
+    _min?: LedgerEntryMinAggregateInputType
+    _max?: LedgerEntryMaxAggregateInputType
+  }
+
+  export type LedgerEntryGroupByOutputType = {
+    id: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date
+    description: string
+    voidedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    organisationId: string
+    studentId: number
+    meetingId: number | null
+    paymentId: string | null
+    invoiceId: string | null
+    _count: LedgerEntryCountAggregateOutputType | null
+    _avg: LedgerEntryAvgAggregateOutputType | null
+    _sum: LedgerEntrySumAggregateOutputType | null
+    _min: LedgerEntryMinAggregateOutputType | null
+    _max: LedgerEntryMaxAggregateOutputType | null
+  }
+
+  type GetLedgerEntryGroupByPayload<T extends LedgerEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LedgerEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LedgerEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LedgerEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], LedgerEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LedgerEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    amountCents?: boolean
+    effectiveDate?: boolean
+    description?: boolean
+    voidedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organisationId?: boolean
+    studentId?: boolean
+    meetingId?: boolean
+    paymentId?: boolean
+    invoiceId?: boolean
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }, ExtArgs["result"]["ledgerEntry"]>
+
+  export type LedgerEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    amountCents?: boolean
+    effectiveDate?: boolean
+    description?: boolean
+    voidedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organisationId?: boolean
+    studentId?: boolean
+    meetingId?: boolean
+    paymentId?: boolean
+    invoiceId?: boolean
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }, ExtArgs["result"]["ledgerEntry"]>
+
+  export type LedgerEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    amountCents?: boolean
+    effectiveDate?: boolean
+    description?: boolean
+    voidedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organisationId?: boolean
+    studentId?: boolean
+    meetingId?: boolean
+    paymentId?: boolean
+    invoiceId?: boolean
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }, ExtArgs["result"]["ledgerEntry"]>
+
+  export type LedgerEntrySelectScalar = {
+    id?: boolean
+    type?: boolean
+    amountCents?: boolean
+    effectiveDate?: boolean
+    description?: boolean
+    voidedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organisationId?: boolean
+    studentId?: boolean
+    meetingId?: boolean
+    paymentId?: boolean
+    invoiceId?: boolean
+  }
+
+  export type LedgerEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "amountCents" | "effectiveDate" | "description" | "voidedAt" | "createdAt" | "updatedAt" | "organisationId" | "studentId" | "meetingId" | "paymentId" | "invoiceId", ExtArgs["result"]["ledgerEntry"]>
+  export type LedgerEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }
+  export type LedgerEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }
+  export type LedgerEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organisation?: boolean | OrganisationDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    meeting?: boolean | LedgerEntry$meetingArgs<ExtArgs>
+    payment?: boolean | LedgerEntry$paymentArgs<ExtArgs>
+  }
+
+  export type $LedgerEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LedgerEntry"
+    objects: {
+      organisation: Prisma.$OrganisationPayload<ExtArgs>
+      student: Prisma.$StudentPayload<ExtArgs>
+      meeting: Prisma.$MeetingPayload<ExtArgs> | null
+      payment: Prisma.$PaymentPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: $Enums.LedgerEntryType
+      amountCents: number
+      effectiveDate: Date
+      description: string
+      voidedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+      organisationId: string
+      studentId: number
+      meetingId: number | null
+      paymentId: string | null
+      invoiceId: string | null
+    }, ExtArgs["result"]["ledgerEntry"]>
+    composites: {}
+  }
+
+  type LedgerEntryGetPayload<S extends boolean | null | undefined | LedgerEntryDefaultArgs> = $Result.GetResult<Prisma.$LedgerEntryPayload, S>
+
+  type LedgerEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LedgerEntryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LedgerEntryCountAggregateInputType | true
+    }
+
+  export interface LedgerEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LedgerEntry'], meta: { name: 'LedgerEntry' } }
+    /**
+     * Find zero or one LedgerEntry that matches the filter.
+     * @param {LedgerEntryFindUniqueArgs} args - Arguments to find a LedgerEntry
+     * @example
+     * // Get one LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LedgerEntryFindUniqueArgs>(args: SelectSubset<T, LedgerEntryFindUniqueArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LedgerEntry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LedgerEntryFindUniqueOrThrowArgs} args - Arguments to find a LedgerEntry
+     * @example
+     * // Get one LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LedgerEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, LedgerEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LedgerEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryFindFirstArgs} args - Arguments to find a LedgerEntry
+     * @example
+     * // Get one LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LedgerEntryFindFirstArgs>(args?: SelectSubset<T, LedgerEntryFindFirstArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LedgerEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryFindFirstOrThrowArgs} args - Arguments to find a LedgerEntry
+     * @example
+     * // Get one LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LedgerEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, LedgerEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LedgerEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LedgerEntries
+     * const ledgerEntries = await prisma.ledgerEntry.findMany()
+     * 
+     * // Get first 10 LedgerEntries
+     * const ledgerEntries = await prisma.ledgerEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ledgerEntryWithIdOnly = await prisma.ledgerEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LedgerEntryFindManyArgs>(args?: SelectSubset<T, LedgerEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LedgerEntry.
+     * @param {LedgerEntryCreateArgs} args - Arguments to create a LedgerEntry.
+     * @example
+     * // Create one LedgerEntry
+     * const LedgerEntry = await prisma.ledgerEntry.create({
+     *   data: {
+     *     // ... data to create a LedgerEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends LedgerEntryCreateArgs>(args: SelectSubset<T, LedgerEntryCreateArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LedgerEntries.
+     * @param {LedgerEntryCreateManyArgs} args - Arguments to create many LedgerEntries.
+     * @example
+     * // Create many LedgerEntries
+     * const ledgerEntry = await prisma.ledgerEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LedgerEntryCreateManyArgs>(args?: SelectSubset<T, LedgerEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LedgerEntries and returns the data saved in the database.
+     * @param {LedgerEntryCreateManyAndReturnArgs} args - Arguments to create many LedgerEntries.
+     * @example
+     * // Create many LedgerEntries
+     * const ledgerEntry = await prisma.ledgerEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LedgerEntries and only return the `id`
+     * const ledgerEntryWithIdOnly = await prisma.ledgerEntry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LedgerEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, LedgerEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LedgerEntry.
+     * @param {LedgerEntryDeleteArgs} args - Arguments to delete one LedgerEntry.
+     * @example
+     * // Delete one LedgerEntry
+     * const LedgerEntry = await prisma.ledgerEntry.delete({
+     *   where: {
+     *     // ... filter to delete one LedgerEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LedgerEntryDeleteArgs>(args: SelectSubset<T, LedgerEntryDeleteArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LedgerEntry.
+     * @param {LedgerEntryUpdateArgs} args - Arguments to update one LedgerEntry.
+     * @example
+     * // Update one LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LedgerEntryUpdateArgs>(args: SelectSubset<T, LedgerEntryUpdateArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LedgerEntries.
+     * @param {LedgerEntryDeleteManyArgs} args - Arguments to filter LedgerEntries to delete.
+     * @example
+     * // Delete a few LedgerEntries
+     * const { count } = await prisma.ledgerEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LedgerEntryDeleteManyArgs>(args?: SelectSubset<T, LedgerEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LedgerEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LedgerEntries
+     * const ledgerEntry = await prisma.ledgerEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LedgerEntryUpdateManyArgs>(args: SelectSubset<T, LedgerEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LedgerEntries and returns the data updated in the database.
+     * @param {LedgerEntryUpdateManyAndReturnArgs} args - Arguments to update many LedgerEntries.
+     * @example
+     * // Update many LedgerEntries
+     * const ledgerEntry = await prisma.ledgerEntry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LedgerEntries and only return the `id`
+     * const ledgerEntryWithIdOnly = await prisma.ledgerEntry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LedgerEntryUpdateManyAndReturnArgs>(args: SelectSubset<T, LedgerEntryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LedgerEntry.
+     * @param {LedgerEntryUpsertArgs} args - Arguments to update or create a LedgerEntry.
+     * @example
+     * // Update or create a LedgerEntry
+     * const ledgerEntry = await prisma.ledgerEntry.upsert({
+     *   create: {
+     *     // ... data to create a LedgerEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LedgerEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LedgerEntryUpsertArgs>(args: SelectSubset<T, LedgerEntryUpsertArgs<ExtArgs>>): Prisma__LedgerEntryClient<$Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LedgerEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryCountArgs} args - Arguments to filter LedgerEntries to count.
+     * @example
+     * // Count the number of LedgerEntries
+     * const count = await prisma.ledgerEntry.count({
+     *   where: {
+     *     // ... the filter for the LedgerEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends LedgerEntryCountArgs>(
+      args?: Subset<T, LedgerEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LedgerEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LedgerEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LedgerEntryAggregateArgs>(args: Subset<T, LedgerEntryAggregateArgs>): Prisma.PrismaPromise<GetLedgerEntryAggregateType<T>>
+
+    /**
+     * Group by LedgerEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LedgerEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LedgerEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LedgerEntryGroupByArgs['orderBy'] }
+        : { orderBy?: LedgerEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LedgerEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLedgerEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LedgerEntry model
+   */
+  readonly fields: LedgerEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LedgerEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LedgerEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organisation<T extends OrganisationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganisationDefaultArgs<ExtArgs>>): Prisma__OrganisationClient<$Result.GetResult<Prisma.$OrganisationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    meeting<T extends LedgerEntry$meetingArgs<ExtArgs> = {}>(args?: Subset<T, LedgerEntry$meetingArgs<ExtArgs>>): Prisma__MeetingClient<$Result.GetResult<Prisma.$MeetingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    payment<T extends LedgerEntry$paymentArgs<ExtArgs> = {}>(args?: Subset<T, LedgerEntry$paymentArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LedgerEntry model
+   */
+  interface LedgerEntryFieldRefs {
+    readonly id: FieldRef<"LedgerEntry", 'String'>
+    readonly type: FieldRef<"LedgerEntry", 'LedgerEntryType'>
+    readonly amountCents: FieldRef<"LedgerEntry", 'Int'>
+    readonly effectiveDate: FieldRef<"LedgerEntry", 'DateTime'>
+    readonly description: FieldRef<"LedgerEntry", 'String'>
+    readonly voidedAt: FieldRef<"LedgerEntry", 'DateTime'>
+    readonly createdAt: FieldRef<"LedgerEntry", 'DateTime'>
+    readonly updatedAt: FieldRef<"LedgerEntry", 'DateTime'>
+    readonly organisationId: FieldRef<"LedgerEntry", 'String'>
+    readonly studentId: FieldRef<"LedgerEntry", 'Int'>
+    readonly meetingId: FieldRef<"LedgerEntry", 'Int'>
+    readonly paymentId: FieldRef<"LedgerEntry", 'String'>
+    readonly invoiceId: FieldRef<"LedgerEntry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LedgerEntry findUnique
+   */
+  export type LedgerEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which LedgerEntry to fetch.
+     */
+    where: LedgerEntryWhereUniqueInput
+  }
+
+  /**
+   * LedgerEntry findUniqueOrThrow
+   */
+  export type LedgerEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which LedgerEntry to fetch.
+     */
+    where: LedgerEntryWhereUniqueInput
+  }
+
+  /**
+   * LedgerEntry findFirst
+   */
+  export type LedgerEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which LedgerEntry to fetch.
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LedgerEntries to fetch.
+     */
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LedgerEntries.
+     */
+    cursor?: LedgerEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LedgerEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LedgerEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LedgerEntries.
+     */
+    distinct?: LedgerEntryScalarFieldEnum | LedgerEntryScalarFieldEnum[]
+  }
+
+  /**
+   * LedgerEntry findFirstOrThrow
+   */
+  export type LedgerEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which LedgerEntry to fetch.
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LedgerEntries to fetch.
+     */
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LedgerEntries.
+     */
+    cursor?: LedgerEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LedgerEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LedgerEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LedgerEntries.
+     */
+    distinct?: LedgerEntryScalarFieldEnum | LedgerEntryScalarFieldEnum[]
+  }
+
+  /**
+   * LedgerEntry findMany
+   */
+  export type LedgerEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which LedgerEntries to fetch.
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LedgerEntries to fetch.
+     */
+    orderBy?: LedgerEntryOrderByWithRelationInput | LedgerEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LedgerEntries.
+     */
+    cursor?: LedgerEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LedgerEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LedgerEntries.
+     */
+    skip?: number
+    distinct?: LedgerEntryScalarFieldEnum | LedgerEntryScalarFieldEnum[]
+  }
+
+  /**
+   * LedgerEntry create
+   */
+  export type LedgerEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LedgerEntry.
+     */
+    data: XOR<LedgerEntryCreateInput, LedgerEntryUncheckedCreateInput>
+  }
+
+  /**
+   * LedgerEntry createMany
+   */
+  export type LedgerEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LedgerEntries.
+     */
+    data: LedgerEntryCreateManyInput | LedgerEntryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LedgerEntry createManyAndReturn
+   */
+  export type LedgerEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * The data used to create many LedgerEntries.
+     */
+    data: LedgerEntryCreateManyInput | LedgerEntryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LedgerEntry update
+   */
+  export type LedgerEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LedgerEntry.
+     */
+    data: XOR<LedgerEntryUpdateInput, LedgerEntryUncheckedUpdateInput>
+    /**
+     * Choose, which LedgerEntry to update.
+     */
+    where: LedgerEntryWhereUniqueInput
+  }
+
+  /**
+   * LedgerEntry updateMany
+   */
+  export type LedgerEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LedgerEntries.
+     */
+    data: XOR<LedgerEntryUpdateManyMutationInput, LedgerEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which LedgerEntries to update
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * Limit how many LedgerEntries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LedgerEntry updateManyAndReturn
+   */
+  export type LedgerEntryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * The data used to update LedgerEntries.
+     */
+    data: XOR<LedgerEntryUpdateManyMutationInput, LedgerEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which LedgerEntries to update
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * Limit how many LedgerEntries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LedgerEntry upsert
+   */
+  export type LedgerEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LedgerEntry to update in case it exists.
+     */
+    where: LedgerEntryWhereUniqueInput
+    /**
+     * In case the LedgerEntry found by the `where` argument doesn't exist, create a new LedgerEntry with this data.
+     */
+    create: XOR<LedgerEntryCreateInput, LedgerEntryUncheckedCreateInput>
+    /**
+     * In case the LedgerEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LedgerEntryUpdateInput, LedgerEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * LedgerEntry delete
+   */
+  export type LedgerEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
+    /**
+     * Filter which LedgerEntry to delete.
+     */
+    where: LedgerEntryWhereUniqueInput
+  }
+
+  /**
+   * LedgerEntry deleteMany
+   */
+  export type LedgerEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LedgerEntries to delete
+     */
+    where?: LedgerEntryWhereInput
+    /**
+     * Limit how many LedgerEntries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LedgerEntry.meeting
+   */
+  export type LedgerEntry$meetingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Meeting
+     */
+    select?: MeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Meeting
+     */
+    omit?: MeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingInclude<ExtArgs> | null
+    where?: MeetingWhereInput
+  }
+
+  /**
+   * LedgerEntry.payment
+   */
+  export type LedgerEntry$paymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+  }
+
+  /**
+   * LedgerEntry without action
+   */
+  export type LedgerEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LedgerEntry
+     */
+    select?: LedgerEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LedgerEntry
+     */
+    omit?: LedgerEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LedgerEntryInclude<ExtArgs> | null
   }
 
 
@@ -35282,6 +36797,7 @@ export namespace Prisma {
     currency: 'currency',
     taxRatePercent: 'taxRatePercent',
     taxInclusive: 'taxInclusive',
+    chargeTiming: 'chargeTiming',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     organisationId: 'organisationId'
@@ -35387,6 +36903,25 @@ export namespace Prisma {
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+  export const LedgerEntryScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    amountCents: 'amountCents',
+    effectiveDate: 'effectiveDate',
+    description: 'description',
+    voidedAt: 'voidedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    organisationId: 'organisationId',
+    studentId: 'studentId',
+    meetingId: 'meetingId',
+    paymentId: 'paymentId',
+    invoiceId: 'invoiceId'
+  };
+
+  export type LedgerEntryScalarFieldEnum = (typeof LedgerEntryScalarFieldEnum)[keyof typeof LedgerEntryScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -35625,6 +37160,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BillingChargeTiming'
+   */
+  export type EnumBillingChargeTimingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingChargeTiming'>
+    
+
+
+  /**
+   * Reference to a field of type 'BillingChargeTiming[]'
+   */
+  export type ListEnumBillingChargeTimingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingChargeTiming[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DiscountType'
    */
   export type EnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType'>
@@ -35678,6 +37227,20 @@ export namespace Prisma {
    */
   export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
     
+
+
+  /**
+   * Reference to a field of type 'LedgerEntryType'
+   */
+  export type EnumLedgerEntryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LedgerEntryType'>
+    
+
+
+  /**
+   * Reference to a field of type 'LedgerEntryType[]'
+   */
+  export type ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LedgerEntryType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -35716,6 +37279,7 @@ export namespace Prisma {
     invoices?: InvoiceListRelationFilter
     quotes?: QuoteListRelationFilter
     payments?: PaymentListRelationFilter
+    ledgerEntries?: LedgerEntryListRelationFilter
   }
 
   export type OrganisationOrderByWithRelationInput = {
@@ -35748,6 +37312,7 @@ export namespace Prisma {
     invoices?: InvoiceOrderByRelationAggregateInput
     quotes?: QuoteOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
+    ledgerEntries?: LedgerEntryOrderByRelationAggregateInput
   }
 
   export type OrganisationWhereUniqueInput = Prisma.AtLeast<{
@@ -35783,6 +37348,7 @@ export namespace Prisma {
     invoices?: InvoiceListRelationFilter
     quotes?: QuoteListRelationFilter
     payments?: PaymentListRelationFilter
+    ledgerEntries?: LedgerEntryListRelationFilter
   }, "id" | "slug" | "ownerId" | "joinCode">
 
   export type OrganisationOrderByWithAggregationInput = {
@@ -36310,6 +37876,7 @@ export namespace Prisma {
     discounts?: StudentDiscountListRelationFilter
     classSessionAttendances?: ClassSessionAttendanceListRelationFilter
     checkInRules?: CheckInRuleListRelationFilter
+    ledgerEntries?: LedgerEntryListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -36347,6 +37914,7 @@ export namespace Prisma {
     discounts?: StudentDiscountOrderByRelationAggregateInput
     classSessionAttendances?: ClassSessionAttendanceOrderByRelationAggregateInput
     checkInRules?: CheckInRuleOrderByRelationAggregateInput
+    ledgerEntries?: LedgerEntryOrderByRelationAggregateInput
   }
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -36387,6 +37955,7 @@ export namespace Prisma {
     discounts?: StudentDiscountListRelationFilter
     classSessionAttendances?: ClassSessionAttendanceListRelationFilter
     checkInRules?: CheckInRuleListRelationFilter
+    ledgerEntries?: LedgerEntryListRelationFilter
   }, "id">
 
   export type StudentOrderByWithAggregationInput = {
@@ -36583,6 +38152,7 @@ export namespace Prisma {
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     assessments?: AssessmentListRelationFilter
+    ledgerEntry?: XOR<LedgerEntryNullableScalarRelationFilter, LedgerEntryWhereInput> | null
   }
 
   export type MeetingOrderByWithRelationInput = {
@@ -36612,6 +38182,7 @@ export namespace Prisma {
     createdBy?: UserOrderByWithRelationInput
     student?: StudentOrderByWithRelationInput
     assessments?: AssessmentOrderByRelationAggregateInput
+    ledgerEntry?: LedgerEntryOrderByWithRelationInput
   }
 
   export type MeetingWhereUniqueInput = Prisma.AtLeast<{
@@ -36644,6 +38215,7 @@ export namespace Prisma {
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     assessments?: AssessmentListRelationFilter
+    ledgerEntry?: XOR<LedgerEntryNullableScalarRelationFilter, LedgerEntryWhereInput> | null
   }, "id">
 
   export type MeetingOrderByWithAggregationInput = {
@@ -37441,6 +39013,7 @@ export namespace Prisma {
     currency?: StringFilter<"BillingSettings"> | string
     taxRatePercent?: FloatFilter<"BillingSettings"> | number
     taxInclusive?: BoolFilter<"BillingSettings"> | boolean
+    chargeTiming?: EnumBillingChargeTimingFilter<"BillingSettings"> | $Enums.BillingChargeTiming
     createdAt?: DateTimeFilter<"BillingSettings"> | Date | string
     updatedAt?: DateTimeFilter<"BillingSettings"> | Date | string
     organisationId?: StringFilter<"BillingSettings"> | string
@@ -37454,6 +39027,7 @@ export namespace Prisma {
     currency?: SortOrder
     taxRatePercent?: SortOrder
     taxInclusive?: SortOrder
+    chargeTiming?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organisationId?: SortOrder
@@ -37471,6 +39045,7 @@ export namespace Prisma {
     currency?: StringFilter<"BillingSettings"> | string
     taxRatePercent?: FloatFilter<"BillingSettings"> | number
     taxInclusive?: BoolFilter<"BillingSettings"> | boolean
+    chargeTiming?: EnumBillingChargeTimingFilter<"BillingSettings"> | $Enums.BillingChargeTiming
     createdAt?: DateTimeFilter<"BillingSettings"> | Date | string
     updatedAt?: DateTimeFilter<"BillingSettings"> | Date | string
     organisation?: XOR<OrganisationScalarRelationFilter, OrganisationWhereInput>
@@ -37483,6 +39058,7 @@ export namespace Prisma {
     currency?: SortOrder
     taxRatePercent?: SortOrder
     taxInclusive?: SortOrder
+    chargeTiming?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organisationId?: SortOrder
@@ -37502,6 +39078,7 @@ export namespace Prisma {
     currency?: StringWithAggregatesFilter<"BillingSettings"> | string
     taxRatePercent?: FloatWithAggregatesFilter<"BillingSettings"> | number
     taxInclusive?: BoolWithAggregatesFilter<"BillingSettings"> | boolean
+    chargeTiming?: EnumBillingChargeTimingWithAggregatesFilter<"BillingSettings"> | $Enums.BillingChargeTiming
     createdAt?: DateTimeWithAggregatesFilter<"BillingSettings"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BillingSettings"> | Date | string
     organisationId?: StringWithAggregatesFilter<"BillingSettings"> | string
@@ -37975,6 +39552,7 @@ export namespace Prisma {
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     invoice?: XOR<InvoiceNullableScalarRelationFilter, InvoiceWhereInput> | null
     recordedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    ledgerEntry?: XOR<LedgerEntryNullableScalarRelationFilter, LedgerEntryWhereInput> | null
   }
 
   export type PaymentOrderByWithRelationInput = {
@@ -37994,6 +39572,7 @@ export namespace Prisma {
     student?: StudentOrderByWithRelationInput
     invoice?: InvoiceOrderByWithRelationInput
     recordedBy?: UserOrderByWithRelationInput
+    ledgerEntry?: LedgerEntryOrderByWithRelationInput
   }
 
   export type PaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -38016,6 +39595,7 @@ export namespace Prisma {
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
     invoice?: XOR<InvoiceNullableScalarRelationFilter, InvoiceWhereInput> | null
     recordedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    ledgerEntry?: XOR<LedgerEntryNullableScalarRelationFilter, LedgerEntryWhereInput> | null
   }, "id">
 
   export type PaymentOrderByWithAggregationInput = {
@@ -38056,6 +39636,112 @@ export namespace Prisma {
     recordedById?: StringWithAggregatesFilter<"Payment"> | string
   }
 
+  export type LedgerEntryWhereInput = {
+    AND?: LedgerEntryWhereInput | LedgerEntryWhereInput[]
+    OR?: LedgerEntryWhereInput[]
+    NOT?: LedgerEntryWhereInput | LedgerEntryWhereInput[]
+    id?: StringFilter<"LedgerEntry"> | string
+    type?: EnumLedgerEntryTypeFilter<"LedgerEntry"> | $Enums.LedgerEntryType
+    amountCents?: IntFilter<"LedgerEntry"> | number
+    effectiveDate?: DateTimeFilter<"LedgerEntry"> | Date | string
+    description?: StringFilter<"LedgerEntry"> | string
+    voidedAt?: DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+    createdAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    organisationId?: StringFilter<"LedgerEntry"> | string
+    studentId?: IntFilter<"LedgerEntry"> | number
+    meetingId?: IntNullableFilter<"LedgerEntry"> | number | null
+    paymentId?: StringNullableFilter<"LedgerEntry"> | string | null
+    invoiceId?: StringNullableFilter<"LedgerEntry"> | string | null
+    organisation?: XOR<OrganisationScalarRelationFilter, OrganisationWhereInput>
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    meeting?: XOR<MeetingNullableScalarRelationFilter, MeetingWhereInput> | null
+    payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+  }
+
+  export type LedgerEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    amountCents?: SortOrder
+    effectiveDate?: SortOrder
+    description?: SortOrder
+    voidedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organisationId?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrderInput | SortOrder
+    paymentId?: SortOrderInput | SortOrder
+    invoiceId?: SortOrderInput | SortOrder
+    organisation?: OrganisationOrderByWithRelationInput
+    student?: StudentOrderByWithRelationInput
+    meeting?: MeetingOrderByWithRelationInput
+    payment?: PaymentOrderByWithRelationInput
+  }
+
+  export type LedgerEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    meetingId?: number
+    paymentId?: string
+    AND?: LedgerEntryWhereInput | LedgerEntryWhereInput[]
+    OR?: LedgerEntryWhereInput[]
+    NOT?: LedgerEntryWhereInput | LedgerEntryWhereInput[]
+    type?: EnumLedgerEntryTypeFilter<"LedgerEntry"> | $Enums.LedgerEntryType
+    amountCents?: IntFilter<"LedgerEntry"> | number
+    effectiveDate?: DateTimeFilter<"LedgerEntry"> | Date | string
+    description?: StringFilter<"LedgerEntry"> | string
+    voidedAt?: DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+    createdAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    organisationId?: StringFilter<"LedgerEntry"> | string
+    studentId?: IntFilter<"LedgerEntry"> | number
+    invoiceId?: StringNullableFilter<"LedgerEntry"> | string | null
+    organisation?: XOR<OrganisationScalarRelationFilter, OrganisationWhereInput>
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    meeting?: XOR<MeetingNullableScalarRelationFilter, MeetingWhereInput> | null
+    payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+  }, "id" | "meetingId" | "paymentId">
+
+  export type LedgerEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    amountCents?: SortOrder
+    effectiveDate?: SortOrder
+    description?: SortOrder
+    voidedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organisationId?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrderInput | SortOrder
+    paymentId?: SortOrderInput | SortOrder
+    invoiceId?: SortOrderInput | SortOrder
+    _count?: LedgerEntryCountOrderByAggregateInput
+    _avg?: LedgerEntryAvgOrderByAggregateInput
+    _max?: LedgerEntryMaxOrderByAggregateInput
+    _min?: LedgerEntryMinOrderByAggregateInput
+    _sum?: LedgerEntrySumOrderByAggregateInput
+  }
+
+  export type LedgerEntryScalarWhereWithAggregatesInput = {
+    AND?: LedgerEntryScalarWhereWithAggregatesInput | LedgerEntryScalarWhereWithAggregatesInput[]
+    OR?: LedgerEntryScalarWhereWithAggregatesInput[]
+    NOT?: LedgerEntryScalarWhereWithAggregatesInput | LedgerEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LedgerEntry"> | string
+    type?: EnumLedgerEntryTypeWithAggregatesFilter<"LedgerEntry"> | $Enums.LedgerEntryType
+    amountCents?: IntWithAggregatesFilter<"LedgerEntry"> | number
+    effectiveDate?: DateTimeWithAggregatesFilter<"LedgerEntry"> | Date | string
+    description?: StringWithAggregatesFilter<"LedgerEntry"> | string
+    voidedAt?: DateTimeNullableWithAggregatesFilter<"LedgerEntry"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LedgerEntry"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LedgerEntry"> | Date | string
+    organisationId?: StringWithAggregatesFilter<"LedgerEntry"> | string
+    studentId?: IntWithAggregatesFilter<"LedgerEntry"> | number
+    meetingId?: IntNullableWithAggregatesFilter<"LedgerEntry"> | number | null
+    paymentId?: StringNullableWithAggregatesFilter<"LedgerEntry"> | string | null
+    invoiceId?: StringNullableWithAggregatesFilter<"LedgerEntry"> | string | null
+  }
+
   export type OrganisationCreateInput = {
     id?: string
     name: string
@@ -38085,6 +39771,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateInput = {
@@ -38116,6 +39803,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUpdateInput = {
@@ -38147,6 +39835,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateInput = {
@@ -38178,6 +39867,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationCreateManyInput = {
@@ -38726,6 +40416,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -38761,6 +40452,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -38795,6 +40487,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -38830,6 +40523,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -39047,6 +40741,7 @@ export namespace Prisma {
     createdBy: UserCreateNestedOneWithoutMeetingsCreatedInput
     student: StudentCreateNestedOneWithoutMeetingsInput
     assessments?: AssessmentCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUncheckedCreateInput = {
@@ -39073,6 +40768,7 @@ export namespace Prisma {
     createdById: string
     studentId: number
     assessments?: AssessmentUncheckedCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUpdateInput = {
@@ -39098,6 +40794,7 @@ export namespace Prisma {
     createdBy?: UserUpdateOneRequiredWithoutMeetingsCreatedNestedInput
     student?: StudentUpdateOneRequiredWithoutMeetingsNestedInput
     assessments?: AssessmentUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateInput = {
@@ -39124,6 +40821,7 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
     assessments?: AssessmentUncheckedUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingCreateManyInput = {
@@ -39942,6 +41640,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     organisation: OrganisationCreateNestedOneWithoutBillingSettingsInput
@@ -39954,6 +41653,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     organisationId: string
@@ -39966,6 +41666,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organisation?: OrganisationUpdateOneRequiredWithoutBillingSettingsNestedInput
@@ -39978,6 +41679,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organisationId?: StringFieldUpdateOperationsInput | string
@@ -39990,6 +41692,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     organisationId: string
@@ -40001,6 +41704,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40011,6 +41715,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organisationId?: StringFieldUpdateOperationsInput | string
@@ -40496,6 +42201,7 @@ export namespace Prisma {
     student: StudentCreateNestedOneWithoutPaymentsInput
     invoice?: InvoiceCreateNestedOneWithoutPaymentsInput
     recordedBy: UserCreateNestedOneWithoutPaymentsRecordedInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateInput = {
@@ -40511,6 +42217,7 @@ export namespace Prisma {
     studentId: number
     invoiceId?: string | null
     recordedById: string
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUpdateInput = {
@@ -40526,6 +42233,7 @@ export namespace Prisma {
     student?: StudentUpdateOneRequiredWithoutPaymentsNestedInput
     invoice?: InvoiceUpdateOneWithoutPaymentsNestedInput
     recordedBy?: UserUpdateOneRequiredWithoutPaymentsRecordedNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
@@ -40541,6 +42249,7 @@ export namespace Prisma {
     studentId?: IntFieldUpdateOperationsInput | number
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     recordedById?: StringFieldUpdateOperationsInput | string
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentCreateManyInput = {
@@ -40582,6 +42291,114 @@ export namespace Prisma {
     studentId?: IntFieldUpdateOperationsInput | number
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     recordedById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LedgerEntryCreateInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceId?: string | null
+    organisation: OrganisationCreateNestedOneWithoutLedgerEntriesInput
+    student: StudentCreateNestedOneWithoutLedgerEntriesInput
+    meeting?: MeetingCreateNestedOneWithoutLedgerEntryInput
+    payment?: PaymentCreateNestedOneWithoutLedgerEntryInput
+  }
+
+  export type LedgerEntryUncheckedCreateInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    studentId: number
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    organisation?: OrganisationUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    student?: StudentUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    meeting?: MeetingUpdateOneWithoutLedgerEntryNestedInput
+    payment?: PaymentUpdateOneWithoutLedgerEntryNestedInput
+  }
+
+  export type LedgerEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LedgerEntryCreateManyInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    studentId: number
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LedgerEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -40759,6 +42576,12 @@ export namespace Prisma {
     none?: PaymentWhereInput
   }
 
+  export type LedgerEntryListRelationFilter = {
+    every?: LedgerEntryWhereInput
+    some?: LedgerEntryWhereInput
+    none?: LedgerEntryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -40833,6 +42656,10 @@ export namespace Prisma {
   }
 
   export type PaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LedgerEntryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41497,6 +43324,11 @@ export namespace Prisma {
     isNot?: StudentWhereInput
   }
 
+  export type LedgerEntryNullableScalarRelationFilter = {
+    is?: LedgerEntryWhereInput | null
+    isNot?: LedgerEntryWhereInput | null
+  }
+
   export type MeetingCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -42142,6 +43974,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type EnumBillingChargeTimingFilter<$PrismaModel = never> = {
+    equals?: $Enums.BillingChargeTiming | EnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    in?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    not?: NestedEnumBillingChargeTimingFilter<$PrismaModel> | $Enums.BillingChargeTiming
+  }
+
   export type DiscountListRelationFilter = {
     every?: DiscountWhereInput
     some?: DiscountWhereInput
@@ -42158,6 +43997,7 @@ export namespace Prisma {
     currency?: SortOrder
     taxRatePercent?: SortOrder
     taxInclusive?: SortOrder
+    chargeTiming?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organisationId?: SortOrder
@@ -42174,6 +44014,7 @@ export namespace Prisma {
     currency?: SortOrder
     taxRatePercent?: SortOrder
     taxInclusive?: SortOrder
+    chargeTiming?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organisationId?: SortOrder
@@ -42185,6 +44026,7 @@ export namespace Prisma {
     currency?: SortOrder
     taxRatePercent?: SortOrder
     taxInclusive?: SortOrder
+    chargeTiming?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     organisationId?: SortOrder
@@ -42209,6 +44051,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumBillingChargeTimingWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BillingChargeTiming | EnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    in?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    not?: NestedEnumBillingChargeTimingWithAggregatesFilter<$PrismaModel> | $Enums.BillingChargeTiming
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBillingChargeTimingFilter<$PrismaModel>
+    _max?: NestedEnumBillingChargeTimingFilter<$PrismaModel>
   }
 
   export type EnumDiscountTypeFilter<$PrismaModel = never> = {
@@ -42653,6 +44505,88 @@ export namespace Prisma {
     _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
   }
 
+  export type EnumLedgerEntryTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LedgerEntryType | EnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLedgerEntryTypeFilter<$PrismaModel> | $Enums.LedgerEntryType
+  }
+
+  export type PaymentNullableScalarRelationFilter = {
+    is?: PaymentWhereInput | null
+    isNot?: PaymentWhereInput | null
+  }
+
+  export type LedgerEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    amountCents?: SortOrder
+    effectiveDate?: SortOrder
+    description?: SortOrder
+    voidedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organisationId?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrder
+    paymentId?: SortOrder
+    invoiceId?: SortOrder
+  }
+
+  export type LedgerEntryAvgOrderByAggregateInput = {
+    amountCents?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrder
+  }
+
+  export type LedgerEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    amountCents?: SortOrder
+    effectiveDate?: SortOrder
+    description?: SortOrder
+    voidedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organisationId?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrder
+    paymentId?: SortOrder
+    invoiceId?: SortOrder
+  }
+
+  export type LedgerEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    amountCents?: SortOrder
+    effectiveDate?: SortOrder
+    description?: SortOrder
+    voidedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organisationId?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrder
+    paymentId?: SortOrder
+    invoiceId?: SortOrder
+  }
+
+  export type LedgerEntrySumOrderByAggregateInput = {
+    amountCents?: SortOrder
+    studentId?: SortOrder
+    meetingId?: SortOrder
+  }
+
+  export type EnumLedgerEntryTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LedgerEntryType | EnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLedgerEntryTypeWithAggregatesFilter<$PrismaModel> | $Enums.LedgerEntryType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLedgerEntryTypeFilter<$PrismaModel>
+    _max?: NestedEnumLedgerEntryTypeFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedOneWithoutOwnedWorkspaceInput = {
     create?: XOR<UserCreateWithoutOwnedWorkspaceInput, UserUncheckedCreateWithoutOwnedWorkspaceInput>
     connectOrCreate?: UserCreateOrConnectWithoutOwnedWorkspaceInput
@@ -42797,6 +44731,13 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
+  export type LedgerEntryCreateNestedManyWithoutOrganisationInput = {
+    create?: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput> | LedgerEntryCreateWithoutOrganisationInput[] | LedgerEntryUncheckedCreateWithoutOrganisationInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutOrganisationInput | LedgerEntryCreateOrConnectWithoutOrganisationInput[]
+    createMany?: LedgerEntryCreateManyOrganisationInputEnvelope
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+  }
+
   export type OrganisationPreferencesUncheckedCreateNestedOneWithoutOrganisationInput = {
     create?: XOR<OrganisationPreferencesCreateWithoutOrganisationInput, OrganisationPreferencesUncheckedCreateWithoutOrganisationInput>
     connectOrCreate?: OrganisationPreferencesCreateOrConnectWithoutOrganisationInput
@@ -42933,6 +44874,13 @@ export namespace Prisma {
     connectOrCreate?: PaymentCreateOrConnectWithoutOrganisationInput | PaymentCreateOrConnectWithoutOrganisationInput[]
     createMany?: PaymentCreateManyOrganisationInputEnvelope
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput = {
+    create?: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput> | LedgerEntryCreateWithoutOrganisationInput[] | LedgerEntryUncheckedCreateWithoutOrganisationInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutOrganisationInput | LedgerEntryCreateOrConnectWithoutOrganisationInput[]
+    createMany?: LedgerEntryCreateManyOrganisationInputEnvelope
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -43233,6 +45181,20 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type LedgerEntryUpdateManyWithoutOrganisationNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput> | LedgerEntryCreateWithoutOrganisationInput[] | LedgerEntryUncheckedCreateWithoutOrganisationInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutOrganisationInput | LedgerEntryCreateOrConnectWithoutOrganisationInput[]
+    upsert?: LedgerEntryUpsertWithWhereUniqueWithoutOrganisationInput | LedgerEntryUpsertWithWhereUniqueWithoutOrganisationInput[]
+    createMany?: LedgerEntryCreateManyOrganisationInputEnvelope
+    set?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    disconnect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    delete?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    update?: LedgerEntryUpdateWithWhereUniqueWithoutOrganisationInput | LedgerEntryUpdateWithWhereUniqueWithoutOrganisationInput[]
+    updateMany?: LedgerEntryUpdateManyWithWhereWithoutOrganisationInput | LedgerEntryUpdateManyWithWhereWithoutOrganisationInput[]
+    deleteMany?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
+  }
+
   export type OrganisationPreferencesUncheckedUpdateOneWithoutOrganisationNestedInput = {
     create?: XOR<OrganisationPreferencesCreateWithoutOrganisationInput, OrganisationPreferencesUncheckedCreateWithoutOrganisationInput>
     connectOrCreate?: OrganisationPreferencesCreateOrConnectWithoutOrganisationInput
@@ -43503,6 +45465,20 @@ export namespace Prisma {
     update?: PaymentUpdateWithWhereUniqueWithoutOrganisationInput | PaymentUpdateWithWhereUniqueWithoutOrganisationInput[]
     updateMany?: PaymentUpdateManyWithWhereWithoutOrganisationInput | PaymentUpdateManyWithWhereWithoutOrganisationInput[]
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput> | LedgerEntryCreateWithoutOrganisationInput[] | LedgerEntryUncheckedCreateWithoutOrganisationInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutOrganisationInput | LedgerEntryCreateOrConnectWithoutOrganisationInput[]
+    upsert?: LedgerEntryUpsertWithWhereUniqueWithoutOrganisationInput | LedgerEntryUpsertWithWhereUniqueWithoutOrganisationInput[]
+    createMany?: LedgerEntryCreateManyOrganisationInputEnvelope
+    set?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    disconnect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    delete?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    update?: LedgerEntryUpdateWithWhereUniqueWithoutOrganisationInput | LedgerEntryUpdateWithWhereUniqueWithoutOrganisationInput[]
+    updateMany?: LedgerEntryUpdateManyWithWhereWithoutOrganisationInput | LedgerEntryUpdateManyWithWhereWithoutOrganisationInput[]
+    deleteMany?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -44190,6 +46166,13 @@ export namespace Prisma {
     connect?: CheckInRuleWhereUniqueInput | CheckInRuleWhereUniqueInput[]
   }
 
+  export type LedgerEntryCreateNestedManyWithoutStudentInput = {
+    create?: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput> | LedgerEntryCreateWithoutStudentInput[] | LedgerEntryUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutStudentInput | LedgerEntryCreateOrConnectWithoutStudentInput[]
+    createMany?: LedgerEntryCreateManyStudentInputEnvelope
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+  }
+
   export type MeetingUncheckedCreateNestedManyWithoutStudentInput = {
     create?: XOR<MeetingCreateWithoutStudentInput, MeetingUncheckedCreateWithoutStudentInput> | MeetingCreateWithoutStudentInput[] | MeetingUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: MeetingCreateOrConnectWithoutStudentInput | MeetingCreateOrConnectWithoutStudentInput[]
@@ -44251,6 +46234,13 @@ export namespace Prisma {
     connectOrCreate?: CheckInRuleCreateOrConnectWithoutStudentInput | CheckInRuleCreateOrConnectWithoutStudentInput[]
     createMany?: CheckInRuleCreateManyStudentInputEnvelope
     connect?: CheckInRuleWhereUniqueInput | CheckInRuleWhereUniqueInput[]
+  }
+
+  export type LedgerEntryUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput> | LedgerEntryCreateWithoutStudentInput[] | LedgerEntryUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutStudentInput | LedgerEntryCreateOrConnectWithoutStudentInput[]
+    createMany?: LedgerEntryCreateManyStudentInputEnvelope
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -44409,6 +46399,20 @@ export namespace Prisma {
     deleteMany?: CheckInRuleScalarWhereInput | CheckInRuleScalarWhereInput[]
   }
 
+  export type LedgerEntryUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput> | LedgerEntryCreateWithoutStudentInput[] | LedgerEntryUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutStudentInput | LedgerEntryCreateOrConnectWithoutStudentInput[]
+    upsert?: LedgerEntryUpsertWithWhereUniqueWithoutStudentInput | LedgerEntryUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: LedgerEntryCreateManyStudentInputEnvelope
+    set?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    disconnect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    delete?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    update?: LedgerEntryUpdateWithWhereUniqueWithoutStudentInput | LedgerEntryUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: LedgerEntryUpdateManyWithWhereWithoutStudentInput | LedgerEntryUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
+  }
+
   export type MeetingUncheckedUpdateManyWithoutStudentNestedInput = {
     create?: XOR<MeetingCreateWithoutStudentInput, MeetingUncheckedCreateWithoutStudentInput> | MeetingCreateWithoutStudentInput[] | MeetingUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: MeetingCreateOrConnectWithoutStudentInput | MeetingCreateOrConnectWithoutStudentInput[]
@@ -44533,6 +46537,20 @@ export namespace Prisma {
     update?: CheckInRuleUpdateWithWhereUniqueWithoutStudentInput | CheckInRuleUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: CheckInRuleUpdateManyWithWhereWithoutStudentInput | CheckInRuleUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: CheckInRuleScalarWhereInput | CheckInRuleScalarWhereInput[]
+  }
+
+  export type LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput> | LedgerEntryCreateWithoutStudentInput[] | LedgerEntryUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutStudentInput | LedgerEntryCreateOrConnectWithoutStudentInput[]
+    upsert?: LedgerEntryUpsertWithWhereUniqueWithoutStudentInput | LedgerEntryUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: LedgerEntryCreateManyStudentInputEnvelope
+    set?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    disconnect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    delete?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    connect?: LedgerEntryWhereUniqueInput | LedgerEntryWhereUniqueInput[]
+    update?: LedgerEntryUpdateWithWhereUniqueWithoutStudentInput | LedgerEntryUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: LedgerEntryUpdateManyWithWhereWithoutStudentInput | LedgerEntryUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
   }
 
   export type OrganisationCreateNestedOneWithoutClassesInput = {
@@ -44746,11 +46764,23 @@ export namespace Prisma {
     connect?: AssessmentWhereUniqueInput | AssessmentWhereUniqueInput[]
   }
 
+  export type LedgerEntryCreateNestedOneWithoutMeetingInput = {
+    create?: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutMeetingInput
+    connect?: LedgerEntryWhereUniqueInput
+  }
+
   export type AssessmentUncheckedCreateNestedManyWithoutMeetingInput = {
     create?: XOR<AssessmentCreateWithoutMeetingInput, AssessmentUncheckedCreateWithoutMeetingInput> | AssessmentCreateWithoutMeetingInput[] | AssessmentUncheckedCreateWithoutMeetingInput[]
     connectOrCreate?: AssessmentCreateOrConnectWithoutMeetingInput | AssessmentCreateOrConnectWithoutMeetingInput[]
     createMany?: AssessmentCreateManyMeetingInputEnvelope
     connect?: AssessmentWhereUniqueInput | AssessmentWhereUniqueInput[]
+  }
+
+  export type LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput = {
+    create?: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutMeetingInput
+    connect?: LedgerEntryWhereUniqueInput
   }
 
   export type EnumLessonStatusFieldUpdateOperationsInput = {
@@ -44795,6 +46825,16 @@ export namespace Prisma {
     deleteMany?: AssessmentScalarWhereInput | AssessmentScalarWhereInput[]
   }
 
+  export type LedgerEntryUpdateOneWithoutMeetingNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutMeetingInput
+    upsert?: LedgerEntryUpsertWithoutMeetingInput
+    disconnect?: LedgerEntryWhereInput | boolean
+    delete?: LedgerEntryWhereInput | boolean
+    connect?: LedgerEntryWhereUniqueInput
+    update?: XOR<XOR<LedgerEntryUpdateToOneWithWhereWithoutMeetingInput, LedgerEntryUpdateWithoutMeetingInput>, LedgerEntryUncheckedUpdateWithoutMeetingInput>
+  }
+
   export type AssessmentUncheckedUpdateManyWithoutMeetingNestedInput = {
     create?: XOR<AssessmentCreateWithoutMeetingInput, AssessmentUncheckedCreateWithoutMeetingInput> | AssessmentCreateWithoutMeetingInput[] | AssessmentUncheckedCreateWithoutMeetingInput[]
     connectOrCreate?: AssessmentCreateOrConnectWithoutMeetingInput | AssessmentCreateOrConnectWithoutMeetingInput[]
@@ -44807,6 +46847,16 @@ export namespace Prisma {
     update?: AssessmentUpdateWithWhereUniqueWithoutMeetingInput | AssessmentUpdateWithWhereUniqueWithoutMeetingInput[]
     updateMany?: AssessmentUpdateManyWithWhereWithoutMeetingInput | AssessmentUpdateManyWithWhereWithoutMeetingInput[]
     deleteMany?: AssessmentScalarWhereInput | AssessmentScalarWhereInput[]
+  }
+
+  export type LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutMeetingInput
+    upsert?: LedgerEntryUpsertWithoutMeetingInput
+    disconnect?: LedgerEntryWhereInput | boolean
+    delete?: LedgerEntryWhereInput | boolean
+    connect?: LedgerEntryWhereUniqueInput
+    update?: XOR<XOR<LedgerEntryUpdateToOneWithWhereWithoutMeetingInput, LedgerEntryUpdateWithoutMeetingInput>, LedgerEntryUncheckedUpdateWithoutMeetingInput>
   }
 
   export type OrganisationCreateNestedOneWithoutTermsInput = {
@@ -45335,6 +47385,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type EnumBillingChargeTimingFieldUpdateOperationsInput = {
+    set?: $Enums.BillingChargeTiming
+  }
+
   export type OrganisationUpdateOneRequiredWithoutBillingSettingsNestedInput = {
     create?: XOR<OrganisationCreateWithoutBillingSettingsInput, OrganisationUncheckedCreateWithoutBillingSettingsInput>
     connectOrCreate?: OrganisationCreateOrConnectWithoutBillingSettingsInput
@@ -45725,6 +47779,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type LedgerEntryCreateNestedOneWithoutPaymentInput = {
+    create?: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutPaymentInput
+    connect?: LedgerEntryWhereUniqueInput
+  }
+
+  export type LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput = {
+    create?: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutPaymentInput
+    connect?: LedgerEntryWhereUniqueInput
+  }
+
   export type EnumPaymentMethodFieldUpdateOperationsInput = {
     set?: $Enums.PaymentMethod
   }
@@ -45761,6 +47827,90 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPaymentsRecordedInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsRecordedInput, UserUpdateWithoutPaymentsRecordedInput>, UserUncheckedUpdateWithoutPaymentsRecordedInput>
+  }
+
+  export type LedgerEntryUpdateOneWithoutPaymentNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutPaymentInput
+    upsert?: LedgerEntryUpsertWithoutPaymentInput
+    disconnect?: LedgerEntryWhereInput | boolean
+    delete?: LedgerEntryWhereInput | boolean
+    connect?: LedgerEntryWhereUniqueInput
+    update?: XOR<XOR<LedgerEntryUpdateToOneWithWhereWithoutPaymentInput, LedgerEntryUpdateWithoutPaymentInput>, LedgerEntryUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput = {
+    create?: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+    connectOrCreate?: LedgerEntryCreateOrConnectWithoutPaymentInput
+    upsert?: LedgerEntryUpsertWithoutPaymentInput
+    disconnect?: LedgerEntryWhereInput | boolean
+    delete?: LedgerEntryWhereInput | boolean
+    connect?: LedgerEntryWhereUniqueInput
+    update?: XOR<XOR<LedgerEntryUpdateToOneWithWhereWithoutPaymentInput, LedgerEntryUpdateWithoutPaymentInput>, LedgerEntryUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type OrganisationCreateNestedOneWithoutLedgerEntriesInput = {
+    create?: XOR<OrganisationCreateWithoutLedgerEntriesInput, OrganisationUncheckedCreateWithoutLedgerEntriesInput>
+    connectOrCreate?: OrganisationCreateOrConnectWithoutLedgerEntriesInput
+    connect?: OrganisationWhereUniqueInput
+  }
+
+  export type StudentCreateNestedOneWithoutLedgerEntriesInput = {
+    create?: XOR<StudentCreateWithoutLedgerEntriesInput, StudentUncheckedCreateWithoutLedgerEntriesInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutLedgerEntriesInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type MeetingCreateNestedOneWithoutLedgerEntryInput = {
+    create?: XOR<MeetingCreateWithoutLedgerEntryInput, MeetingUncheckedCreateWithoutLedgerEntryInput>
+    connectOrCreate?: MeetingCreateOrConnectWithoutLedgerEntryInput
+    connect?: MeetingWhereUniqueInput
+  }
+
+  export type PaymentCreateNestedOneWithoutLedgerEntryInput = {
+    create?: XOR<PaymentCreateWithoutLedgerEntryInput, PaymentUncheckedCreateWithoutLedgerEntryInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutLedgerEntryInput
+    connect?: PaymentWhereUniqueInput
+  }
+
+  export type EnumLedgerEntryTypeFieldUpdateOperationsInput = {
+    set?: $Enums.LedgerEntryType
+  }
+
+  export type OrganisationUpdateOneRequiredWithoutLedgerEntriesNestedInput = {
+    create?: XOR<OrganisationCreateWithoutLedgerEntriesInput, OrganisationUncheckedCreateWithoutLedgerEntriesInput>
+    connectOrCreate?: OrganisationCreateOrConnectWithoutLedgerEntriesInput
+    upsert?: OrganisationUpsertWithoutLedgerEntriesInput
+    connect?: OrganisationWhereUniqueInput
+    update?: XOR<XOR<OrganisationUpdateToOneWithWhereWithoutLedgerEntriesInput, OrganisationUpdateWithoutLedgerEntriesInput>, OrganisationUncheckedUpdateWithoutLedgerEntriesInput>
+  }
+
+  export type StudentUpdateOneRequiredWithoutLedgerEntriesNestedInput = {
+    create?: XOR<StudentCreateWithoutLedgerEntriesInput, StudentUncheckedCreateWithoutLedgerEntriesInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutLedgerEntriesInput
+    upsert?: StudentUpsertWithoutLedgerEntriesInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutLedgerEntriesInput, StudentUpdateWithoutLedgerEntriesInput>, StudentUncheckedUpdateWithoutLedgerEntriesInput>
+  }
+
+  export type MeetingUpdateOneWithoutLedgerEntryNestedInput = {
+    create?: XOR<MeetingCreateWithoutLedgerEntryInput, MeetingUncheckedCreateWithoutLedgerEntryInput>
+    connectOrCreate?: MeetingCreateOrConnectWithoutLedgerEntryInput
+    upsert?: MeetingUpsertWithoutLedgerEntryInput
+    disconnect?: MeetingWhereInput | boolean
+    delete?: MeetingWhereInput | boolean
+    connect?: MeetingWhereUniqueInput
+    update?: XOR<XOR<MeetingUpdateToOneWithWhereWithoutLedgerEntryInput, MeetingUpdateWithoutLedgerEntryInput>, MeetingUncheckedUpdateWithoutLedgerEntryInput>
+  }
+
+  export type PaymentUpdateOneWithoutLedgerEntryNestedInput = {
+    create?: XOR<PaymentCreateWithoutLedgerEntryInput, PaymentUncheckedCreateWithoutLedgerEntryInput>
+    connectOrCreate?: PaymentCreateOrConnectWithoutLedgerEntryInput
+    upsert?: PaymentUpsertWithoutLedgerEntryInput
+    disconnect?: PaymentWhereInput | boolean
+    delete?: PaymentWhereInput | boolean
+    connect?: PaymentWhereUniqueInput
+    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutLedgerEntryInput, PaymentUpdateWithoutLedgerEntryInput>, PaymentUncheckedUpdateWithoutLedgerEntryInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -46139,6 +48289,13 @@ export namespace Prisma {
     _max?: NestedEnumCheckInRecurrenceFilter<$PrismaModel>
   }
 
+  export type NestedEnumBillingChargeTimingFilter<$PrismaModel = never> = {
+    equals?: $Enums.BillingChargeTiming | EnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    in?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    not?: NestedEnumBillingChargeTimingFilter<$PrismaModel> | $Enums.BillingChargeTiming
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -46153,6 +48310,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBillingChargeTimingWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BillingChargeTiming | EnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    in?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BillingChargeTiming[] | ListEnumBillingChargeTimingFieldRefInput<$PrismaModel>
+    not?: NestedEnumBillingChargeTimingWithAggregatesFilter<$PrismaModel> | $Enums.BillingChargeTiming
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBillingChargeTimingFilter<$PrismaModel>
+    _max?: NestedEnumBillingChargeTimingFilter<$PrismaModel>
   }
 
   export type NestedEnumDiscountTypeFilter<$PrismaModel = never> = {
@@ -46221,6 +48388,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPaymentMethodFilter<$PrismaModel>
     _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLedgerEntryTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LedgerEntryType | EnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLedgerEntryTypeFilter<$PrismaModel> | $Enums.LedgerEntryType
+  }
+
+  export type NestedEnumLedgerEntryTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LedgerEntryType | EnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LedgerEntryType[] | ListEnumLedgerEntryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLedgerEntryTypeWithAggregatesFilter<$PrismaModel> | $Enums.LedgerEntryType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLedgerEntryTypeFilter<$PrismaModel>
+    _max?: NestedEnumLedgerEntryTypeFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutOwnedWorkspaceInput = {
@@ -46442,6 +48626,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutOrganisationInput = {
@@ -46476,6 +48661,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutOrganisationInput = {
@@ -46555,6 +48741,7 @@ export namespace Prisma {
     createdBy: UserCreateNestedOneWithoutMeetingsCreatedInput
     student: StudentCreateNestedOneWithoutMeetingsInput
     assessments?: AssessmentCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUncheckedCreateWithoutOrganisationInput = {
@@ -46580,6 +48767,7 @@ export namespace Prisma {
     createdById: string
     studentId: number
     assessments?: AssessmentUncheckedCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingCreateOrConnectWithoutOrganisationInput = {
@@ -46882,6 +49070,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     discounts?: DiscountCreateNestedManyWithoutBillingSettingsInput
@@ -46893,6 +49082,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     discounts?: DiscountUncheckedCreateNestedManyWithoutBillingSettingsInput
@@ -47011,6 +49201,7 @@ export namespace Prisma {
     student: StudentCreateNestedOneWithoutPaymentsInput
     invoice?: InvoiceCreateNestedOneWithoutPaymentsInput
     recordedBy: UserCreateNestedOneWithoutPaymentsRecordedInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutOrganisationInput = {
@@ -47025,6 +49216,7 @@ export namespace Prisma {
     studentId: number
     invoiceId?: string | null
     recordedById: string
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutOrganisationInput = {
@@ -47034,6 +49226,46 @@ export namespace Prisma {
 
   export type PaymentCreateManyOrganisationInputEnvelope = {
     data: PaymentCreateManyOrganisationInput | PaymentCreateManyOrganisationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LedgerEntryCreateWithoutOrganisationInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceId?: string | null
+    student: StudentCreateNestedOneWithoutLedgerEntriesInput
+    meeting?: MeetingCreateNestedOneWithoutLedgerEntryInput
+    payment?: PaymentCreateNestedOneWithoutLedgerEntryInput
+  }
+
+  export type LedgerEntryUncheckedCreateWithoutOrganisationInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentId: number
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryCreateOrConnectWithoutOrganisationInput = {
+    where: LedgerEntryWhereUniqueInput
+    create: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput>
+  }
+
+  export type LedgerEntryCreateManyOrganisationInputEnvelope = {
+    data: LedgerEntryCreateManyOrganisationInput | LedgerEntryCreateManyOrganisationInput[]
     skipDuplicates?: boolean
   }
 
@@ -47639,6 +49871,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discounts?: DiscountUpdateManyWithoutBillingSettingsNestedInput
@@ -47650,6 +49883,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discounts?: DiscountUncheckedUpdateManyWithoutBillingSettingsNestedInput
@@ -47764,6 +49998,41 @@ export namespace Prisma {
     recordedById?: StringFilter<"Payment"> | string
   }
 
+  export type LedgerEntryUpsertWithWhereUniqueWithoutOrganisationInput = {
+    where: LedgerEntryWhereUniqueInput
+    update: XOR<LedgerEntryUpdateWithoutOrganisationInput, LedgerEntryUncheckedUpdateWithoutOrganisationInput>
+    create: XOR<LedgerEntryCreateWithoutOrganisationInput, LedgerEntryUncheckedCreateWithoutOrganisationInput>
+  }
+
+  export type LedgerEntryUpdateWithWhereUniqueWithoutOrganisationInput = {
+    where: LedgerEntryWhereUniqueInput
+    data: XOR<LedgerEntryUpdateWithoutOrganisationInput, LedgerEntryUncheckedUpdateWithoutOrganisationInput>
+  }
+
+  export type LedgerEntryUpdateManyWithWhereWithoutOrganisationInput = {
+    where: LedgerEntryScalarWhereInput
+    data: XOR<LedgerEntryUpdateManyMutationInput, LedgerEntryUncheckedUpdateManyWithoutOrganisationInput>
+  }
+
+  export type LedgerEntryScalarWhereInput = {
+    AND?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
+    OR?: LedgerEntryScalarWhereInput[]
+    NOT?: LedgerEntryScalarWhereInput | LedgerEntryScalarWhereInput[]
+    id?: StringFilter<"LedgerEntry"> | string
+    type?: EnumLedgerEntryTypeFilter<"LedgerEntry"> | $Enums.LedgerEntryType
+    amountCents?: IntFilter<"LedgerEntry"> | number
+    effectiveDate?: DateTimeFilter<"LedgerEntry"> | Date | string
+    description?: StringFilter<"LedgerEntry"> | string
+    voidedAt?: DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+    createdAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"LedgerEntry"> | Date | string
+    organisationId?: StringFilter<"LedgerEntry"> | string
+    studentId?: IntFilter<"LedgerEntry"> | number
+    meetingId?: IntNullableFilter<"LedgerEntry"> | number | null
+    paymentId?: StringNullableFilter<"LedgerEntry"> | string | null
+    invoiceId?: StringNullableFilter<"LedgerEntry"> | string | null
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id?: string
     name?: string | null
@@ -47837,6 +50106,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutMembersInput = {
@@ -47867,6 +50137,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutMembersInput = {
@@ -47964,6 +50235,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutMembersInput = {
@@ -47994,6 +50266,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationCreateWithoutInvitationsInput = {
@@ -48024,6 +50297,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutInvitationsInput = {
@@ -48054,6 +50328,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutInvitationsInput = {
@@ -48145,6 +50420,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutInvitationsInput = {
@@ -48175,6 +50451,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type UserUpsertWithoutInvitationsSentInput = {
@@ -48301,6 +50578,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutJoinRequestsInput = {
@@ -48331,6 +50609,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutJoinRequestsInput = {
@@ -48473,6 +50752,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutJoinRequestsInput = {
@@ -48503,6 +50783,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type UserUpsertWithoutJoinRequestsDecidedInput = {
@@ -48584,6 +50865,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutOwnerInput = {
@@ -48614,6 +50896,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutOwnerInput = {
@@ -48791,6 +51074,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutMeetingsInput
     student: StudentCreateNestedOneWithoutMeetingsInput
     assessments?: AssessmentCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUncheckedCreateWithoutCreatedByInput = {
@@ -48816,6 +51100,7 @@ export namespace Prisma {
     organisationId: string
     studentId: number
     assessments?: AssessmentUncheckedCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingCreateOrConnectWithoutCreatedByInput = {
@@ -48918,6 +51203,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutPaymentsInput
     student: StudentCreateNestedOneWithoutPaymentsInput
     invoice?: InvoiceCreateNestedOneWithoutPaymentsInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutRecordedByInput = {
@@ -48932,6 +51218,7 @@ export namespace Prisma {
     organisationId: string
     studentId: number
     invoiceId?: string | null
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutRecordedByInput = {
@@ -49018,6 +51305,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutOwnerInput = {
@@ -49048,6 +51336,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type UserPreferencesUpsertWithWhereUniqueWithoutUserInput = {
@@ -49238,6 +51527,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutPreferencesInput = {
@@ -49268,6 +51558,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutPreferencesInput = {
@@ -49314,6 +51605,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutPreferencesInput = {
@@ -49344,6 +51636,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type UserCreateWithoutPreferencesInput = {
@@ -49419,6 +51712,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutUserPreferencesInput = {
@@ -49449,6 +51743,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutUserPreferencesInput = {
@@ -49546,6 +51841,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutUserPreferencesInput = {
@@ -49576,6 +51872,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationCreateWithoutStudentsInput = {
@@ -49606,6 +51903,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutStudentsInput = {
@@ -49636,6 +51934,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutStudentsInput = {
@@ -49705,6 +52004,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutMeetingsInput
     createdBy: UserCreateNestedOneWithoutMeetingsCreatedInput
     assessments?: AssessmentCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUncheckedCreateWithoutStudentInput = {
@@ -49730,6 +52030,7 @@ export namespace Prisma {
     organisationId: string
     createdById: string
     assessments?: AssessmentUncheckedCreateNestedManyWithoutMeetingInput
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingCreateOrConnectWithoutStudentInput = {
@@ -49928,6 +52229,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutPaymentsInput
     invoice?: InvoiceCreateNestedOneWithoutPaymentsInput
     recordedBy: UserCreateNestedOneWithoutPaymentsRecordedInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutStudentInput = {
@@ -49942,6 +52244,7 @@ export namespace Prisma {
     organisationId: string
     invoiceId?: string | null
     recordedById: string
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutStudentInput = {
@@ -50041,6 +52344,46 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LedgerEntryCreateWithoutStudentInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceId?: string | null
+    organisation: OrganisationCreateNestedOneWithoutLedgerEntriesInput
+    meeting?: MeetingCreateNestedOneWithoutLedgerEntryInput
+    payment?: PaymentCreateNestedOneWithoutLedgerEntryInput
+  }
+
+  export type LedgerEntryUncheckedCreateWithoutStudentInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryCreateOrConnectWithoutStudentInput = {
+    where: LedgerEntryWhereUniqueInput
+    create: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput>
+  }
+
+  export type LedgerEntryCreateManyStudentInputEnvelope = {
+    data: LedgerEntryCreateManyStudentInput | LedgerEntryCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OrganisationUpsertWithoutStudentsInput = {
     update: XOR<OrganisationUpdateWithoutStudentsInput, OrganisationUncheckedUpdateWithoutStudentsInput>
     create: XOR<OrganisationCreateWithoutStudentsInput, OrganisationUncheckedCreateWithoutStudentsInput>
@@ -50080,6 +52423,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutStudentsInput = {
@@ -50110,6 +52454,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type ClassUpsertWithoutStudentsInput = {
@@ -50312,6 +52657,22 @@ export namespace Prisma {
     data: XOR<CheckInRuleUpdateManyMutationInput, CheckInRuleUncheckedUpdateManyWithoutStudentInput>
   }
 
+  export type LedgerEntryUpsertWithWhereUniqueWithoutStudentInput = {
+    where: LedgerEntryWhereUniqueInput
+    update: XOR<LedgerEntryUpdateWithoutStudentInput, LedgerEntryUncheckedUpdateWithoutStudentInput>
+    create: XOR<LedgerEntryCreateWithoutStudentInput, LedgerEntryUncheckedCreateWithoutStudentInput>
+  }
+
+  export type LedgerEntryUpdateWithWhereUniqueWithoutStudentInput = {
+    where: LedgerEntryWhereUniqueInput
+    data: XOR<LedgerEntryUpdateWithoutStudentInput, LedgerEntryUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type LedgerEntryUpdateManyWithWhereWithoutStudentInput = {
+    where: LedgerEntryScalarWhereInput
+    data: XOR<LedgerEntryUpdateManyMutationInput, LedgerEntryUncheckedUpdateManyWithoutStudentInput>
+  }
+
   export type OrganisationCreateWithoutClassesInput = {
     id?: string
     name: string
@@ -50340,6 +52701,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutClassesInput = {
@@ -50370,6 +52732,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutClassesInput = {
@@ -50408,6 +52771,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutClassInput = {
@@ -50442,6 +52806,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutClassInput = {
@@ -50604,6 +52969,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutClassesInput = {
@@ -50634,6 +53000,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithWhereUniqueWithoutClassInput = {
@@ -50728,6 +53095,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutMeetingsInput = {
@@ -50758,6 +53126,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutMeetingsInput = {
@@ -50841,6 +53210,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutMeetingsInput = {
@@ -50875,6 +53245,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutMeetingsInput = {
@@ -50924,6 +53295,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LedgerEntryCreateWithoutMeetingInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceId?: string | null
+    organisation: OrganisationCreateNestedOneWithoutLedgerEntriesInput
+    student: StudentCreateNestedOneWithoutLedgerEntriesInput
+    payment?: PaymentCreateNestedOneWithoutLedgerEntryInput
+  }
+
+  export type LedgerEntryUncheckedCreateWithoutMeetingInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    studentId: number
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryCreateOrConnectWithoutMeetingInput = {
+    where: LedgerEntryWhereUniqueInput
+    create: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+  }
+
   export type OrganisationUpsertWithoutMeetingsInput = {
     update: XOR<OrganisationUpdateWithoutMeetingsInput, OrganisationUncheckedUpdateWithoutMeetingsInput>
     create: XOR<OrganisationCreateWithoutMeetingsInput, OrganisationUncheckedCreateWithoutMeetingsInput>
@@ -50963,6 +53369,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutMeetingsInput = {
@@ -50993,6 +53400,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type UserUpsertWithoutMeetingsCreatedInput = {
@@ -51088,6 +53496,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutMeetingsInput = {
@@ -51122,6 +53531,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type AssessmentUpsertWithWhereUniqueWithoutMeetingInput = {
@@ -51138,6 +53548,47 @@ export namespace Prisma {
   export type AssessmentUpdateManyWithWhereWithoutMeetingInput = {
     where: AssessmentScalarWhereInput
     data: XOR<AssessmentUpdateManyMutationInput, AssessmentUncheckedUpdateManyWithoutMeetingInput>
+  }
+
+  export type LedgerEntryUpsertWithoutMeetingInput = {
+    update: XOR<LedgerEntryUpdateWithoutMeetingInput, LedgerEntryUncheckedUpdateWithoutMeetingInput>
+    create: XOR<LedgerEntryCreateWithoutMeetingInput, LedgerEntryUncheckedCreateWithoutMeetingInput>
+    where?: LedgerEntryWhereInput
+  }
+
+  export type LedgerEntryUpdateToOneWithWhereWithoutMeetingInput = {
+    where?: LedgerEntryWhereInput
+    data: XOR<LedgerEntryUpdateWithoutMeetingInput, LedgerEntryUncheckedUpdateWithoutMeetingInput>
+  }
+
+  export type LedgerEntryUpdateWithoutMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    organisation?: OrganisationUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    student?: StudentUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    payment?: PaymentUpdateOneWithoutLedgerEntryNestedInput
+  }
+
+  export type LedgerEntryUncheckedUpdateWithoutMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrganisationCreateWithoutTermsInput = {
@@ -51168,6 +53619,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutTermsInput = {
@@ -51198,6 +53650,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutTermsInput = {
@@ -51340,6 +53793,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutTermsInput = {
@@ -51370,6 +53824,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type InvoiceUpsertWithWhereUniqueWithoutTermInput = {
@@ -51432,6 +53887,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutHolidaysInput = {
@@ -51462,6 +53918,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutHolidaysInput = {
@@ -51508,6 +53965,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutHolidaysInput = {
@@ -51538,6 +53996,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationCreateWithoutKeyDatesInput = {
@@ -51568,6 +54027,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutKeyDatesInput = {
@@ -51598,6 +54058,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutKeyDatesInput = {
@@ -51684,6 +54145,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutKeyDatesInput = {
@@ -51714,6 +54176,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type ClassUpsertWithoutKeyDatesInput = {
@@ -51790,6 +54253,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutAssessmentsInput = {
@@ -51820,6 +54284,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutAssessmentsInput = {
@@ -51858,6 +54323,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAssessmentsInput = {
@@ -51892,6 +54358,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAssessmentsInput = {
@@ -51921,6 +54388,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutMeetingsInput
     createdBy: UserCreateNestedOneWithoutMeetingsCreatedInput
     student: StudentCreateNestedOneWithoutMeetingsInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingUncheckedCreateWithoutAssessmentsInput = {
@@ -51946,6 +54414,7 @@ export namespace Prisma {
     organisationId: string
     createdById: string
     studentId: number
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutMeetingInput
   }
 
   export type MeetingCreateOrConnectWithoutAssessmentsInput = {
@@ -52037,6 +54506,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutAssessmentsInput = {
@@ -52067,6 +54537,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutAssessmentsInput = {
@@ -52111,6 +54582,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAssessmentsInput = {
@@ -52145,6 +54617,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type MeetingUpsertWithoutAssessmentsInput = {
@@ -52180,6 +54653,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutMeetingsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutMeetingsCreatedNestedInput
     student?: StudentUpdateOneRequiredWithoutMeetingsNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateWithoutAssessmentsInput = {
@@ -52205,6 +54679,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput
   }
 
   export type UserUpsertWithoutAssessmentsLoggedInput = {
@@ -52286,6 +54761,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutClassSessionsInput = {
@@ -52316,6 +54792,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutClassSessionsInput = {
@@ -52474,6 +54951,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutClassSessionsInput = {
@@ -52504,6 +54982,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type ClassUpsertWithoutClassSessionsInput = {
@@ -52647,6 +55126,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutClassSessionAttendancesInput = {
@@ -52677,6 +55157,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutClassSessionAttendancesInput = {
@@ -52745,6 +55226,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentInput
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutClassSessionAttendancesInput = {
@@ -52779,6 +55261,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentInput
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutClassSessionAttendancesInput = {
@@ -52825,6 +55308,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutClassSessionAttendancesInput = {
@@ -52855,6 +55339,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type ClassSessionUpsertWithoutAttendanceRecordsInput = {
@@ -52935,6 +55420,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentNestedInput
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutClassSessionAttendancesInput = {
@@ -52969,6 +55455,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutStudentNestedInput
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type OrganisationCreateWithoutCheckInsInput = {
@@ -52999,6 +55486,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutCheckInsInput = {
@@ -53029,6 +55517,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutCheckInsInput = {
@@ -53067,6 +55556,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutCheckInsInput = {
@@ -53101,6 +55591,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutCheckInsInput = {
@@ -53225,6 +55716,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutCheckInsInput = {
@@ -53255,6 +55747,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutCheckInsInput = {
@@ -53299,6 +55792,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutCheckInsInput = {
@@ -53333,6 +55827,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUpsertWithoutCheckInsAssignedInput = {
@@ -53453,6 +55948,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutCheckInRulesInput = {
@@ -53483,6 +55979,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutCheckInRulesInput = {
@@ -53521,6 +56018,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentInput
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutCheckInRulesInput = {
@@ -53555,6 +56053,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentInput
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutCheckInRulesInput = {
@@ -53677,6 +56176,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutCheckInRulesInput = {
@@ -53707,6 +56207,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutCheckInRulesInput = {
@@ -53751,6 +56252,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentNestedInput
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutCheckInRulesInput = {
@@ -53785,6 +56287,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutStudentNestedInput
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type ClassUpsertWithoutCheckInRulesInput = {
@@ -53877,6 +56380,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutBillingSettingsInput = {
@@ -53907,6 +56411,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutBillingSettingsInput = {
@@ -53983,6 +56488,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutBillingSettingsInput = {
@@ -54013,6 +56519,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type DiscountUpsertWithWhereUniqueWithoutBillingSettingsInput = {
@@ -54050,6 +56557,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     organisation: OrganisationCreateNestedOneWithoutBillingSettingsInput
@@ -54061,6 +56569,7 @@ export namespace Prisma {
     currency?: string
     taxRatePercent?: number
     taxInclusive?: boolean
+    chargeTiming?: $Enums.BillingChargeTiming
     createdAt?: Date | string
     updatedAt?: Date | string
     organisationId: string
@@ -54110,6 +56619,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organisation?: OrganisationUpdateOneRequiredWithoutBillingSettingsNestedInput
@@ -54121,6 +56631,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     taxRatePercent?: FloatFieldUpdateOperationsInput | number
     taxInclusive?: BoolFieldUpdateOperationsInput | boolean
+    chargeTiming?: EnumBillingChargeTimingFieldUpdateOperationsInput | $Enums.BillingChargeTiming
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organisationId?: StringFieldUpdateOperationsInput | string
@@ -54173,6 +56684,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutDiscountsInput = {
@@ -54207,6 +56719,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutDiscountsInput = {
@@ -54281,6 +56794,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutDiscountsInput = {
@@ -54315,6 +56829,7 @@ export namespace Prisma {
     payments?: PaymentUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type DiscountUpsertWithoutStudentDiscountsInput = {
@@ -54376,6 +56891,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsCreateNestedOneWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutInvoicesInput = {
@@ -54406,6 +56922,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedCreateNestedOneWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutInvoicesInput = {
@@ -54444,6 +56961,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutInvoicesInput = {
@@ -54478,6 +56996,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutInvoicesInput = {
@@ -54529,6 +57048,7 @@ export namespace Prisma {
     organisation: OrganisationCreateNestedOneWithoutPaymentsInput
     student: StudentCreateNestedOneWithoutPaymentsInput
     recordedBy: UserCreateNestedOneWithoutPaymentsRecordedInput
+    ledgerEntry?: LedgerEntryCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentUncheckedCreateWithoutInvoiceInput = {
@@ -54543,6 +57063,7 @@ export namespace Prisma {
     organisationId: string
     studentId: number
     recordedById: string
+    ledgerEntry?: LedgerEntryUncheckedCreateNestedOneWithoutPaymentInput
   }
 
   export type PaymentCreateOrConnectWithoutInvoiceInput = {
@@ -54665,6 +57186,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUpdateOneWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutInvoicesInput = {
@@ -54695,6 +57217,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedUpdateOneWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutInvoicesInput = {
@@ -54739,6 +57262,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutInvoicesInput = {
@@ -54773,6 +57297,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TermUpsertWithoutInvoicesInput = {
@@ -55033,6 +57558,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsCreateNestedOneWithoutOrganisationInput
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     payments?: PaymentCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutQuotesInput = {
@@ -55063,6 +57589,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedCreateNestedOneWithoutOrganisationInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutQuotesInput = {
@@ -55101,6 +57628,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutQuotesInput = {
@@ -55135,6 +57663,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutQuotesInput = {
@@ -55260,6 +57789,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUpdateOneWithoutOrganisationNestedInput
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutQuotesInput = {
@@ -55290,6 +57820,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedUpdateOneWithoutOrganisationNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutQuotesInput = {
@@ -55334,6 +57865,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutQuotesInput = {
@@ -55368,6 +57900,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TermUpsertWithoutQuotesInput = {
@@ -55489,6 +58022,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsCreateNestedOneWithoutOrganisationInput
     invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationUncheckedCreateWithoutPaymentsInput = {
@@ -55519,6 +58053,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedCreateNestedOneWithoutOrganisationInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
     quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutOrganisationInput
   }
 
   export type OrganisationCreateOrConnectWithoutPaymentsInput = {
@@ -55557,6 +58092,7 @@ export namespace Prisma {
     discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutPaymentsInput = {
@@ -55591,6 +58127,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
     checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+    ledgerEntries?: LedgerEntryUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutPaymentsInput = {
@@ -55690,6 +58227,41 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutPaymentsRecordedInput, UserUncheckedCreateWithoutPaymentsRecordedInput>
   }
 
+  export type LedgerEntryCreateWithoutPaymentInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoiceId?: string | null
+    organisation: OrganisationCreateNestedOneWithoutLedgerEntriesInput
+    student: StudentCreateNestedOneWithoutLedgerEntriesInput
+    meeting?: MeetingCreateNestedOneWithoutLedgerEntryInput
+  }
+
+  export type LedgerEntryUncheckedCreateWithoutPaymentInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    studentId: number
+    meetingId?: number | null
+    invoiceId?: string | null
+  }
+
+  export type LedgerEntryCreateOrConnectWithoutPaymentInput = {
+    where: LedgerEntryWhereUniqueInput
+    create: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+  }
+
   export type OrganisationUpsertWithoutPaymentsInput = {
     update: XOR<OrganisationUpdateWithoutPaymentsInput, OrganisationUncheckedUpdateWithoutPaymentsInput>
     create: XOR<OrganisationCreateWithoutPaymentsInput, OrganisationUncheckedCreateWithoutPaymentsInput>
@@ -55729,6 +58301,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUpdateOneWithoutOrganisationNestedInput
     invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutOrganisationNestedInput
   }
 
   export type OrganisationUncheckedUpdateWithoutPaymentsInput = {
@@ -55759,6 +58332,7 @@ export namespace Prisma {
     billingSettings?: BillingSettingsUncheckedUpdateOneWithoutOrganisationNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
     quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutOrganisationNestedInput
   }
 
   export type StudentUpsertWithoutPaymentsInput = {
@@ -55803,6 +58377,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutPaymentsInput = {
@@ -55837,6 +58412,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type InvoiceUpsertWithoutPaymentsInput = {
@@ -55941,6 +58517,535 @@ export namespace Prisma {
     assessmentsLogged?: AssessmentUncheckedUpdateManyWithoutRecordedByNestedInput
     checkInsAssigned?: CheckInUncheckedUpdateManyWithoutTeacherNestedInput
     classSessionsCreated?: ClassSessionUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type LedgerEntryUpsertWithoutPaymentInput = {
+    update: XOR<LedgerEntryUpdateWithoutPaymentInput, LedgerEntryUncheckedUpdateWithoutPaymentInput>
+    create: XOR<LedgerEntryCreateWithoutPaymentInput, LedgerEntryUncheckedCreateWithoutPaymentInput>
+    where?: LedgerEntryWhereInput
+  }
+
+  export type LedgerEntryUpdateToOneWithWhereWithoutPaymentInput = {
+    where?: LedgerEntryWhereInput
+    data: XOR<LedgerEntryUpdateWithoutPaymentInput, LedgerEntryUncheckedUpdateWithoutPaymentInput>
+  }
+
+  export type LedgerEntryUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    organisation?: OrganisationUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    student?: StudentUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    meeting?: MeetingUpdateOneWithoutLedgerEntryNestedInput
+  }
+
+  export type LedgerEntryUncheckedUpdateWithoutPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type OrganisationCreateWithoutLedgerEntriesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string | null
+    joinCodeExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutOwnedWorkspaceInput
+    preferences?: OrganisationPreferencesCreateNestedOneWithoutOrganisationInput
+    userPreferences?: UserPreferencesCreateNestedManyWithoutOrganisationInput
+    members?: OrganisationMemberCreateNestedManyWithoutOrganisationInput
+    invitations?: InvitationCreateNestedManyWithoutOrganisationInput
+    joinRequests?: OrganisationJoinRequestCreateNestedManyWithoutOrganisationInput
+    students?: StudentCreateNestedManyWithoutOrganisationInput
+    classes?: ClassCreateNestedManyWithoutOrganisationInput
+    meetings?: MeetingCreateNestedManyWithoutOrganisationInput
+    classSessions?: ClassSessionCreateNestedManyWithoutOrganisationInput
+    classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutOrganisationInput
+    terms?: TermCreateNestedManyWithoutOrganisationInput
+    holidays?: HolidayCreateNestedManyWithoutOrganisationInput
+    assessments?: AssessmentCreateNestedManyWithoutOrganisationInput
+    checkIns?: CheckInCreateNestedManyWithoutOrganisationInput
+    checkInRules?: CheckInRuleCreateNestedManyWithoutOrganisationInput
+    keyDates?: KeyDateCreateNestedManyWithoutOrganisationInput
+    billingSettings?: BillingSettingsCreateNestedOneWithoutOrganisationInput
+    invoices?: InvoiceCreateNestedManyWithoutOrganisationInput
+    quotes?: QuoteCreateNestedManyWithoutOrganisationInput
+    payments?: PaymentCreateNestedManyWithoutOrganisationInput
+  }
+
+  export type OrganisationUncheckedCreateWithoutLedgerEntriesInput = {
+    id?: string
+    name: string
+    slug: string
+    ownerId?: string | null
+    joinCode?: string | null
+    joinCodeExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    preferences?: OrganisationPreferencesUncheckedCreateNestedOneWithoutOrganisationInput
+    userPreferences?: UserPreferencesUncheckedCreateNestedManyWithoutOrganisationInput
+    members?: OrganisationMemberUncheckedCreateNestedManyWithoutOrganisationInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutOrganisationInput
+    joinRequests?: OrganisationJoinRequestUncheckedCreateNestedManyWithoutOrganisationInput
+    students?: StudentUncheckedCreateNestedManyWithoutOrganisationInput
+    classes?: ClassUncheckedCreateNestedManyWithoutOrganisationInput
+    meetings?: MeetingUncheckedCreateNestedManyWithoutOrganisationInput
+    classSessions?: ClassSessionUncheckedCreateNestedManyWithoutOrganisationInput
+    classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutOrganisationInput
+    terms?: TermUncheckedCreateNestedManyWithoutOrganisationInput
+    holidays?: HolidayUncheckedCreateNestedManyWithoutOrganisationInput
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutOrganisationInput
+    checkIns?: CheckInUncheckedCreateNestedManyWithoutOrganisationInput
+    checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutOrganisationInput
+    keyDates?: KeyDateUncheckedCreateNestedManyWithoutOrganisationInput
+    billingSettings?: BillingSettingsUncheckedCreateNestedOneWithoutOrganisationInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutOrganisationInput
+    quotes?: QuoteUncheckedCreateNestedManyWithoutOrganisationInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutOrganisationInput
+  }
+
+  export type OrganisationCreateOrConnectWithoutLedgerEntriesInput = {
+    where: OrganisationWhereUniqueInput
+    create: XOR<OrganisationCreateWithoutLedgerEntriesInput, OrganisationUncheckedCreateWithoutLedgerEntriesInput>
+  }
+
+  export type StudentCreateWithoutLedgerEntriesInput = {
+    firstName: string
+    lastName: string
+    email?: string | null
+    phone?: string | null
+    subjects?: string
+    schoolSubjects?: string | null
+    hourlyRateCents: number
+    notes?: string | null
+    isActive?: boolean
+    isArchived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentEmail?: string | null
+    parentName?: string | null
+    parentPhone?: string | null
+    year?: number | null
+    meetingLocation?: string | null
+    resourceLink?: string | null
+    school?: string | null
+    customTermRateCents?: number | null
+    organisation: OrganisationCreateNestedOneWithoutStudentsInput
+    class?: ClassCreateNestedOneWithoutStudentsInput
+    meetings?: MeetingCreateNestedManyWithoutStudentInput
+    assessments?: AssessmentCreateNestedManyWithoutStudentInput
+    checkIns?: CheckInCreateNestedManyWithoutStudentInput
+    invoices?: InvoiceCreateNestedManyWithoutStudentInput
+    quotes?: QuoteCreateNestedManyWithoutStudentInput
+    payments?: PaymentCreateNestedManyWithoutStudentInput
+    discounts?: StudentDiscountCreateNestedManyWithoutStudentInput
+    classSessionAttendances?: ClassSessionAttendanceCreateNestedManyWithoutStudentInput
+    checkInRules?: CheckInRuleCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutLedgerEntriesInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    email?: string | null
+    phone?: string | null
+    subjects?: string
+    schoolSubjects?: string | null
+    hourlyRateCents: number
+    notes?: string | null
+    isActive?: boolean
+    isArchived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentEmail?: string | null
+    parentName?: string | null
+    parentPhone?: string | null
+    year?: number | null
+    meetingLocation?: string | null
+    resourceLink?: string | null
+    school?: string | null
+    classId?: number | null
+    customTermRateCents?: number | null
+    organisationId: string
+    meetings?: MeetingUncheckedCreateNestedManyWithoutStudentInput
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutStudentInput
+    checkIns?: CheckInUncheckedCreateNestedManyWithoutStudentInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutStudentInput
+    quotes?: QuoteUncheckedCreateNestedManyWithoutStudentInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutStudentInput
+    discounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
+    classSessionAttendances?: ClassSessionAttendanceUncheckedCreateNestedManyWithoutStudentInput
+    checkInRules?: CheckInRuleUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutLedgerEntriesInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutLedgerEntriesInput, StudentUncheckedCreateWithoutLedgerEntriesInput>
+  }
+
+  export type MeetingCreateWithoutLedgerEntryInput = {
+    title: string
+    description?: string | null
+    meetingLocation?: string | null
+    startTime: Date | string
+    endTime: Date | string
+    isCompleted?: boolean
+    status?: $Enums.LessonStatus
+    lessonPlan?: string | null
+    homework?: string | null
+    lessonSummary?: string | null
+    nextLessonPrep?: string | null
+    cancelReason?: string | null
+    recurrenceSeriesId?: string | null
+    recurrenceIndex?: number | null
+    hourlyRateCents?: number | null
+    totalCents?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisation: OrganisationCreateNestedOneWithoutMeetingsInput
+    createdBy: UserCreateNestedOneWithoutMeetingsCreatedInput
+    student: StudentCreateNestedOneWithoutMeetingsInput
+    assessments?: AssessmentCreateNestedManyWithoutMeetingInput
+  }
+
+  export type MeetingUncheckedCreateWithoutLedgerEntryInput = {
+    id?: number
+    title: string
+    description?: string | null
+    meetingLocation?: string | null
+    startTime: Date | string
+    endTime: Date | string
+    isCompleted?: boolean
+    status?: $Enums.LessonStatus
+    lessonPlan?: string | null
+    homework?: string | null
+    lessonSummary?: string | null
+    nextLessonPrep?: string | null
+    cancelReason?: string | null
+    recurrenceSeriesId?: string | null
+    recurrenceIndex?: number | null
+    hourlyRateCents?: number | null
+    totalCents?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    createdById: string
+    studentId: number
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutMeetingInput
+  }
+
+  export type MeetingCreateOrConnectWithoutLedgerEntryInput = {
+    where: MeetingWhereUniqueInput
+    create: XOR<MeetingCreateWithoutLedgerEntryInput, MeetingUncheckedCreateWithoutLedgerEntryInput>
+  }
+
+  export type PaymentCreateWithoutLedgerEntryInput = {
+    id?: string
+    amount: number
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    date: Date | string
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisation: OrganisationCreateNestedOneWithoutPaymentsInput
+    student: StudentCreateNestedOneWithoutPaymentsInput
+    invoice?: InvoiceCreateNestedOneWithoutPaymentsInput
+    recordedBy: UserCreateNestedOneWithoutPaymentsRecordedInput
+  }
+
+  export type PaymentUncheckedCreateWithoutLedgerEntryInput = {
+    id?: string
+    amount: number
+    method: $Enums.PaymentMethod
+    reference?: string | null
+    date: Date | string
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    studentId: number
+    invoiceId?: string | null
+    recordedById: string
+  }
+
+  export type PaymentCreateOrConnectWithoutLedgerEntryInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutLedgerEntryInput, PaymentUncheckedCreateWithoutLedgerEntryInput>
+  }
+
+  export type OrganisationUpsertWithoutLedgerEntriesInput = {
+    update: XOR<OrganisationUpdateWithoutLedgerEntriesInput, OrganisationUncheckedUpdateWithoutLedgerEntriesInput>
+    create: XOR<OrganisationCreateWithoutLedgerEntriesInput, OrganisationUncheckedCreateWithoutLedgerEntriesInput>
+    where?: OrganisationWhereInput
+  }
+
+  export type OrganisationUpdateToOneWithWhereWithoutLedgerEntriesInput = {
+    where?: OrganisationWhereInput
+    data: XOR<OrganisationUpdateWithoutLedgerEntriesInput, OrganisationUncheckedUpdateWithoutLedgerEntriesInput>
+  }
+
+  export type OrganisationUpdateWithoutLedgerEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    joinCodeExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutOwnedWorkspaceNestedInput
+    preferences?: OrganisationPreferencesUpdateOneWithoutOrganisationNestedInput
+    userPreferences?: UserPreferencesUpdateManyWithoutOrganisationNestedInput
+    members?: OrganisationMemberUpdateManyWithoutOrganisationNestedInput
+    invitations?: InvitationUpdateManyWithoutOrganisationNestedInput
+    joinRequests?: OrganisationJoinRequestUpdateManyWithoutOrganisationNestedInput
+    students?: StudentUpdateManyWithoutOrganisationNestedInput
+    classes?: ClassUpdateManyWithoutOrganisationNestedInput
+    meetings?: MeetingUpdateManyWithoutOrganisationNestedInput
+    classSessions?: ClassSessionUpdateManyWithoutOrganisationNestedInput
+    classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutOrganisationNestedInput
+    terms?: TermUpdateManyWithoutOrganisationNestedInput
+    holidays?: HolidayUpdateManyWithoutOrganisationNestedInput
+    assessments?: AssessmentUpdateManyWithoutOrganisationNestedInput
+    checkIns?: CheckInUpdateManyWithoutOrganisationNestedInput
+    checkInRules?: CheckInRuleUpdateManyWithoutOrganisationNestedInput
+    keyDates?: KeyDateUpdateManyWithoutOrganisationNestedInput
+    billingSettings?: BillingSettingsUpdateOneWithoutOrganisationNestedInput
+    invoices?: InvoiceUpdateManyWithoutOrganisationNestedInput
+    quotes?: QuoteUpdateManyWithoutOrganisationNestedInput
+    payments?: PaymentUpdateManyWithoutOrganisationNestedInput
+  }
+
+  export type OrganisationUncheckedUpdateWithoutLedgerEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    joinCodeExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferences?: OrganisationPreferencesUncheckedUpdateOneWithoutOrganisationNestedInput
+    userPreferences?: UserPreferencesUncheckedUpdateManyWithoutOrganisationNestedInput
+    members?: OrganisationMemberUncheckedUpdateManyWithoutOrganisationNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutOrganisationNestedInput
+    joinRequests?: OrganisationJoinRequestUncheckedUpdateManyWithoutOrganisationNestedInput
+    students?: StudentUncheckedUpdateManyWithoutOrganisationNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutOrganisationNestedInput
+    meetings?: MeetingUncheckedUpdateManyWithoutOrganisationNestedInput
+    classSessions?: ClassSessionUncheckedUpdateManyWithoutOrganisationNestedInput
+    classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutOrganisationNestedInput
+    terms?: TermUncheckedUpdateManyWithoutOrganisationNestedInput
+    holidays?: HolidayUncheckedUpdateManyWithoutOrganisationNestedInput
+    assessments?: AssessmentUncheckedUpdateManyWithoutOrganisationNestedInput
+    checkIns?: CheckInUncheckedUpdateManyWithoutOrganisationNestedInput
+    checkInRules?: CheckInRuleUncheckedUpdateManyWithoutOrganisationNestedInput
+    keyDates?: KeyDateUncheckedUpdateManyWithoutOrganisationNestedInput
+    billingSettings?: BillingSettingsUncheckedUpdateOneWithoutOrganisationNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutOrganisationNestedInput
+    quotes?: QuoteUncheckedUpdateManyWithoutOrganisationNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutOrganisationNestedInput
+  }
+
+  export type StudentUpsertWithoutLedgerEntriesInput = {
+    update: XOR<StudentUpdateWithoutLedgerEntriesInput, StudentUncheckedUpdateWithoutLedgerEntriesInput>
+    create: XOR<StudentCreateWithoutLedgerEntriesInput, StudentUncheckedCreateWithoutLedgerEntriesInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutLedgerEntriesInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutLedgerEntriesInput, StudentUncheckedUpdateWithoutLedgerEntriesInput>
+  }
+
+  export type StudentUpdateWithoutLedgerEntriesInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subjects?: StringFieldUpdateOperationsInput | string
+    schoolSubjects?: NullableStringFieldUpdateOperationsInput | string | null
+    hourlyRateCents?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    parentName?: NullableStringFieldUpdateOperationsInput | string | null
+    parentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    meetingLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceLink?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    customTermRateCents?: NullableIntFieldUpdateOperationsInput | number | null
+    organisation?: OrganisationUpdateOneRequiredWithoutStudentsNestedInput
+    class?: ClassUpdateOneWithoutStudentsNestedInput
+    meetings?: MeetingUpdateManyWithoutStudentNestedInput
+    assessments?: AssessmentUpdateManyWithoutStudentNestedInput
+    checkIns?: CheckInUpdateManyWithoutStudentNestedInput
+    invoices?: InvoiceUpdateManyWithoutStudentNestedInput
+    quotes?: QuoteUpdateManyWithoutStudentNestedInput
+    payments?: PaymentUpdateManyWithoutStudentNestedInput
+    discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
+    classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
+    checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutLedgerEntriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    subjects?: StringFieldUpdateOperationsInput | string
+    schoolSubjects?: NullableStringFieldUpdateOperationsInput | string | null
+    hourlyRateCents?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    parentName?: NullableStringFieldUpdateOperationsInput | string | null
+    parentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    meetingLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceLink?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    classId?: NullableIntFieldUpdateOperationsInput | number | null
+    customTermRateCents?: NullableIntFieldUpdateOperationsInput | number | null
+    organisationId?: StringFieldUpdateOperationsInput | string
+    meetings?: MeetingUncheckedUpdateManyWithoutStudentNestedInput
+    assessments?: AssessmentUncheckedUpdateManyWithoutStudentNestedInput
+    checkIns?: CheckInUncheckedUpdateManyWithoutStudentNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutStudentNestedInput
+    quotes?: QuoteUncheckedUpdateManyWithoutStudentNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutStudentNestedInput
+    discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
+    classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type MeetingUpsertWithoutLedgerEntryInput = {
+    update: XOR<MeetingUpdateWithoutLedgerEntryInput, MeetingUncheckedUpdateWithoutLedgerEntryInput>
+    create: XOR<MeetingCreateWithoutLedgerEntryInput, MeetingUncheckedCreateWithoutLedgerEntryInput>
+    where?: MeetingWhereInput
+  }
+
+  export type MeetingUpdateToOneWithWhereWithoutLedgerEntryInput = {
+    where?: MeetingWhereInput
+    data: XOR<MeetingUpdateWithoutLedgerEntryInput, MeetingUncheckedUpdateWithoutLedgerEntryInput>
+  }
+
+  export type MeetingUpdateWithoutLedgerEntryInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
+    lessonPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    homework?: NullableStringFieldUpdateOperationsInput | string | null
+    lessonSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    nextLessonPrep?: NullableStringFieldUpdateOperationsInput | string | null
+    cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrenceSeriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrenceIndex?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateCents?: NullableIntFieldUpdateOperationsInput | number | null
+    totalCents?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisation?: OrganisationUpdateOneRequiredWithoutMeetingsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutMeetingsCreatedNestedInput
+    student?: StudentUpdateOneRequiredWithoutMeetingsNestedInput
+    assessments?: AssessmentUpdateManyWithoutMeetingNestedInput
+  }
+
+  export type MeetingUncheckedUpdateWithoutLedgerEntryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
+    lessonPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    homework?: NullableStringFieldUpdateOperationsInput | string | null
+    lessonSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    nextLessonPrep?: NullableStringFieldUpdateOperationsInput | string | null
+    cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrenceSeriesId?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrenceIndex?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateCents?: NullableIntFieldUpdateOperationsInput | number | null
+    totalCents?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    assessments?: AssessmentUncheckedUpdateManyWithoutMeetingNestedInput
+  }
+
+  export type PaymentUpsertWithoutLedgerEntryInput = {
+    update: XOR<PaymentUpdateWithoutLedgerEntryInput, PaymentUncheckedUpdateWithoutLedgerEntryInput>
+    create: XOR<PaymentCreateWithoutLedgerEntryInput, PaymentUncheckedCreateWithoutLedgerEntryInput>
+    where?: PaymentWhereInput
+  }
+
+  export type PaymentUpdateToOneWithWhereWithoutLedgerEntryInput = {
+    where?: PaymentWhereInput
+    data: XOR<PaymentUpdateWithoutLedgerEntryInput, PaymentUncheckedUpdateWithoutLedgerEntryInput>
+  }
+
+  export type PaymentUpdateWithoutLedgerEntryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisation?: OrganisationUpdateOneRequiredWithoutPaymentsNestedInput
+    student?: StudentUpdateOneRequiredWithoutPaymentsNestedInput
+    invoice?: InvoiceUpdateOneWithoutPaymentsNestedInput
+    recordedBy?: UserUpdateOneRequiredWithoutPaymentsRecordedNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutLedgerEntryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    recordedById?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserPreferencesCreateManyOrganisationInput = {
@@ -56193,6 +59298,21 @@ export namespace Prisma {
     recordedById: string
   }
 
+  export type LedgerEntryCreateManyOrganisationInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentId: number
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
   export type UserPreferencesUpdateWithoutOrganisationInput = {
     id?: StringFieldUpdateOperationsInput | string
     studentsTablePrefsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -56338,6 +59458,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutOrganisationInput = {
@@ -56372,6 +59493,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutOrganisationInput = {
@@ -56470,6 +59592,7 @@ export namespace Prisma {
     createdBy?: UserUpdateOneRequiredWithoutMeetingsCreatedNestedInput
     student?: StudentUpdateOneRequiredWithoutMeetingsNestedInput
     assessments?: AssessmentUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateWithoutOrganisationInput = {
@@ -56495,6 +59618,7 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
     assessments?: AssessmentUncheckedUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateManyWithoutOrganisationInput = {
@@ -56948,6 +60072,7 @@ export namespace Prisma {
     student?: StudentUpdateOneRequiredWithoutPaymentsNestedInput
     invoice?: InvoiceUpdateOneWithoutPaymentsNestedInput
     recordedBy?: UserUpdateOneRequiredWithoutPaymentsRecordedNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutOrganisationInput = {
@@ -56962,6 +60087,7 @@ export namespace Prisma {
     studentId?: IntFieldUpdateOperationsInput | number
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     recordedById?: StringFieldUpdateOperationsInput | string
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutOrganisationInput = {
@@ -56976,6 +60102,51 @@ export namespace Prisma {
     studentId?: IntFieldUpdateOperationsInput | number
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     recordedById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LedgerEntryUpdateWithoutOrganisationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    student?: StudentUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    meeting?: MeetingUpdateOneWithoutLedgerEntryNestedInput
+    payment?: PaymentUpdateOneWithoutLedgerEntryNestedInput
+  }
+
+  export type LedgerEntryUncheckedUpdateWithoutOrganisationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LedgerEntryUncheckedUpdateManyWithoutOrganisationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentId?: IntFieldUpdateOperationsInput | number
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserPreferencesCreateManyUserInput = {
@@ -57275,6 +60446,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutMeetingsNestedInput
     student?: StudentUpdateOneRequiredWithoutMeetingsNestedInput
     assessments?: AssessmentUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateWithoutCreatedByInput = {
@@ -57300,6 +60472,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
     assessments?: AssessmentUncheckedUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateManyWithoutCreatedByInput = {
@@ -57425,6 +60598,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutPaymentsNestedInput
     student?: StudentUpdateOneRequiredWithoutPaymentsNestedInput
     invoice?: InvoiceUpdateOneWithoutPaymentsNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutRecordedByInput = {
@@ -57439,6 +60613,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutRecordedByInput = {
@@ -57622,6 +60797,21 @@ export namespace Prisma {
     classId?: number | null
   }
 
+  export type LedgerEntryCreateManyStudentInput = {
+    id?: string
+    type: $Enums.LedgerEntryType
+    amountCents: number
+    effectiveDate: Date | string
+    description: string
+    voidedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organisationId: string
+    meetingId?: number | null
+    paymentId?: string | null
+    invoiceId?: string | null
+  }
+
   export type MeetingUpdateWithoutStudentInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57644,6 +60834,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutMeetingsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutMeetingsCreatedNestedInput
     assessments?: AssessmentUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateWithoutStudentInput = {
@@ -57669,6 +60860,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     assessments?: AssessmentUncheckedUpdateManyWithoutMeetingNestedInput
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutMeetingNestedInput
   }
 
   export type MeetingUncheckedUpdateManyWithoutStudentInput = {
@@ -57905,6 +61097,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutPaymentsNestedInput
     invoice?: InvoiceUpdateOneWithoutPaymentsNestedInput
     recordedBy?: UserUpdateOneRequiredWithoutPaymentsRecordedNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutStudentInput = {
@@ -57919,6 +61112,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     recordedById?: StringFieldUpdateOperationsInput | string
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutStudentInput = {
@@ -58020,6 +61214,51 @@ export namespace Prisma {
     classId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type LedgerEntryUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+    organisation?: OrganisationUpdateOneRequiredWithoutLedgerEntriesNestedInput
+    meeting?: MeetingUpdateOneWithoutLedgerEntryNestedInput
+    payment?: PaymentUpdateOneWithoutLedgerEntryNestedInput
+  }
+
+  export type LedgerEntryUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LedgerEntryUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+    amountCents?: IntFieldUpdateOperationsInput | number
+    effectiveDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    voidedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organisationId?: StringFieldUpdateOperationsInput | string
+    meetingId?: NullableIntFieldUpdateOperationsInput | number | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    invoiceId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StudentCreateManyClassInput = {
     id?: number
     firstName: string
@@ -58115,6 +61354,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutClassInput = {
@@ -58149,6 +61389,7 @@ export namespace Prisma {
     discounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
     classSessionAttendances?: ClassSessionAttendanceUncheckedUpdateManyWithoutStudentNestedInput
     checkInRules?: CheckInRuleUncheckedUpdateManyWithoutStudentNestedInput
+    ledgerEntries?: LedgerEntryUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutClassInput = {
@@ -58692,6 +61933,7 @@ export namespace Prisma {
     organisation?: OrganisationUpdateOneRequiredWithoutPaymentsNestedInput
     student?: StudentUpdateOneRequiredWithoutPaymentsNestedInput
     recordedBy?: UserUpdateOneRequiredWithoutPaymentsRecordedNestedInput
+    ledgerEntry?: LedgerEntryUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateWithoutInvoiceInput = {
@@ -58706,6 +61948,7 @@ export namespace Prisma {
     organisationId?: StringFieldUpdateOperationsInput | string
     studentId?: IntFieldUpdateOperationsInput | number
     recordedById?: StringFieldUpdateOperationsInput | string
+    ledgerEntry?: LedgerEntryUncheckedUpdateOneWithoutPaymentNestedInput
   }
 
   export type PaymentUncheckedUpdateManyWithoutInvoiceInput = {

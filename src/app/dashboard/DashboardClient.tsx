@@ -226,7 +226,7 @@ export default function DashboardClient({
 				<CardShell className="min-h-[290px] flex flex-col">
 					<div className="flex items-center justify-between mb-1">
 						<h2 className="text-base font-semibold text-gray-900">Revenue</h2>
-						<SeeAllButton href="/billing/invoices" />
+						<SeeAllButton href="/billing" />
 					</div>
 					<div className="mb-2">
 						<span className="text-3xl font-bold text-gray-900">

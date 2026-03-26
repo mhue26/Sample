@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgContext } from "@/utils/auth";
+import { createPaymentLedgerEntry } from "@/lib/ledger";
 
 export async function GET() {
 	const ctx = await getOrgContext();
@@ -30,18 +31,34 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ error: "Student, amount, method, and date are required" }, { status: 400 });
 	}
 
-	const payment = await prisma.payment.create({
-		data: {
-			amount: Math.round(parseFloat(amount) * 100),
-			method,
-			reference: reference || null,
-			date: new Date(date),
-			notes: notes || null,
-			organisationId: ctx.organisationId,
-			studentId: parseInt(studentId),
-			invoiceId: invoiceId || null,
-			recordedById: ctx.userId,
-		},
+	const amountCents = Math.round(parseFloat(amount) * 100);
+	const paymentDate = new Date(date);
+
+	const payment = await prisma.$transaction(async (tx) => {
+		const p = await tx.payment.create({
+			data: {
+				amount: amountCents,
+				method,
+				reference: reference || null,
+				date: paymentDate,
+				notes: notes || null,
+				organisationId: ctx.organisationId,
+				studentId: parseInt(studentId),
+				invoiceId: invoiceId || null,
+				recordedById: ctx.userId,
+			},
+		});
+		await createPaymentLedgerEntry(tx, {
+			id: p.id,
+			amount: p.amount,
+			date: p.date,
+			method: p.method,
+			reference: p.reference,
+			organisationId: p.organisationId,
+			studentId: p.studentId,
+			invoiceId: p.invoiceId,
+		});
+		return p;
 	});
 
 	if (invoiceId) {

@@ -6,9 +6,11 @@ interface AnimatedTextProps {
   text: string;
   className?: string;
   delay?: number;
+  /** Use "inline" so words flow horizontally; "block" stacks vertically (legacy). */
+  display?: "inline" | "block";
 }
 
-export default function AnimatedText({ text, className = '', delay = 150 }: AnimatedTextProps) {
+export default function AnimatedText({ text, className = '', delay = 150, display = "inline" }: AnimatedTextProps) {
   const words = useMemo(() => text.split(' '), [text]);
 
   return (
@@ -16,7 +18,7 @@ export default function AnimatedText({ text, className = '', delay = 150 }: Anim
       {words.map((word, index) => (
         <span
           key={index}
-          className="block opacity-0 animate-fade-in-word"
+          className={`opacity-0 animate-fade-in-word ${display === "block" ? "block" : "inline-block mr-[0.25em]"}`}
           style={{ animationDelay: `${index * delay}ms` }}
         >
           {word}

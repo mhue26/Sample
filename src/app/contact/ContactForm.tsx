@@ -75,7 +75,7 @@ export default function ContactForm() {
 				</p>
 				<button 
 					onClick={() => setSuccess(false)}
-					className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+					className="text-[#584b53] hover:text-[#3D4756] text-sm font-medium"
 				>
 					Send another message
 				</button>
@@ -96,7 +96,7 @@ export default function ContactForm() {
 							className={`w-full border-0 border-b-2 px-0 py-2 text-gray-900 font-medium focus:outline-none transition-colors ${
 								fieldErrors.name 
 									? 'border-red-500' 
-									: 'border-gray-300 focus:border-blue-600'
+									: 'border-gray-300 focus:border-ui-form-lavender'
 							}`}
 						/>
 					</label>
@@ -109,7 +109,7 @@ export default function ContactForm() {
 							className={`w-full border-0 border-b-2 px-0 py-2 text-gray-900 font-medium focus:outline-none transition-colors ${
 								fieldErrors.email 
 									? 'border-red-500' 
-									: 'border-gray-300 focus:border-blue-600'
+									: 'border-gray-300 focus:border-ui-form-lavender'
 							}`}
 						/>
 					</label>
@@ -124,7 +124,7 @@ export default function ContactForm() {
 						className={`w-full border-0 border-b-2 px-0 py-2 text-gray-900 font-medium focus:outline-none transition-colors ${
 							fieldErrors.subject 
 								? 'border-red-500' 
-								: 'border-gray-300 focus:border-blue-600'
+								: 'border-gray-300 focus:border-ui-form-lavender'
 						}`}
 					/>
 				</label>
@@ -138,7 +138,7 @@ export default function ContactForm() {
 						className={`w-full border-0 border-b-2 px-0 py-2 text-gray-900 font-medium focus:outline-none transition-colors resize-vertical ${
 							fieldErrors.message 
 								? 'border-red-500' 
-								: 'border-gray-300 focus:border-blue-600'
+								: 'border-gray-300 focus:border-ui-form-lavender'
 						}`}
 					/>
 				</label>

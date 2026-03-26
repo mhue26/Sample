@@ -308,6 +308,23 @@ export default async function SettingsPage() {
 											/>
 											<span className="text-sm text-gray-700">Prices include tax (tax-inclusive)</span>
 										</label>
+										<label className="block">
+											<div className="text-sm font-medium text-gray-700">
+												Lesson ledger charges
+											</div>
+											<select
+												name="chargeTiming"
+												defaultValue={billingSettings?.chargeTiming ?? "ON_SCHEDULE"}
+												disabled={!canBillingEdit}
+												className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#584b53] disabled:bg-gray-50"
+											>
+												<option value="ON_SCHEDULE">When lesson is scheduled</option>
+												<option value="ON_COMPLETE">When lesson is marked complete</option>
+											</select>
+											<p className="mt-1 text-xs text-gray-500">
+												Controls when a charge appears on each student&apos;s account ledger.
+											</p>
+										</label>
 										{canBillingEdit && (
 											<button
 												type="submit"

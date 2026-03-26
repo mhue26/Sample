@@ -37,6 +37,8 @@ interface StudentTabsProps {
   teachingPeriods: TeachingPeriod[];
   studentName: string;
   studentSubjects: string;
+  accountTab: React.ReactNode;
+  initialTab?: "profile" | "lessons" | "notes" | "account";
 }
 
 interface Note {
@@ -45,8 +47,16 @@ interface Note {
   isEditing: boolean;
 }
 
-export default function StudentTabs({ children, meetings, teachingPeriods, studentName, studentSubjects }: StudentTabsProps) {
-  const [activeTab, setActiveTab] = useState<'profile' | 'lessons' | 'notes'>('profile');
+export default function StudentTabs({
+  children,
+  meetings,
+  teachingPeriods,
+  studentName,
+  studentSubjects,
+  accountTab,
+  initialTab = "profile",
+}: StudentTabsProps) {
+  const [activeTab, setActiveTab] = useState<"profile" | "lessons" | "notes" | "account">(initialTab);
   const [notes, setNotes] = useState<Note[]>([]);
 
   const addNote = () => {
@@ -108,6 +118,16 @@ export default function StudentTabs({ children, meetings, teachingPeriods, stude
             }`}
           >
             Notes
+          </button>
+          <button
+            onClick={() => setActiveTab('account')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm cursor-pointer ${
+              activeTab === 'account'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Account
           </button>
         </nav>
       </div>
@@ -206,6 +226,10 @@ export default function StudentTabs({ children, meetings, teachingPeriods, stude
                   </div>
                 )}
               </div>
+            )}
+
+            {activeTab === "account" && (
+              <div className="space-y-6">{accountTab}</div>
             )}
       </div>
     </div>

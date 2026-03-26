@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { requireOrgContext } from "@/utils/auth";
+import { getStudentLedgerBalanceCents } from "@/lib/ledger";
+import StudentAccountLedger from "../StudentAccountLedger";
 import { getLessonDisplayTitle } from "@/utils/teachingPeriods";
 import DeleteIcon from "./DeleteIcon";
 import ArchiveIcon from "./ArchiveIcon";
@@ -29,12 +31,22 @@ async function deleteStudent(id: number) {
 	redirect("/students");
 }
 
-export default async function StudentDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function StudentDetail({
+	params,
+	searchParams,
+}: {
+	params: Promise<{ id: string }>;
+	searchParams: Promise<{ tab?: string }>;
+}) {
 	const { id: idString } = await params;
+	const sp = await searchParams;
 	const id = Number(idString);
 	if (Number.isNaN(id)) notFound();
 
 	const ctx = await requireOrgContext();
+	const initialTab =
+		sp.tab === "account" ? ("account" as const) : ("profile" as const);
+	const canManageBilling = ctx.role === "OWNER" || ctx.role === "ADMIN";
 
 	const student = await prisma.student.findFirst({
 		where: { id, organisationId: ctx.organisationId },
@@ -58,7 +70,7 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 		orderBy: { startTime: "desc" },
 	});
 
-	const [terms, holidays, keyDates] = await Promise.all([
+	const [terms, holidays, keyDates, ledgerEntries, balanceCents, payAgg, billingSettings] = await Promise.all([
 		prisma.term.findMany({
 			where: { organisationId: ctx.organisationId },
 			orderBy: { startDate: "desc" },
@@ -79,7 +91,31 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 			},
 			orderBy: { date: "asc" },
 		}) ?? [],
+		prisma.ledgerEntry.findMany({
+			where: {
+				studentId: id,
+				organisationId: ctx.organisationId,
+				voidedAt: null,
+			},
+			orderBy: [{ effectiveDate: "desc" }, { createdAt: "desc" }],
+			take: 200,
+		}),
+		getStudentLedgerBalanceCents(id, ctx.organisationId),
+		prisma.ledgerEntry.aggregate({
+			where: {
+				studentId: id,
+				organisationId: ctx.organisationId,
+				voidedAt: null,
+				type: "PAYMENT",
+			},
+			_sum: { amountCents: true },
+		}),
+		prisma.billingSettings.findUnique({
+			where: { organisationId: ctx.organisationId },
+		}),
 	]);
+
+	const totalPaidCents = Math.abs(payAgg._sum.amountCents ?? 0);
 
 	const teachingPeriods: any[] = [
 		...terms.map((term) => ({ ...term, type: "term" as const })),
@@ -215,6 +251,23 @@ export default async function StudentDetail({ params }: { params: Promise<{ id: 
 				teachingPeriods={teachingPeriods}
 				studentName={`${student.firstName} ${student.lastName}`}
 				studentSubjects={student.schoolSubjects || ""}
+				initialTab={initialTab}
+				accountTab={
+					<StudentAccountLedger
+						balanceCents={balanceCents}
+						totalPaidCents={totalPaidCents}
+						currency={billingSettings?.currency ?? "AUD"}
+						canManageBilling={canManageBilling}
+						entries={ledgerEntries.map((e) => ({
+							id: e.id,
+							type: e.type,
+							amountCents: e.amountCents,
+							effectiveDate: e.effectiveDate.toISOString(),
+							description: e.description,
+							voidedAt: e.voidedAt?.toISOString() ?? null,
+						}))}
+					/>
+				}
 			>
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 					<div className="bg-white rounded-2xl shadow-sm p-6">

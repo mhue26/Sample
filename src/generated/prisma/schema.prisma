@@ -98,6 +98,17 @@ enum ClassFormat {
   HYBRID
 }
 
+enum BillingChargeTiming {
+  ON_SCHEDULE
+  ON_COMPLETE
+}
+
+enum LedgerEntryType {
+  LESSON_CHARGE
+  PAYMENT
+  ADJUSTMENT
+}
+
 // ─── Organisation ────────────────────────────────────────────────────────────
 
 model Organisation {
@@ -131,6 +142,7 @@ model Organisation {
   invoices                Invoice[]
   quotes                  Quote[]
   payments                Payment[]
+  ledgerEntries           LedgerEntry[]
 }
 
 model OrganisationMember {
@@ -271,6 +283,7 @@ model Student {
   discounts               StudentDiscount[]
   classSessionAttendances ClassSessionAttendance[]
   checkInRules            CheckInRule[]
+  ledgerEntries           LedgerEntry[]
 }
 
 // ─── Class ───────────────────────────────────────────────────────────────────
@@ -326,6 +339,7 @@ model Meeting {
   createdBy      User         @relation(fields: [createdById], references: [id])
   student        Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
   assessments    Assessment[]
+  ledgerEntry    LedgerEntry?
 }
 
 // ─── Term ────────────────────────────────────────────────────────────────────
@@ -486,13 +500,14 @@ model CheckInRule {
 // ─── Billing ─────────────────────────────────────────────────────────────────
 
 model BillingSettings {
-  id                   String   @id @default(cuid())
+  id                   String              @id @default(cuid())
   defaultTermRateCents Int
-  currency             String   @default("AUD")
-  taxRatePercent       Float    @default(0)
-  taxInclusive         Boolean  @default(false)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  currency             String              @default("AUD")
+  taxRatePercent       Float               @default(0)
+  taxInclusive         Boolean             @default(false)
+  chargeTiming         BillingChargeTiming @default(ON_SCHEDULE)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
 
   organisationId String       @unique
   organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
@@ -609,4 +624,27 @@ model Payment {
   student        Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
   invoice        Invoice?     @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
   recordedBy     User         @relation("PaymentRecordedBy", fields: [recordedById], references: [id])
+  ledgerEntry    LedgerEntry?
+}
+
+model LedgerEntry {
+  id            String          @id @default(cuid())
+  type          LedgerEntryType
+  amountCents   Int
+  effectiveDate DateTime
+  description   String
+  voidedAt      DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  organisationId String
+  studentId      Int
+  meetingId      Int?    @unique
+  paymentId      String? @unique
+  invoiceId      String?
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  student      Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  meeting      Meeting?     @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  payment      Payment?     @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 }

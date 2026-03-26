@@ -111,8 +111,9 @@ export default function Sidebar({ session, isOpen, onToggle }: SidebarProps) {
       </button>
 
       <div className="flex flex-col h-full min-h-0 flex-1">
-        {/* Main navigation - scrolls if content is tall so Workspaces stays visible */}
-        <div className="flex-1 min-h-0 overflow-y-auto p-4">
+        {/* Main navigation - scrolls if content is tall so Workspaces stays visible.
+            pr-10 clears the absolute hide-sidebar rail (w-8) so nav + workspace row aren’t obscured. */}
+        <div className="flex-1 min-h-0 overflow-y-auto p-4 pr-10">
           <div className="space-y-0.5">
             {navItems.map((item) => (
               <Link
@@ -134,7 +135,10 @@ export default function Sidebar({ session, isOpen, onToggle }: SidebarProps) {
         </div>
 
         {/* Workspaces dropdown at bottom - always visible, does not scroll away */}
-        <div className="flex-shrink-0 p-4 border-t border-gray-200" ref={workspaceDropdownRef}>
+        <div
+          className="flex-shrink-0 p-4 pr-10 border-t border-gray-200 overflow-visible"
+          ref={workspaceDropdownRef}
+        >
           <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase px-1 mb-2">
             Workspaces
           </p>

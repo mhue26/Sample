@@ -27,7 +27,7 @@ export default function Navigation({ session }: NavigationProps) {
           <span className="px-2">·</span>
           <Link href="/calendar" className={pathname === '/calendar' ? 'font-bold' : 'hover:font-bold'} style={{ color: '#584B53' }}>Calendar</Link>
           <span className="px-2">·</span>
-          <Link href="/billing" className={pathname === '/billing' ? 'font-bold' : 'hover:font-bold'} style={{ color: '#584B53' }}>Invoicing</Link>
+          <Link href="/billing" className={pathname?.startsWith('/billing') ? 'font-bold' : 'hover:font-bold'} style={{ color: '#584B53' }}>Billing</Link>
         </>
       ) : (
         <div className="flex items-center gap-2">

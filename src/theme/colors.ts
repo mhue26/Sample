@@ -17,6 +17,12 @@ export const colors = {
   accentBg: "#FEF5eF",
   /** Muted secondary text (e.g. empty states) */
   muted: "#A1ACBD",
+  /** Blue accent: landing hero, highlights, decorative elements */
+  blueAccent: "#D6E3F8",
+  /** Lighter blue for subtle backgrounds */
+  blueAccentLight: "#E8EFF9",
+  /** Form focus (underline / border) — blue-lavender, pairs with blueAccent */
+  formFocusLavender: "#9CA3D4",
 } as const;
 
 export type ColorKey = keyof typeof colors;

@@ -10,6 +10,9 @@
   --ui-accent-highlight: #E4BB97;
   --ui-accent-bg: #FEF5eF;
   --ui-muted: #A1ACBD;
+  --ui-blue-accent: #D6E3F8;
+  --ui-blue-accent-light: #E8EFF9;
+  --ui-form-lavender: #9ca3d4;
 }
 
 @theme inline {
@@ -21,6 +24,9 @@
   --color-ui-accent-highlight: var(--ui-accent-highlight);
   --color-ui-accent-bg: var(--ui-accent-bg);
   --color-ui-muted: var(--ui-muted);
+  --color-ui-blue-accent: var(--ui-blue-accent);
+  --color-ui-blue-accent-light: var(--ui-blue-accent-light);
+  --color-ui-form-lavender: var(--ui-form-lavender);
   --font-sans: 'Work Sans', sans-serif;
   --font-mono: var(--font-geist-mono);
 }

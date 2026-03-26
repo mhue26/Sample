@@ -41,7 +41,6 @@ interface CalendarClientProps {
   calendarEvents: CalendarEventDTO[];
   initialView?: "month" | "week" | "fiveday" | "threeday" | "day";
   students: Student[];
-  createMeeting: (formData: FormData) => Promise<void>;
   userId: string;
 }
 
@@ -53,13 +52,18 @@ export default function CalendarClient({
   calendarEvents,
   initialView = "month",
   students: _students,
-  createMeeting: _createMeeting,
   userId
 }: CalendarClientProps) {
   type CalendarView = "month" | "week" | "fiveday" | "threeday" | "day";
 
   const [view, setView] = useState<CalendarView>(initialView);
   const [currentDate, setCurrentDate] = useState<Date>(() => {
+    const today = new Date();
+    const isCurrentMonthView =
+      currentYear === today.getFullYear() && currentMonth === today.getMonth();
+    if (isCurrentMonthView) {
+      return new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    }
     return new Date(currentYear, currentMonth, 1);
   });
   const [timeRange, setTimeRange] = useState<string>('week');

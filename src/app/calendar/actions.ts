@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireOrgContext } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import { LessonStatus } from "@/generated/prisma";
+import { syncManyMeetingLedgerEntries, syncMeetingLedgerEntry } from "@/lib/ledger";
 
 export async function createMeeting(formData: FormData): Promise<{ meetingIds: number[] } | { error: string }> {
 	const ctx = await requireOrgContext();
@@ -136,6 +137,7 @@ export async function createMeeting(formData: FormData): Promise<{ meetingIds: n
 			orderBy: { recurrenceIndex: "asc" },
 		});
 		const result = { meetingIds: created.map((m) => m.id) };
+		await syncManyMeetingLedgerEntries(result.meetingIds);
 		if (formData.get("redirect") === "true") redirect("/calendar");
 		return result;
 	}
@@ -158,6 +160,7 @@ export async function createMeeting(formData: FormData): Promise<{ meetingIds: n
 		},
 	});
 	const result = { meetingIds: [meeting.id] };
+	await syncMeetingLedgerEntry(meeting.id);
 	if (formData.get("redirect") === "true") redirect("/calendar");
 	return result;
 }

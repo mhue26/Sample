@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "seed": "ts-node --compiler-options '{\"module\":\"commonjs\"}' prisma/seed.ts"
+    "seed": "ts-node --compiler-options '{\"module\":\"commonjs\"}' prisma/seed.ts",
+    "backfill:ledger": "npx tsx scripts/backfill-ledger.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",

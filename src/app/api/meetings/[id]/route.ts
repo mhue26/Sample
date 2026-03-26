@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgContext } from "@/utils/auth";
+import { syncManyMeetingLedgerEntries, syncMeetingLedgerEntry } from "@/lib/ledger";
 
 interface RouteParams {
 	params: Promise<{ id: string }>;
@@ -216,6 +217,8 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 			}
 		}
 
+		await syncManyMeetingLedgerEntries(targets.map((t) => t.id));
+
 		return NextResponse.json(updated);
 	}
 
@@ -268,6 +271,8 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 			});
 		}
 	}
+
+	await syncMeetingLedgerEntry(meetingId);
 
 	return NextResponse.json(updated);
 }

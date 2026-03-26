@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { requireOrgContext } from "@/utils/auth";
 import CalendarClient from "./CalendarClient";
-import { createMeeting } from "./actions";
 import { getCalendarEvents } from "./getCalendarEvents";
 
 interface CalendarSearchParams {
@@ -59,10 +58,6 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
 		select: { id: true, firstName: true, lastName: true },
 	});
 
-	const createMeetingAction = async (formData: FormData) => {
-		await createMeeting(formData);
-	};
-
 	return (
 		<CalendarClient
 			meetings={meetings as any}
@@ -72,7 +67,6 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
 			calendarEvents={events}
 			initialView={params.view ?? "month"}
 			students={students}
-			createMeeting={createMeetingAction}
 			userId={ctx.userId}
 		/>
 	);
