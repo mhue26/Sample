@@ -29,11 +29,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (!user) {
-			// Don't reveal if user exists or not for security
-			return NextResponse.json(
-				{ error: 'If an account exists with this email, the password has been reset.' },
-				{ status: 404 }
-			);
+			return NextResponse.json({ success: true, message: 'If an account exists with this email, the password has been reset.' });
 		}
 
 		// Hash the new password

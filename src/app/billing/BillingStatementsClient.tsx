@@ -82,6 +82,7 @@ export default function BillingStatementsClient({
 	const [showGenerateLessons, setShowGenerateLessons] = useState(false);
 	const [showPayment, setShowPayment] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [actionError, setActionError] = useState<string | null>(null);
 	const [backfillLoading, setBackfillLoading] = useState(false);
 	const [activeTab, setActiveTab] = useState<"invoices" | "payments" | "quotes">("invoices");
 
@@ -124,87 +125,135 @@ export default function BillingStatementsClient({
 	const generateInvoices = async () => {
 		if (!genTermId) return;
 		setLoading(true);
-		await fetch("/api/invoices", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ termId: genTermId }),
-		});
-		setShowGenerate(false);
-		setLoading(false);
-		router.refresh();
+		setActionError(null);
+		try {
+			const res = await fetch("/api/invoices", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ termId: genTermId }),
+			});
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setActionError(data.error || "Failed to generate invoices. Please try again.");
+				return;
+			}
+			setShowGenerate(false);
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const generateQuotes = async () => {
 		if (!genQuoteTermId) return;
 		setLoading(true);
-		await fetch("/api/quotes", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ termId: genQuoteTermId }),
-		});
-		setShowGenerateQuotes(false);
-		setLoading(false);
-		router.refresh();
+		setActionError(null);
+		try {
+			const res = await fetch("/api/quotes", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ termId: genQuoteTermId }),
+			});
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setActionError(data.error || "Failed to create quotes. Please try again.");
+				return;
+			}
+			setShowGenerateQuotes(false);
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const generateFromLessons = async () => {
 		if (!genLessonsFrom || !genLessonsTo) return;
 		setLoading(true);
-		await fetch("/api/invoices/generate-from-lessons", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				dateFrom: genLessonsFrom,
-				dateTo: genLessonsTo,
-			}),
-		});
-		setShowGenerateLessons(false);
-		setLoading(false);
-		router.refresh();
+		setActionError(null);
+		try {
+			const res = await fetch("/api/invoices/generate-from-lessons", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ dateFrom: genLessonsFrom, dateTo: genLessonsTo }),
+			});
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setActionError(data.error || "Failed to generate invoices. Please try again.");
+				return;
+			}
+			setShowGenerateLessons(false);
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const updateInvoiceStatus = async (id: string, status: string) => {
-		await fetch(`/api/invoices/${id}`, {
+		const res = await fetch(`/api/invoices/${id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ status }),
 		});
-		router.refresh();
+		if (res.ok) router.refresh();
 	};
 
 	const convertQuoteToInvoice = async (quoteId: string) => {
 		setLoading(true);
-		const res = await fetch(`/api/quotes/${quoteId}/convert-to-invoice`, { method: "POST" });
-		if (res.ok) {
+		setActionError(null);
+		try {
+			const res = await fetch(`/api/quotes/${quoteId}/convert-to-invoice`, { method: "POST" });
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setActionError(data.error || "Failed to convert quote. Please try again.");
+				return;
+			}
 			router.refresh();
+		} finally {
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 
 	const recordPayment = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
-		await fetch("/api/payments", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(payForm),
-		});
-		setShowPayment(false);
-		setPayForm({
-			studentId: "",
-			invoiceId: "",
-			amount: "",
-			method: "CASH",
-			reference: "",
-			date: new Date().toISOString().split("T")[0],
-			notes: "",
-		});
-		setLoading(false);
-		router.refresh();
+		setActionError(null);
+		try {
+			const res = await fetch("/api/payments", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payForm),
+			});
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setActionError(data.error || "Failed to record payment. Please try again.");
+				return;
+			}
+			setShowPayment(false);
+			setPayForm({
+				studentId: "",
+				invoiceId: "",
+				amount: "",
+				method: "CASH",
+				reference: "",
+				date: new Date().toISOString().split("T")[0],
+				notes: "",
+			});
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
 		<div className="space-y-6">
+			{actionError && (
+				<div className="flex items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+					<span>{actionError}</span>
+					<button type="button" onClick={() => setActionError(null)} className="flex-shrink-0 rounded p-1 text-red-600 hover:bg-red-100" aria-label="Dismiss">
+						<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+					</button>
+				</div>
+			)}
 			<p className="text-sm text-gray-600">
 				<Link href="/billing" className="text-[#3D4756] font-medium hover:underline">
 					← Back to Billing

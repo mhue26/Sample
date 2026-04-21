@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
-import { markOverdueInvoices } from "@/lib/billing";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 const REMINDER_COOLDOWN_DAYS = 7;
@@ -15,11 +14,16 @@ export async function GET(request: NextRequest) {
 
 	const baseUrl = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl?.origin || "https://localhost:3000";
 
-	// Mark SENT/PARTIALLY_PAID with past dueDate as OVERDUE
-	const orgs = await prisma.organisation.findMany({ select: { id: true } });
-	for (const org of orgs) {
-		await markOverdueInvoices(org.id);
-	}
+	// Mark all SENT/PARTIALLY_PAID invoices with a past due date as OVERDUE in one query
+	const startOfToday = new Date();
+	startOfToday.setHours(0, 0, 0, 0);
+	await prisma.invoice.updateMany({
+		where: {
+			status: { in: ["SENT", "PARTIALLY_PAID"] },
+			dueDate: { lt: startOfToday },
+		},
+		data: { status: "OVERDUE" },
+	});
 
 	// Find OVERDUE invoices with student email where we haven't sent a reminder in the cooldown period
 	const cooldown = new Date();

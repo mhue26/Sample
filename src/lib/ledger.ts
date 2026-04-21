@@ -123,9 +123,7 @@ export async function syncMeetingLedgerEntry(meetingId: number, db: Db = prisma)
 }
 
 export async function syncManyMeetingLedgerEntries(meetingIds: number[]): Promise<void> {
-	for (const id of meetingIds) {
-		await syncMeetingLedgerEntry(id);
-	}
+	await Promise.all(meetingIds.map((id) => syncMeetingLedgerEntry(id)));
 }
 
 const methodLabels: Record<string, string> = {

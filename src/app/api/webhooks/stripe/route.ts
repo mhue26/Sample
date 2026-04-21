@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
+import { createPaymentLedgerEntry } from "@/lib/ledger";
 
 const stripe = process.env.STRIPE_SECRET_KEY
 	? new Stripe(process.env.STRIPE_SECRET_KEY)
@@ -60,18 +61,33 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: "No organisation member to record payment" }, { status: 500 });
 		}
 
-		await prisma.payment.create({
-			data: {
-				amount: amountTotal,
-				method: "CARD",
-				reference: paymentIntentId || `stripe-${session.id}`,
-				date: new Date(),
-				notes: "Paid via Stripe",
-				organisationId,
-				studentId: parseInt(studentId, 10),
-				invoiceId,
-				recordedById: member.userId,
-			},
+		const reference = paymentIntentId || `stripe-${session.id}`;
+		const numericStudentId = parseInt(studentId, 10);
+
+		await prisma.$transaction(async (tx) => {
+			const payment = await tx.payment.create({
+				data: {
+					amount: amountTotal,
+					method: "CARD",
+					reference,
+					date: new Date(),
+					notes: "Paid via Stripe",
+					organisationId,
+					studentId: numericStudentId,
+					invoiceId,
+					recordedById: member.userId,
+				},
+			});
+			await createPaymentLedgerEntry(tx, {
+				id: payment.id,
+				amount: payment.amount,
+				date: payment.date,
+				method: payment.method,
+				reference: payment.reference,
+				organisationId: payment.organisationId,
+				studentId: payment.studentId,
+				invoiceId: payment.invoiceId,
+			});
 		});
 
 		const totalPaid = invoice.payments.reduce((s, p) => s + p.amount, 0) + amountTotal;

@@ -21,6 +21,7 @@ export default function BillingLedgerClient({
 	const router = useRouter();
 	const [showPayment, setShowPayment] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [payError, setPayError] = useState<string | null>(null);
 	const [payForm, setPayForm] = useState({
 		studentId: "",
 		amount: "",
@@ -36,26 +37,31 @@ export default function BillingLedgerClient({
 	const recordPayment = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
-		await fetch("/api/payments", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				...payForm,
-				invoiceId: "",
-				amount: payForm.amount,
-			}),
-		});
-		setShowPayment(false);
-		setPayForm({
-			studentId: "",
-			amount: "",
-			method: "CASH",
-			reference: "",
-			date: new Date().toISOString().split("T")[0],
-			notes: "",
-		});
-		setLoading(false);
-		router.refresh();
+		setPayError(null);
+		try {
+			const res = await fetch("/api/payments", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ ...payForm, invoiceId: "" }),
+			});
+			if (!res.ok) {
+				const data = await res.json().catch(() => ({}));
+				setPayError(data.error || "Failed to record payment. Please try again.");
+				return;
+			}
+			setShowPayment(false);
+			setPayForm({
+				studentId: "",
+				amount: "",
+				method: "CASH",
+				reference: "",
+				date: new Date().toISOString().split("T")[0],
+				notes: "",
+			});
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -75,6 +81,9 @@ export default function BillingLedgerClient({
 			{showPayment && canManage && (
 				<form onSubmit={recordPayment} className="bg-white rounded-2xl shadow-sm p-6 space-y-3">
 					<h3 className="text-lg font-medium">Record payment</h3>
+					{payError && (
+						<p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{payError}</p>
+					)}
 					<p className="text-xs text-gray-500">
 						Applied to the student&apos;s ledger. For invoice-linked or online payments, use{" "}
 						<Link href="/billing/statements" className="text-[#3D4756] underline">

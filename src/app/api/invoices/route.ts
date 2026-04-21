@@ -35,9 +35,12 @@ export async function POST(request: NextRequest) {
 	if (!termId) {
 		return NextResponse.json({ error: "Term is required" }, { status: 400 });
 	}
+	if (studentIds && (!Array.isArray(studentIds) || studentIds.length > 500)) {
+		return NextResponse.json({ error: "studentIds must be an array of at most 500 IDs" }, { status: 400 });
+	}
 
 	const term = await prisma.term.findFirst({
-		where: { id: parseInt(termId), organisationId: ctx.organisationId },
+		where: { id: parseInt(termId, 10), organisationId: ctx.organisationId },
 	});
 	if (!term) return NextResponse.json({ error: "Term not found" }, { status: 404 });
 
@@ -51,8 +54,9 @@ export async function POST(request: NextRequest) {
 
 	let students;
 	if (studentIds && studentIds.length > 0) {
+		const ids = studentIds.map((id: string) => parseInt(id, 10)).filter((n: number) => !isNaN(n));
 		students = await prisma.student.findMany({
-			where: { id: { in: studentIds.map((id: string) => parseInt(id)) }, organisationId: ctx.organisationId, isArchived: false },
+			where: { id: { in: ids }, organisationId: ctx.organisationId, isArchived: false },
 			include: { discounts: { include: { discount: true } } },
 		});
 	} else {
@@ -62,74 +66,87 @@ export async function POST(request: NextRequest) {
 		});
 	}
 
-	const lastInvoice = await prisma.invoice.findFirst({
-		where: { organisationId: ctx.organisationId },
-		orderBy: { createdAt: "desc" },
-		select: { number: true },
+	// Batch-check which students already have an invoice for this term
+	const existingInvoices = await prisma.invoice.findMany({
+		where: {
+			organisationId: ctx.organisationId,
+			termId: term.id,
+			studentId: { in: students.map((s) => s.id) },
+		},
+		select: { studentId: true },
 	});
-	let nextNum = 1;
-	if (lastInvoice?.number) {
-		const match = lastInvoice.number.match(/(\d+)$/);
-		if (match) nextNum = parseInt(match[1]) + 1;
-	}
+	const alreadyInvoiced = new Set(existingInvoices.map((i) => i.studentId));
+	const toInvoice = students.filter((s) => !alreadyInvoiced.has(s.id));
 
-	const invoices = [];
-	for (const student of students) {
-		const existing = await prisma.invoice.findFirst({
-			where: { organisationId: ctx.organisationId, studentId: student.id, termId: term.id },
-		});
-		if (existing) continue;
-
-		const rate = student.customTermRateCents ?? defaultRate;
-		let discountTotal = 0;
-		for (const sd of student.discounts) {
-			if (sd.discount.type === "PERCENTAGE") {
-				discountTotal += Math.round(rate * (sd.discount.value / 100));
-			} else {
-				discountTotal += Math.round(sd.discount.value);
+	const invoices = await prisma.$transaction(
+		async (tx) => {
+			const lastInvoice = await tx.invoice.findFirst({
+				where: { organisationId: ctx.organisationId },
+				orderBy: { createdAt: "desc" },
+				select: { number: true },
+			});
+			let nextNum = 1;
+			if (lastInvoice?.number) {
+				const match = lastInvoice.number.match(/(\d+)$/);
+				if (match) nextNum = parseInt(match[1], 10) + 1;
 			}
-		}
 
-		const subtotal = Math.max(0, rate - discountTotal);
-		let taxCents = 0;
-		let total = subtotal;
-		if (taxRate > 0) {
-			if (taxInclusive) {
-				taxCents = Math.round(subtotal - subtotal / (1 + taxRate / 100));
-				total = subtotal;
-			} else {
-				taxCents = Math.round(subtotal * (taxRate / 100));
-				total = subtotal + taxCents;
-			}
-		}
-		const year = new Date().getFullYear();
-		const number = `INV-${year}-${String(nextNum).padStart(3, "0")}`;
-		nextNum++;
+			const created = [];
+			const year = new Date().getFullYear();
+			for (const student of toInvoice) {
+				const rate = student.customTermRateCents ?? defaultRate;
+				let discountTotal = 0;
+				for (const sd of student.discounts) {
+					if (sd.discount.type === "PERCENTAGE") {
+						discountTotal += Math.round(rate * (sd.discount.value / 100));
+					} else {
+						discountTotal += Math.round(sd.discount.value);
+					}
+				}
 
-		const invoice = await prisma.invoice.create({
-			data: {
-				number,
-				amount: rate,
-				discount: discountTotal,
-				tax: taxCents,
-				total,
-				status: "DRAFT",
-				dueDate: term.endDate,
-				organisationId: ctx.organisationId,
-				studentId: student.id,
-				termId: term.id,
-				lineItems: {
-					create: {
-						description: `${term.name} ${term.year}`,
-						quantity: 1,
-						unitPriceCents: rate,
-						amountCents: rate,
+				const subtotal = Math.max(0, rate - discountTotal);
+				let taxCents = 0;
+				let total = subtotal;
+				if (taxRate > 0) {
+					if (taxInclusive) {
+						taxCents = Math.round(subtotal - subtotal / (1 + taxRate / 100));
+						total = subtotal;
+					} else {
+						taxCents = Math.round(subtotal * (taxRate / 100));
+						total = subtotal + taxCents;
+					}
+				}
+				const number = `INV-${year}-${String(nextNum).padStart(3, "0")}`;
+				nextNum++;
+
+				const invoice = await tx.invoice.create({
+					data: {
+						number,
+						amount: rate,
+						discount: discountTotal,
+						tax: taxCents,
+						total,
+						status: "DRAFT",
+						dueDate: term.endDate,
+						organisationId: ctx.organisationId,
+						studentId: student.id,
+						termId: term.id,
+						lineItems: {
+							create: {
+								description: `${term.name} ${term.year}`,
+								quantity: 1,
+								unitPriceCents: rate,
+								amountCents: rate,
+							},
+						},
 					},
-				},
-			},
-		});
-		invoices.push(invoice);
-	}
+				});
+				created.push(invoice);
+			}
+			return created;
+		},
+		{ isolationLevel: "Serializable" }
+	);
 
 	return NextResponse.json({ created: invoices.length, invoices });
 }

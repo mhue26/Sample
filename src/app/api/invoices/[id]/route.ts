@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrgContext } from "@/utils/auth";
 
+const VALID_STATUSES = ["DRAFT", "SENT", "PAID", "PARTIALLY_PAID", "OVERDUE", "CANCELLED"] as const;
+type InvoiceStatus = typeof VALID_STATUSES[number];
+
 export async function GET(
 	_request: NextRequest,
 	{ params }: { params: Promise<{ id: string }> }
@@ -35,23 +38,32 @@ export async function PUT(
 	const body = await request.json();
 	const { status, dueDate, notes, total } = body;
 
+	if (status !== undefined && !VALID_STATUSES.includes(status as InvoiceStatus)) {
+		return NextResponse.json({ error: `Invalid status. Must be one of: ${VALID_STATUSES.join(", ")}` }, { status: 400 });
+	}
+
 	const existing = await prisma.invoice.findFirst({
 		where: { id, organisationId: ctx.organisationId },
 	});
 	if (!existing) return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
 
-	const data: Record<string, unknown> = {};
-	if (status) data.status = status;
+	const data: {
+		status?: InvoiceStatus;
+		dueDate?: Date | null;
+		notes?: string | null;
+		total?: number;
+		amount?: number;
+	} = {};
+	if (status) data.status = status as InvoiceStatus;
 	if (dueDate !== undefined) data.dueDate = dueDate ? new Date(dueDate) : null;
 	if (notes !== undefined) data.notes = notes;
-	// Allow updating total (and amount) for DRAFT only
 	if (existing.status === "DRAFT" && typeof total === "number" && total >= 0) {
 		const totalCents = Math.round(total);
 		data.total = totalCents;
 		data.amount = totalCents + existing.discount;
 	}
 
-	const invoice = await prisma.invoice.update({ where: { id }, data: data as any });
+	const invoice = await prisma.invoice.update({ where: { id }, data });
 	return NextResponse.json(invoice);
 }
 
