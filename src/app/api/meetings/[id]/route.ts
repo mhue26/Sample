@@ -293,6 +293,12 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
 	};
 	if (ctx.role === "TEACHER") where.createdById = ctx.userId;
 
-	await prisma.meeting.deleteMany({ where });
+	const result = await prisma.meeting.deleteMany({ where });
+	if (result.count === 0) {
+		return NextResponse.json(
+			{ error: "Meeting not found or you do not have permission to delete it" },
+			{ status: 404 },
+		);
+	}
 	return NextResponse.json({ ok: true });
 }

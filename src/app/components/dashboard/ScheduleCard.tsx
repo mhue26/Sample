@@ -136,10 +136,10 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 	return (
 		<div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col h-full">
 			<div className="flex items-center justify-between mb-4">
-				<h2 className="text-base font-semibold text-gray-900">Schedule</h2>
+				<h2 className="text-xl font-semibold text-gray-900">Schedule</h2>
 				<Link
 					href="/calendar"
-					className="text-xs font-medium text-gray-500 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors"
+					className="text-sm font-medium text-gray-500 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors"
 				>
 					See All
 				</Link>
@@ -156,7 +156,7 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 				</button>
 				<button
 					onClick={goToday}
-					className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+					className="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors"
 				>
 					{formatDateHeader(selectedDate)}
 				</button>
@@ -175,7 +175,7 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 					<button
 						key={tab.key}
 						onClick={() => setActiveTab(tab.key)}
-						className={`pb-2 px-3 text-sm font-medium transition-colors border-b-2 ${
+						className={`pb-2 px-3 text-base font-medium transition-colors border-b-2 ${
 							activeTab === tab.key
 								? "text-gray-900 border-gray-900"
 								: "text-gray-400 border-transparent hover:text-gray-600"
@@ -186,7 +186,7 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 				))}
 			</div>
 			{activeTab === "lessons" && needsReviewCount > 0 && (
-				<div className="mb-3 rounded-lg border border-purple-100 bg-purple-50 px-3 py-2 text-xs text-purple-700">
+				<div className="mb-3 rounded-lg border border-purple-100 bg-purple-50 px-3 py-2 text-sm text-purple-700">
 					{needsReviewCount} lesson{needsReviewCount === 1 ? "" : "s"} need review
 				</div>
 			)}
@@ -194,7 +194,7 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 			<div className="flex-1 overflow-y-auto space-y-3 min-h-0">
 				{filteredItems.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-8 text-center">
-						<p className="text-sm text-gray-400">Nothing scheduled</p>
+						<p className="text-base text-gray-400">Nothing scheduled</p>
 					</div>
 				) : (
 					filteredItems.map((item) => {
@@ -207,11 +207,11 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 								className={`flex gap-3 p-3 rounded-xl border-l-[3px] ${style.border} bg-gray-50/50`}
 							>
 								<div className="flex flex-col text-right min-w-[60px] shrink-0">
-									<span className="text-sm font-semibold text-gray-800">
+									<span className="text-base font-semibold text-gray-800">
 										{formatTimeDisplay(item.startTime)}
 									</span>
 									{item.endTime && (
-										<span className="text-xs text-gray-400">
+										<span className="text-sm text-gray-400">
 											{formatTimeDisplay(item.endTime)}
 										</span>
 									)}
@@ -224,8 +224,8 @@ export default function ScheduleCard({ lessons, events, checkins, needsReviewCou
 												{style.label}
 											</span>
 										)}
-									<p className="text-sm font-medium text-gray-800 truncate">{item.title}</p>
-									<p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+									<p className="text-base font-medium text-gray-800 truncate">{item.title}</p>
+									<p className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
 										<svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
 										</svg>

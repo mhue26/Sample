@@ -54,9 +54,6 @@ export default function Home() {
 									<span className="block">Focus on teaching.</span>
 									<span className="block mt-2 sm:mt-3">We handle the admin.</span>
 								</h1>
-								<p className="mt-6 text-lg sm:text-xl text-[#584b53] max-w-3xl mx-auto">
-									Student profiles, classes, calendar, and billing — all in one place for private tutors.
-								</p>
 								<div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
 									<Link
 										href="/signup"
