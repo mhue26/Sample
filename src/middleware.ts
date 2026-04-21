@@ -4,7 +4,9 @@ import { getToken } from "next-auth/jwt";
 
 export default async function middleware(req: NextRequest) {
 	const pathname = req.nextUrl.pathname;
-	const response = NextResponse.next();
+	const requestHeaders = new Headers(req.headers);
+	requestHeaders.set("x-pathname", pathname);
+	const response = NextResponse.next({ request: { headers: requestHeaders } });
 	response.headers.set("x-pathname", pathname);
 
 	const protectedRoutes = [
@@ -37,6 +39,13 @@ export default async function middleware(req: NextRequest) {
 		// Logged in but no organisation (e.g. new Google user): complete signup first
 		if ((token as any).needOrg === true) {
 			return NextResponse.redirect(new URL("/signup/complete", req.url));
+		}
+
+		// JWT present but missing org claims (stale session / bad token): force re-auth
+		if (!(token as any).organisationId || !(token as any).role) {
+			const signInUrl = new URL("/signin", req.url);
+			signInUrl.searchParams.set("callbackUrl", pathname);
+			return NextResponse.redirect(signInUrl);
 		}
 	}
 

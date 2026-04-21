@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireOrgContext } from "@/utils/auth";
+import { getOrgContext } from "@/utils/auth";
 
 export async function POST(request: NextRequest) {
-	const ctx = await requireOrgContext();
+	const ctx = await getOrgContext();
+	if (!ctx) {
+		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+	}
 
 	const body = await request.json().catch(() => ({}));
 	const firstName = String(body?.firstName ?? "").trim();

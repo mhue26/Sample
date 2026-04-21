@@ -4,6 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 function slugFromName(name: string): string {
 	return name
@@ -239,13 +241,20 @@ export async function getOrgContext(): Promise<OrgContext | null> {
 }
 
 /**
- * Same as getOrgContext but throws a redirect-friendly error for use in
- * server components / actions that must have org context.
+ * Same as getOrgContext but redirects to sign-in (or signup) when context is missing,
+ * so server components do not surface a raw runtime error.
  */
 export async function requireOrgContext(): Promise<OrgContext> {
 	const ctx = await getOrgContext();
 	if (!ctx) {
-		throw new Error("Not authenticated or no organisation context");
+		const h = await headers();
+		const pathname = h.get("x-pathname") || "/dashboard";
+		const session = await getServerSession(authOptions);
+		if (session?.user && (session.user as any).needOrg === true) {
+			redirect("/signup/complete");
+		}
+		const q = new URLSearchParams({ callbackUrl: pathname });
+		redirect(`/signin?${q.toString()}`);
 	}
 	return ctx;
 }
